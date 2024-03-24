@@ -10,10 +10,10 @@ import '../../domain/interfaces/either.dart';
 import '../../infra/drivers/i_http_driver.dart';
 
 class DioClientDriver extends IHttpDriver with Disposable {
-  DioClientDriver({required this.client, required this.crashLog});
+  DioClientDriver({required this.client,  this.crashLog});
 
   final dio.Dio client;
-  final CrashLog crashLog;
+  final CrashLog? crashLog;
 
   HttpDriverResponse _responseError(dio.DioException e, {StackTrace? s}) {
     try {
@@ -39,7 +39,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
           break;
       }
 
-      crashLog.capture(
+      crashLog?.capture(
         exception: HttpFailure(
           exception: e,
           stackTrace: StackTrace.current,
@@ -55,7 +55,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
         statusCode: e.response?.statusCode,
       );
     } catch (e, s) {
-      crashLog.capture(exception: e, stackTrace: s);
+      crashLog?.capture(exception: e, stackTrace: s);
 
       return HttpDriverResponse(
         data: e,
