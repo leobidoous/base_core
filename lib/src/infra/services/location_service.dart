@@ -1,4 +1,4 @@
-import '../../../core.dart' show Either, ILocationFailure, PositionEntity;
+import '../../../base_core.dart' show Either, ILocationFailure, PositionEntity;
 
 import '../../domain/services/i_location_service.dart';
 import '../drivers/i_location_driver.dart';

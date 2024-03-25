@@ -136,7 +136,7 @@ class FormValidators {
 
     if (value.length < 11) {
       return 'CPF inválido';
-    } else if (value.length < 14) {
+    } else if (value.length != 11 && value.length < 14) {
       return 'CNPJ inválido';
     }
     if (value.length == 11) {

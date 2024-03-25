@@ -1,5 +1,3 @@
-import 'package:meta/meta.dart';
-
 abstract class Either<TLeft, TRight> {
   const Either();
 
@@ -81,7 +79,6 @@ Either<TLeft, TRight> Right<TLeft, TRight>(TRight r) =>
 // ignore: non_constant_identifier_names
 Either<TLeft, TRight> Left<TLeft, TRight>(TLeft l) => _Left<TLeft, TRight>(l);
 
-@sealed
 abstract class Unit {}
 
 class _Unit implements Unit {

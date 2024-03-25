@@ -1,7 +1,9 @@
-name: core
-description: Core module
-version: 0.0.1
-publish_to: "none"
+name: base_core
+description: Um package auxiliar para manter as dependências globais de um aplicativo multi-repositório e mono-repositório.
+homepage: https://www.linkedin.com/in/leonardo-bido/
+repository: https://github.com/leobidoous/core.git
+issue_tracker: https://github.com/leobidoous/core.git/issues
+version: 1.0.0
 
 environment:
   sdk: ">=3.1.3 <4.0.0"
@@ -35,6 +37,7 @@ dependencies:
   path_provider: ^2.1.2
   sentry_flutter: ^7.16.1
   connectivity_plus: ^5.0.2
+  package_info_plus: ^4.2.0
   shared_preferences: ^2.2.2
   permission_handler: ^11.3.0
   flutter_secure_storage: ^9.0.0
