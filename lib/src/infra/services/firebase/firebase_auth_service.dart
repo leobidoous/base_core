@@ -38,7 +38,7 @@ class FirebaseAuthService extends IFirebaseAuthService {
   }) {
     return firebaseAuthDriver.signInWithPhoneNumber(phoneNumber: phoneNumber);
   }
-  
+
   @override
   User? get getCurrentUser => firebaseAuthDriver.getCurrentUser;
 }

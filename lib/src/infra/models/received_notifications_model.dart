@@ -13,7 +13,6 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
     required super.payload,
   });
 
-
   factory ReceivedNotificationModel.fromMap(Map<String, dynamic> map) {
     return ReceivedNotificationModel(
       id: map['id']?.toInt() ?? 0,

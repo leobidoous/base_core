@@ -14,7 +14,6 @@ class PackageInfoEntity {
   final String buildSignature;
   final bool forceUpdate;
 
-
   int getExtendedVersionNumber(String version) {
     List versionCells = version.split('.');
     versionCells = versionCells.map((i) => int.parse(i)).toList();

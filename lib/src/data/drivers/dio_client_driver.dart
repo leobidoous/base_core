@@ -10,7 +10,7 @@ import '../../domain/interfaces/either.dart';
 import '../../infra/drivers/i_http_driver.dart';
 
 class DioClientDriver extends IHttpDriver with Disposable {
-  DioClientDriver({required this.client,  this.crashLog});
+  DioClientDriver({required this.client, this.crashLog});
 
   final dio.Dio client;
   final CrashLog? crashLog;
@@ -77,6 +77,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
       headers: {
         if (options != null)
           'Authorization': '${options.accessTokenType} ${options.accessToken}',
+        if (options != null) '${options.apiMapKey}': '${options.apiKey}',
         ...?options?.extraHeaders,
       },
     );

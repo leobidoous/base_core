@@ -24,7 +24,7 @@ class LocationDriver extends ILocationDriver {
         (r) async {
           switch (r) {
             case PermissionStatusType.denied:
-            return Left(PermissionDeniedError(''));
+              return Left(PermissionDeniedError(''));
             case PermissionStatusType.granted:
               final response = await Geolocator.getCurrentPosition();
               return Right(
@@ -34,11 +34,11 @@ class LocationDriver extends ILocationDriver {
                 ),
               );
             case PermissionStatusType.restricted:
-            return Left(PermissionRestrictedError(''));
+              return Left(PermissionRestrictedError(''));
             case PermissionStatusType.limited:
-            return Left(PermissionLimitedError(''));
+              return Left(PermissionLimitedError(''));
             case PermissionStatusType.permanentlyDenied:
-            return Left(PermissionPermanentDeniedError(''));
+              return Left(PermissionPermanentDeniedError(''));
           }
         },
       );
