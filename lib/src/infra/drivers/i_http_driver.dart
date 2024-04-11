@@ -23,6 +23,7 @@ class HttpDriverOptions {
     this.channelId,
     this.apiKey,
     this.responseType,
+    this.apiMapKey = 'apiKey',
     this.accessTokenType = 'Bearer',
     this.customerId,
     this.extraHeaders,
@@ -34,6 +35,7 @@ class HttpDriverOptions {
   final String? tenantId;
   final String? channelId;
   final String? apiKey;
+  final String? apiMapKey;
 
   final HttpCustomerId? customerId;
   final Map<String, dynamic>? extraHeaders;

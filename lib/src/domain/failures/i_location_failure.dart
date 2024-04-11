@@ -40,6 +40,7 @@ class PermissionDeniedError extends ILocationFailure {
   @override
   String? get message => error;
 }
+
 class PermissionPermanentDeniedError extends ILocationFailure {
   PermissionPermanentDeniedError(this.error, {this.detailsMessage});
   final String error;

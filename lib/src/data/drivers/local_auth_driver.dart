@@ -17,11 +17,8 @@ class LocalAuthDriver extends ILocalAuthDriver {
   }) async {
     try {
       final response = await _auth.authenticate(
+        options: const AuthenticationOptions(),
         localizedReason: localizedReason,
-        options: const AuthenticationOptions(
-          stickyAuth: true,
-          biometricOnly: true,
-        ),
       );
       return Right(response);
     } on PlatformException catch (e) {

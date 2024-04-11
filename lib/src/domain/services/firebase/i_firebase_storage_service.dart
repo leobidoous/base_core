@@ -4,9 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart'
 import '../../../domain/entities/query_snapshot_filters_entity.dart';
 import '../../../domain/interfaces/either.dart';
 
-
 abstract class IFirebaseStorageService {
-
   Future<Either<Exception, Stream<QuerySnapshot<Map<String, dynamic>>>>>
       getCollectionStream({
     required QuerySnapshotFiltersEntity filters,
