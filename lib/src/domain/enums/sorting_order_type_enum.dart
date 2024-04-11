@@ -11,13 +11,13 @@ extension SortingOrderTypeExt on SortingOrderType {
   }
 }
 
-SortingOrderType sortingOrderTypeFromJson(String? type) {
+SortingOrderType? sortingOrderTypeFromJson(String? type) {
   switch (type) {
     case 'ASC':
       return SortingOrderType.asc;
     case 'DESC':
       return SortingOrderType.desc;
     default:
-      return SortingOrderType.asc;
+      return null;
   }
 }
