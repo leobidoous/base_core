@@ -1,3 +1,7 @@
+## 1.0.6
+
+* Add translations
+
 ## 1.0.5
 
 * Rename path to basePath into INavigationDriver

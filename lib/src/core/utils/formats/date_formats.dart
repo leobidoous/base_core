@@ -51,7 +51,7 @@ class DateFormat {
       try {
         return df.DateFormat(pattern).parse(date).toLocal();
       } catch (e) {
-        return DateTime.now();
+        return null;
       }
     }
   }
