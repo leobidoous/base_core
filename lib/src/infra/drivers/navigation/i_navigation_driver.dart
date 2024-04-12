@@ -21,7 +21,7 @@ abstract class INavigationDriver {
   ///
   /// Current path
   ///
-  BasePath get path;
+  BasePath get basePath;
 
   ///
   /// Push a named route to the stack
