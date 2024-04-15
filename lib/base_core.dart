@@ -103,7 +103,7 @@ export 'package:base_core/src/presentation/widgets/custom_listenable_builder.dar
 export 'package:cloud_firestore/cloud_firestore.dart' show FirebaseFirestore;
 export 'package:connectivity_plus/connectivity_plus.dart';
 export 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
-export 'package:dio/dio.dart' hide MultipartFile, ResponseType;
+export 'package:dio/dio.dart' hide ResponseType;
 export 'package:equatable/equatable.dart' show EquatableMixin, Equatable;
 export 'package:firebase_analytics/firebase_analytics.dart'
     show FirebaseAnalytics, FirebaseAnalyticsObserver;

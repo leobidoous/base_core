@@ -27,10 +27,12 @@ class HttpDriverOptions {
     this.accessTokenType = 'Bearer',
     this.customerId,
     this.extraHeaders,
+    this.contentType,
   });
   final HttpAccessToken? accessToken;
   final ResponseType? responseType;
   final HttpBaseUrl? baseUrl;
+  final String? contentType;
   final String accessTokenType;
   final String? tenantId;
   final String? channelId;

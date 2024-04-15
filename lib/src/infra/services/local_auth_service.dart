@@ -9,8 +9,20 @@ class LocalAuthService extends ILocalAuthService {
   final ILocalAuthDriver localAuthDriver;
 
   @override
-  Future<Either<Exception, bool>> authenticate({String localizedReason = ''}) {
-    return localAuthDriver.authenticate(localizedReason: localizedReason);
+  Future<Either<Exception, bool>> authenticate({
+    String localizedReason = '',
+    bool useErrorDialogs = true,
+    bool stickyAuth = false,
+    bool sensitiveTransaction = true,
+    bool biometricOnly = false,
+  }) {
+    return localAuthDriver.authenticate(
+      localizedReason: localizedReason,
+      useErrorDialogs: useErrorDialogs,
+      stickyAuth: stickyAuth,
+      sensitiveTransaction: sensitiveTransaction,
+      biometricOnly: biometricOnly,
+    );
   }
 
   @override

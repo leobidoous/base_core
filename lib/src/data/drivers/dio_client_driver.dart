@@ -74,6 +74,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
         ResponseType.json => dio.ResponseType.json,
         null => null,
       },
+      contentType: options?.contentType,
       headers: {
         if (options != null && options.accessToken != null)
           'Authorization': '${options.accessTokenType} ${options.accessToken}',

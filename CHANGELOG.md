@@ -1,3 +1,8 @@
+## 1.0.7
+
+* Update local auth service
+* Add MultipartFile export
+
 ## 1.0.6
 
 * Add translations

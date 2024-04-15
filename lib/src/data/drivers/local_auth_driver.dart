@@ -1,6 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart' hide BiometricType;
+import 'package:local_auth_android/local_auth_android.dart' hide BiometricType;
+import 'package:local_auth_darwin/local_auth_darwin.dart' hide BiometricType;
 
 import '../../domain/enums/biometric_type.dart';
 import '../../domain/interfaces/either.dart';
@@ -14,11 +16,24 @@ class LocalAuthDriver extends ILocalAuthDriver {
   @override
   Future<Either<Exception, bool>> authenticate({
     String localizedReason = '',
+    bool useErrorDialogs = true,
+    bool stickyAuth = false,
+    bool sensitiveTransaction = true,
+    bool biometricOnly = false,
   }) async {
     try {
       final response = await _auth.authenticate(
-        options: const AuthenticationOptions(),
+        options: AuthenticationOptions(
+          useErrorDialogs: useErrorDialogs,
+          stickyAuth: stickyAuth,
+          sensitiveTransaction: sensitiveTransaction,
+          biometricOnly: biometricOnly,
+        ),
         localizedReason: localizedReason,
+        authMessages: [
+          const AndroidAuthMessages(cancelButton: 'Cancelar'),
+          const IOSAuthMessages(cancelButton: 'Cancelar'),
+        ],
       );
       return Right(response);
     } on PlatformException catch (e) {
