@@ -31,8 +31,8 @@ class LocalAuthDriver extends ILocalAuthDriver {
         ),
         localizedReason: localizedReason,
         authMessages: [
-          const AndroidAuthMessages(cancelButton: 'Cancelar'),
-          const IOSAuthMessages(cancelButton: 'Cancelar'),
+          const AndroidAuthMessages(),
+          const IOSAuthMessages(),
         ],
       );
       return Right(response);

@@ -5,5 +5,5 @@ import '../interfaces/either.dart';
 
 abstract class IConnectivityService {
   Future<Either<Exception, Unit>> isOnline();
-  StreamSubscription<ConnectivityStatus> get onConnectivityChanged;
+  StreamSubscription<List<ConnectivityStatus>> get onConnectivityChanged;
 }

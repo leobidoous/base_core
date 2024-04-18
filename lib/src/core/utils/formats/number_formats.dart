@@ -5,11 +5,12 @@ import '../../../presentation/extensions/string_extension.dart';
 class NumberFormat {
   static String toCurrency(
     dynamic value, {
+    String? locale = 'pt_BR',
     String? symbol = 'R\$',
     int? decimalDigits,
   }) {
     final format = nf.NumberFormat.currency(
-      locale: 'pt_BR',
+      locale: locale,
       symbol: symbol,
       decimalDigits: decimalDigits,
     ).format;

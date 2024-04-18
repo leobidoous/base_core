@@ -22,6 +22,6 @@ class ConnectivityService implements IConnectivityService {
   }
 
   @override
-  StreamSubscription<ConnectivityStatus> get onConnectivityChanged =>
+  StreamSubscription<List<ConnectivityStatus>> get onConnectivityChanged =>
       driver.onConnectivityChanged;
 }

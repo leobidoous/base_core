@@ -1,3 +1,12 @@
+## 1.0.9
+
+* Upgrade dependencies
+
+## 1.0.8
+
+* Fix IHttpDriver delete data
+* Add BuildContext to Nav.to.canPop
+
 ## 1.0.7
 
 * Update local auth service

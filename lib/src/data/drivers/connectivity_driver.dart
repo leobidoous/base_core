@@ -14,30 +14,31 @@ class ConnectivityDriver implements IConnectivityDriver {
   @override
   Future<bool> get isOnline async {
     final result = await connectivity.checkConnectivity();
-
-    return result == ConnectivityResult.wifi ||
-        result == ConnectivityResult.mobile;
+    return result.contains(ConnectivityResult.wifi) ||
+        result.contains(ConnectivityResult.mobile);
   }
 
   @override
-  StreamSubscription<ConnectivityStatus> get onConnectivityChanged {
+  StreamSubscription<List<ConnectivityStatus>> get onConnectivityChanged {
     return connectivity.onConnectivityChanged.map((event) {
-      switch (event) {
-        case ConnectivityResult.bluetooth:
-          return ConnectivityStatus.bluetooth;
-        case ConnectivityResult.wifi:
-          return ConnectivityStatus.wifi;
-        case ConnectivityResult.ethernet:
-          return ConnectivityStatus.ethernet;
-        case ConnectivityResult.mobile:
-          return ConnectivityStatus.mobile;
-        case ConnectivityResult.none:
-          return ConnectivityStatus.none;
-        case ConnectivityResult.vpn:
-          return ConnectivityStatus.vpn;
-        case ConnectivityResult.other:
-          return ConnectivityStatus.other;
-      }
+      return event.map((status) {
+        switch (status) {
+          case ConnectivityResult.bluetooth:
+            return ConnectivityStatus.bluetooth;
+          case ConnectivityResult.wifi:
+            return ConnectivityStatus.wifi;
+          case ConnectivityResult.ethernet:
+            return ConnectivityStatus.ethernet;
+          case ConnectivityResult.mobile:
+            return ConnectivityStatus.mobile;
+          case ConnectivityResult.none:
+            return ConnectivityStatus.none;
+          case ConnectivityResult.vpn:
+            return ConnectivityStatus.vpn;
+          case ConnectivityResult.other:
+            return ConnectivityStatus.other;
+        }
+      }).toList();
     }).listen((event) => event);
   }
 }

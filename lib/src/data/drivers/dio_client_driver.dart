@@ -103,6 +103,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
     try {
       final response = await client.delete(
         path,
+        data: data,
         queryParameters: queryParameters,
         options: _options(options),
       );

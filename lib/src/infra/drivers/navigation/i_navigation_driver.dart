@@ -120,7 +120,7 @@ abstract class INavigationDriver {
   ///
   /// Return true if route can pop
   ///
-  bool canPop();
+  bool canPop(BuildContext context);
 
   /// Pop the current route off the navigator and navigate to a route
   Future<T?> popAndPushNamed<T extends Object?, TO extends Object?>(

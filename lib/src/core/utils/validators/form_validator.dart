@@ -70,9 +70,8 @@ class FormValidators {
   }
 
   static String? invalidUppercase(String? input) {
-    if (input == null || input.isEmpty) {
-      return null;
-    }
+    if (input == null || input.isEmpty) return null;
+
     if (!RegExp('[a-z]').hasMatch(input)) {
       return 'Campo deve conter pelo menos um caractere maiúsculo.';
     }
@@ -80,9 +79,8 @@ class FormValidators {
   }
 
   static String? invalidLowercase(String? input) {
-    if (input == null || input.isEmpty) {
-      return null;
-    }
+    if (input == null || input.isEmpty) return null;
+
     if (!RegExp('[A-Z]').hasMatch(input)) {
       return 'Campo deve conter pelo menos um caractere minúsculo.';
     }
@@ -244,12 +242,9 @@ class FormValidators {
     return null;
   }
 
-  static String? isvalidPin(
-    String? input,
-  ) {
-    if (input == null || input.isEmpty) {
-      return 'Por favor, insira o código';
-    }
+  static String? isvalidPin(String? input) {
+    if (input == null || input.isEmpty) return null;
+
     final regex = RegExp(r'^[0-9]+$');
     if (!regex.hasMatch(input)) {
       return 'PIN inválido.';
@@ -258,7 +253,7 @@ class FormValidators {
   }
 
   static String? plate({String? input}) {
-    if (input == null || input.isEmpty) return 'Este campo não pode ser vazio.';
+    if (input == null || input.isEmpty) return null;
 
     final regx = RegExp('(^[A-Z]{3}-[0-9][0-9A-Z][0-9]{2})');
     if (!regx.hasMatch(input)) {
