@@ -1,3 +1,7 @@
+## 1.0.10
+
+* Fix firebase notifications save token method
+
 ## 1.0.9
 
 * Upgrade dependencies

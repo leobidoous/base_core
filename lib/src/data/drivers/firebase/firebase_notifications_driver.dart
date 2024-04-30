@@ -36,8 +36,9 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
         return Left(Exception('Token está vazio'));
       }
       return Right(token);
-    } catch (e) {
-      return Left(Exception(e));
+    } catch (exception, strackTrace) {
+      await crashLog.capture(exception: exception, stackTrace: strackTrace);
+      return Left(Exception(exception));
     }
   }
 
@@ -81,9 +82,10 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
       );
       debugPrint('FirebaseNotificationsDriver configurado com sucesso.');
       return Right(unit);
-    } catch (e) {
+    } catch (exception, strackTrace) {
+      await crashLog.capture(exception: exception, stackTrace: strackTrace);
       debugPrint('Erro ao configurar FirebaseNotificationsDriver.');
-      return Left(Exception(e));
+      return Left(Exception(exception));
     }
   }
 
@@ -117,23 +119,23 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
 
   @override
   Future<Either<Exception, Unit>> saveToken({required String userId}) async {
-    final response = await storageDriver.docGet(
-      collection: 'users',
-      doc: userId,
-    );
-    final token = await getToken();
-    return token.fold((l) => Left(l), (token) async {
-      return response.fold((l) async {
-        final response = await storageDriver.docSet(
-          collection: 'users',
-          id: userId,
-          data: {
-            'deviceTokens': [token],
-          },
-        );
-        return response.fold((l) => Left(l), (r) => Right(unit));
-      }, (r) async {
-        try {
+    try {
+      final response = await storageDriver.docGet(
+        collection: 'users',
+        doc: userId,
+      );
+      final token = await getToken();
+      return token.fold((l) => Left(l), (token) async {
+        return response.fold((l) async {
+          final response = await storageDriver.docSet(
+            collection: 'users',
+            id: userId,
+            data: {
+              'deviceTokens': [token],
+            },
+          );
+          return response.fold((l) => Left(l), (r) => Right(unit));
+        }, (r) async {
           final deviceTokens = List.from(
             ((r.data()?['deviceTokens'] as List?) ?? []),
             growable: true,
@@ -147,10 +149,14 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
             return response.fold((l) => Left(l), (r) => Right(unit));
           }
           return Right(unit);
-        } catch (e) {
-          return Left(Exception());
-        }
+        });
       });
-    });
+    } catch (exception, strackTrace) {
+      debugPrint('Error in saveToken');
+      await crashLog.capture(exception: exception, stackTrace: strackTrace);
+      return Left(
+        Exception('FirebaseNotificationsDriver.saveToken: $exception'),
+      );
+    }
   }
 }
