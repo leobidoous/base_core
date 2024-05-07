@@ -1,3 +1,7 @@
+## 1.0.11
+
+* Remove form validators
+
 ## 1.0.10
 
 * Fix firebase notifications save token method

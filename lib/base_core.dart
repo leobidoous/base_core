@@ -8,7 +8,6 @@ export 'package:base_core/src/core/utils/formats/date_formats.dart';
 export 'package:base_core/src/core/utils/formats/number_formats.dart';
 export 'package:base_core/src/core/utils/load_mock.dart';
 export 'package:base_core/src/core/utils/router_observer.dart';
-export 'package:base_core/src/core/utils/validators/form_validator.dart';
 export 'package:base_core/src/data/drivers/connectivity_driver.dart';
 export 'package:base_core/src/data/drivers/dio_client_driver.dart';
 export 'package:base_core/src/data/drivers/firebase/firebase_analytics_driver.dart';
