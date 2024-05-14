@@ -1,3 +1,7 @@
+## 1.0.12
+
+* Remove flutter_localizations
+
 ## 1.0.11
 
 * Remove form validators
