@@ -33,7 +33,7 @@ class ShareDriver extends IShareDriver {
   @override
   Future<Either<Exception, Unit>> shareText({required String text}) async {
     try {
-      await Share.shareWithResult(text);
+      await Share.share(text);
       return Right(unit);
     } catch (e, s) {
       return Left(Exception('$e $s'));
