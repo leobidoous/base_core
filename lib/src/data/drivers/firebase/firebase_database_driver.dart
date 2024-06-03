@@ -58,9 +58,14 @@ class FirebaseDatabaseDriver extends IFirebaseDatabaseDriver {
   @override
   Future<Either<Exception, DataSnapshot>> getDocument({
     required QuerySnapshotFiltersEntity filters,
-  }) {
-    // TODO: implement getDocument
-    throw UnimplementedError();
+  }) async {
+    try {
+      final ref = instance.ref(filters.collection);
+      return Right(await ref.get());
+    } catch (e, s) {
+      crashLog.capture(exception: e, stackTrace: s);
+      return Left(Exception('$e $s'));
+    }
   }
 
   @override
