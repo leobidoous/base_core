@@ -103,12 +103,14 @@ export 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 export 'package:dio/dio.dart' hide ResponseType;
 export 'package:equatable/equatable.dart' show EquatableMixin, Equatable;
 export 'package:firebase_analytics/firebase_analytics.dart'
-    show FirebaseAnalytics, FirebaseAnalyticsObserver;
+    show FirebaseAnalytics, FirebaseAnalyticsObserver, AnalyticsEventItem;
 export 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 export 'package:firebase_crashlytics/firebase_crashlytics.dart';
-export 'package:firebase_database/firebase_database.dart' show FirebaseDatabase;
+export 'package:firebase_database/firebase_database.dart'
+    show FirebaseDatabase, DataSnapshot, DatabaseEvent;
 export 'package:firebase_in_app_messaging/firebase_in_app_messaging.dart';
 export 'package:firebase_messaging/firebase_messaging.dart';
+export 'package:firebase_remote_config/firebase_remote_config.dart';
 export 'package:flutter_local_notifications/flutter_local_notifications.dart';
 export 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
 export 'package:package_info_plus/package_info_plus.dart';

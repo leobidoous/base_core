@@ -1,3 +1,8 @@
+## 1.2.1
+
+* Upgrade firebase dependencies
+* Update Firebase Database implementations
+
 ## 1.2.0
 
 * Upgrade dependencies
