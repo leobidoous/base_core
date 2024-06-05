@@ -106,7 +106,7 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
         iOS: iOSDetails,
       );
       await _localNotificationsPlugin.show(
-        notification.id,
+         notification.id,
         notification.title,
         notification.body,
         platformChannelSpecifics,

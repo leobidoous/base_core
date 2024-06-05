@@ -11,8 +11,20 @@ import '../../../infra/drivers/firebase/i_firebase_storage_driver.dart';
 import '../../../infra/drivers/i_local_notifications_driver.dart';
 import '../../../infra/models/received_notifications_model.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-  debugPrint('onMessageOpenedApp: $message');
+Future<void> _firebaseMessagingBackgroundHandler(
+  RemoteMessage message,
+  ILocalNotificationsDriver localNotificationsDriver,
+) async {
+  final notification = ReceivedNotificationModel(
+    id: message.messageId?.hashCode ?? message.hashCode,
+    title: message.notification?.title ?? '',
+    body: message.notification?.title ?? '',
+    payload: jsonEncode(message.data),
+  );
+
+  await localNotificationsDriver.showNotification(
+    notification: notification,
+  );
 }
 
 class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
@@ -45,7 +57,9 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
   @override
   Future<Either<Exception, Unit>> configure() async {
     try {
-      //Define as opções de apresentação para notificações da Apple
+      await localNotificationsDriver.init();
+
+      // Define as opções de apresentação para notificações da Apple
       //  quando recebidas em primeiro plano.
       instance.setForegroundNotificationPresentationOptions(
         alert: true,
@@ -78,7 +92,10 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
       });
 
       FirebaseMessaging.onBackgroundMessage(
-        _firebaseMessagingBackgroundHandler,
+        (message) => _firebaseMessagingBackgroundHandler(
+          message,
+          localNotificationsDriver,
+        ),
       );
       debugPrint('FirebaseNotificationsDriver configurado com sucesso.');
       return Right(unit);

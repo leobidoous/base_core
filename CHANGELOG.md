@@ -1,3 +1,7 @@
+## 1.2.2
+
+* Fix local notifications init
+
 ## 1.2.1
 
 * Upgrade firebase dependencies

@@ -3,7 +3,7 @@ description: Um package auxiliar para manter as dependências globais de um apli
 homepage: https://github.com/leobidoous
 repository: https://github.com/leobidoous/base_core
 issue_tracker: https://github.com/leobidoous/base_core/issues
-version: 1.2.1
+version: 1.2.2
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -43,7 +43,7 @@ dependencies:
   local_auth_android: ^1.0.38
   flutter_secure_storage: ^9.2.2
   mask_text_input_formatter: ^2.9.0
-  flutter_local_notifications: ^17.0.1
+  flutter_local_notifications: ^17.1.2
   currency_text_input_formatter: ^2.2.1
   #==============================================
 
