@@ -136,14 +136,14 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
 
   @override
   Future<Either<Exception, Unit>> saveToken({required String userId}) async {
-    try {
-      final response = await storageDriver.docGet(
-        collection: 'users',
-        doc: userId,
-      );
-      final token = await getToken();
-      return token.fold((l) => Left(l), (token) async {
-        return response.fold((l) async {
+    final response = await storageDriver.docGet(
+      collection: 'users',
+      doc: userId,
+    );
+    final token = await getToken();
+    return token.fold((l) => Left(l), (token) async {
+      return response.fold(
+        (l) async {
           final response = await storageDriver.docSet(
             collection: 'users',
             id: userId,
@@ -151,29 +151,30 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
               'deviceTokens': [token],
             },
           );
-          return response.fold((l) => Left(l), (r) => Right(unit));
-        }, (r) async {
-          final deviceTokens = List.from(
-            ((r.data()?['deviceTokens'] as List?) ?? []),
-            growable: true,
-          );
-          if (!deviceTokens.contains(token)) {
-            final response = await storageDriver.docSet(
-              collection: 'users/',
-              id: userId,
-              data: {'deviceTokens': deviceTokens..add(token)},
+          return response;
+        },
+        (r) async {
+          try {
+            final deviceTokens = List.from(
+              ((r.data()?['deviceTokens'] as List?) ?? []),
+              growable: true,
             );
-            return response.fold((l) => Left(l), (r) => Right(unit));
+            if (!deviceTokens.contains(token)) {
+              final response = await storageDriver.docSet(
+                collection: 'users/',
+                id: userId,
+                data: {'deviceTokens': deviceTokens..add(token)},
+              );
+              return response;
+            }
+            return Right(unit);
+          } catch (e, s) {
+            debugPrint('Error in saveToken');
+            await crashLog.capture(exception: e, stackTrace: s);
+            return Left(Exception('FirebaseNotificationsDriver.saveToken: $e'));
           }
-          return Right(unit);
-        });
-      });
-    } catch (exception, strackTrace) {
-      debugPrint('Error in saveToken');
-      await crashLog.capture(exception: exception, stackTrace: strackTrace);
-      return Left(
-        Exception('FirebaseNotificationsDriver.saveToken: $exception'),
+        },
       );
-    }
+    });
   }
 }

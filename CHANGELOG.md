@@ -1,3 +1,8 @@
+## 1.2.3
+
+* Fix firebase notification save foken function
+* Add Firebase Remote Config 
+
 ## 1.2.2
 
 * Fix local notifications init
