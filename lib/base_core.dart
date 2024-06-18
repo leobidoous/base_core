@@ -45,7 +45,7 @@ export 'package:base_core/src/domain/interfaces/either.dart';
 export 'package:base_core/src/domain/services/firebase/i_firebase_auth_service.dart';
 export 'package:base_core/src/domain/services/firebase/i_firebase_database_service.dart';
 export 'package:base_core/src/domain/services/firebase/i_firebase_notifications_service.dart';
-export 'package:base_core/src/domain/services/firebase/i_firebase_remote_service.dart';
+export 'package:base_core/src/domain/services/firebase/i_firebase_remote_config_service.dart';
 export 'package:base_core/src/domain/services/firebase/i_firebase_storage_service.dart';
 export 'package:base_core/src/domain/services/i_app_tracking_service.dart';
 export 'package:base_core/src/domain/services/i_connectivity_service.dart';
@@ -62,7 +62,7 @@ export 'package:base_core/src/infra/drivers/firebase/i_firebase_auth_driver.dart
 export 'package:base_core/src/infra/drivers/firebase/i_firebase_database_driver.dart';
 export 'package:base_core/src/infra/drivers/firebase/i_firebase_driver.dart';
 export 'package:base_core/src/infra/drivers/firebase/i_firebase_notifications_driver.dart';
-export 'package:base_core/src/infra/drivers/firebase/i_firebase_remote_driver.dart';
+export 'package:base_core/src/infra/drivers/firebase/i_firebase_remote_config_driver.dart';
 export 'package:base_core/src/infra/drivers/firebase/i_firebase_storage_driver.dart';
 export 'package:base_core/src/infra/drivers/i_app_tracking_driver.dart';
 export 'package:base_core/src/infra/drivers/i_connectivity_driver.dart';
@@ -89,7 +89,7 @@ export 'package:base_core/src/infra/services/firebase/firebase_auth_service.dart
 export 'package:base_core/src/infra/services/firebase/firebase_crashlytics_service.dart';
 export 'package:base_core/src/infra/services/firebase/firebase_database_service.dart';
 export 'package:base_core/src/infra/services/firebase/firebase_notifications_service.dart';
-export 'package:base_core/src/infra/services/firebase/firebase_remote_service.dart';
+export 'package:base_core/src/infra/services/firebase/firebase_remote_config_service.dart';
 export 'package:base_core/src/infra/services/firebase/firebase_storage_service.dart';
 export 'package:base_core/src/infra/services/local_auth_service.dart';
 export 'package:base_core/src/infra/services/local_notifications_service.dart';
@@ -107,7 +107,11 @@ export 'package:currency_text_input_formatter/currency_text_input_formatter.dart
 export 'package:dio/dio.dart' hide ResponseType;
 export 'package:equatable/equatable.dart' show EquatableMixin, Equatable;
 export 'package:firebase_analytics/firebase_analytics.dart'
-    show FirebaseAnalytics, FirebaseAnalyticsObserver, AnalyticsEventItem;
+    show
+        FirebaseAnalytics,
+        FirebaseAnalyticsObserver,
+        AnalyticsEventItem,
+        AnalyticsCallOptions;
 export 'package:firebase_auth/firebase_auth.dart' show FirebaseAuth;
 export 'package:firebase_crashlytics/firebase_crashlytics.dart';
 export 'package:firebase_database/firebase_database.dart'

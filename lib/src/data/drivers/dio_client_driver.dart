@@ -77,7 +77,8 @@ class DioClientDriver extends IHttpDriver with Disposable {
       contentType: options?.contentType,
       headers: {
         if (options != null && options.accessToken != null)
-          'Authorization': '${options.accessTokenType} ${options.accessToken}',
+          'Authorization':
+              '${options.accessTokenType} ${options.accessToken}'.trim(),
         if (options != null && options.apiKey != null)
           '${options.apiMapKey}': '${options.apiKey}',
         ...?options?.extraHeaders,

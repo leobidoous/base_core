@@ -5,5 +5,6 @@ abstract class IAppTrackingService {
   Future<Either<Exception, Unit>> init({Map<String, dynamic>? params});
   Future<Either<Exception, Unit>> createEvent({
     required LogEventEntity event,
+    Object? params,
   });
 }

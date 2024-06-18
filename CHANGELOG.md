@@ -1,3 +1,8 @@
+## 1.2.4
+
+* Update firebase analytics
+* Remove event log
+
 ## 1.2.3
 
 * Fix firebase notification save foken function

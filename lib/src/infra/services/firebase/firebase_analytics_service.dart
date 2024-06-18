@@ -3,7 +3,7 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import '../../../domain/entities/log_event_entity.dart';
 import '../../../domain/interfaces/either.dart';
 import '../../../domain/services/i_app_tracking_service.dart';
-import '../../drivers/i_app_tracking_driver.dart';
+import '../../drivers/firebase/i_firebase_analytics_driver.dart';
 
 class FirebaseAnalyticsService extends IAppTrackingService {
   FirebaseAnalyticsService({
@@ -12,20 +12,18 @@ class FirebaseAnalyticsService extends IAppTrackingService {
   });
 
   final FirebaseAnalytics analytics;
-  final IAppTrackingDriver firebaseAnalyticsDriver;
+  final IFirebaseAnalyticsDriver firebaseAnalyticsDriver;
 
   @override
   Future<Either<Exception, Unit>> init({Map<String, dynamic>? params}) async {
-    try {
-      FirebaseAnalyticsObserver(analytics: analytics);
-      return Right(unit);
-    } catch (e) {
-      return Left(Exception(e));
-    }
+    return firebaseAnalyticsDriver.init(params: params);
   }
 
   @override
-  Future<Either<Exception, Unit>> createEvent({required LogEventEntity event}) {
-    return firebaseAnalyticsDriver.createEvent(event: event);
+  Future<Either<Exception, Unit>> createEvent({
+    required LogEventEntity event,
+    Object? params,
+  }) {
+    return firebaseAnalyticsDriver.createEvent(event: event, params: params);
   }
 }

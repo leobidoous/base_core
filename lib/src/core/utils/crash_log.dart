@@ -3,10 +3,9 @@ import 'package:flutter/foundation.dart';
 import '../../domain/services/i_crash_log_service.dart';
 
 class CrashLog {
-  CrashLog({this.firebase, this.sentry});
+  CrashLog({this.logs = const []});
 
-  final ICrashLogService? firebase;
-  final ICrashLogService? sentry;
+  final List<ICrashLogService> logs;
 
   Future<void> capture({
     required exception,
@@ -17,18 +16,14 @@ class CrashLog {
     debugPrint('---------------------------------');
     debugPrint('Exception: $exception');
     debugPrint('---------------------------------');
-    await Future.wait([
-      if (firebase != null)
-        firebase!.setError(
+    await Future.wait(
+      logs.map(
+        (log) => log.setError(
           exception: exception,
           stackTrace: error,
           fatal: false,
         ),
-      if (sentry != null)
-        sentry!.setError(
-          exception: exception,
-          stackTrace: error,
-        ),
-    ]);
+      ),
+    );
   }
 }
