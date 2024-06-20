@@ -1,3 +1,7 @@
+## 1.2.5
+
+* Update fdependencies versions
+
 ## 1.2.4
 
 * Update firebase analytics

@@ -4,6 +4,7 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../core/utils/crash_log.dart';
+import '../../../domain/entities/received_notifications_entity.dart';
 import '../../../domain/interfaces/either.dart';
 import '../../../infra/drivers/firebase/i_firebase_notifications_driver.dart'
     show IFirebaseNotificationsDriver;
@@ -13,7 +14,7 @@ import '../../../infra/models/received_notifications_model.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(
   RemoteMessage message,
-  ILocalNotificationsDriver localNotificationsDriver,
+  Function(ReceivedNotificationEntity)? onBackgroundMessage,
 ) async {
   final notification = ReceivedNotificationModel(
     id: message.messageId?.hashCode ?? message.hashCode,
@@ -22,9 +23,8 @@ Future<void> _firebaseMessagingBackgroundHandler(
     payload: jsonEncode(message.data),
   );
 
-  await localNotificationsDriver.showNotification(
-    notification: notification,
-  );
+  debugPrint('onBackgroundMessage: $notification');
+  onBackgroundMessage?.call(notification);
 }
 
 class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
@@ -55,7 +55,11 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
   }
 
   @override
-  Future<Either<Exception, Unit>> configure() async {
+  Future<Either<Exception, Unit>> configure({
+    Function(ReceivedNotificationEntity)? onMessage,
+    Function(ReceivedNotificationEntity)? onMessageOpenedApp,
+    Function(ReceivedNotificationEntity)? onBackgroundMessage,
+  }) async {
     try {
       await localNotificationsDriver.init();
 
@@ -75,9 +79,9 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
           payload: jsonEncode(message.data),
         );
 
-        await localNotificationsDriver.showNotification(
-          notification: notification,
-        );
+        debugPrint('onMessage: $notification');
+        localNotificationsDriver.showNotification(notification: notification);
+        onMessage?.call(notification);
       });
 
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
@@ -89,14 +93,16 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
         );
 
         debugPrint('onMessageOpenedApp: $notification');
+        onMessageOpenedApp?.call(notification);
       });
 
       FirebaseMessaging.onBackgroundMessage(
-        (message) => _firebaseMessagingBackgroundHandler(
+        (message) async => await _firebaseMessagingBackgroundHandler(
           message,
-          localNotificationsDriver,
+          onBackgroundMessage,
         ),
       );
+
       debugPrint('FirebaseNotificationsDriver configurado com sucesso.');
       return Right(unit);
     } catch (exception, strackTrace) {
@@ -112,6 +118,7 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
   }) async {
     try {
       await instance.subscribeToTopic(topic);
+      debugPrint('Subscribed in topic: $topic');
       return Right(unit);
     } catch (exception, strackTrace) {
       await crashLog.capture(exception: exception, stackTrace: strackTrace);
@@ -126,6 +133,7 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
   }) async {
     try {
       await instance.unsubscribeFromTopic(topic);
+      debugPrint('Unsubscribed from topic: $topic');
       return Right(unit);
     } catch (exception, strackTrace) {
       await crashLog.capture(exception: exception, stackTrace: strackTrace);
@@ -169,9 +177,9 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
             }
             return Right(unit);
           } catch (e, s) {
-            debugPrint('Error in saveToken');
+            debugPrint('FirebaseNotificationsDriver.saveToken: $e');
             await crashLog.capture(exception: e, stackTrace: s);
-            return Left(Exception('FirebaseNotificationsDriver.saveToken: $e'));
+            return Left(Exception('$e'));
           }
         },
       );

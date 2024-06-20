@@ -1,3 +1,4 @@
+import '../../../domain/entities/received_notifications_entity.dart';
 import '../../../domain/interfaces/either.dart';
 import '../../../domain/services/firebase/i_firebase_notifications_service.dart';
 import '../../drivers/firebase/i_firebase_notifications_driver.dart';
@@ -8,8 +9,16 @@ class FirebaseNotificationsService extends IFirebaseNotificationsService {
   final IFirebaseNotificationsDriver firebaseNotificationsDriver;
 
   @override
-  Future<Either<Exception, Unit>> configure() {
-    return firebaseNotificationsDriver.configure();
+  Future<Either<Exception, Unit>> configure({
+    Function(ReceivedNotificationEntity)? onMessage,
+    Function(ReceivedNotificationEntity)? onMessageOpenedApp,
+    Function(ReceivedNotificationEntity)? onBackgroundMessage,
+  }) {
+    return firebaseNotificationsDriver.configure(
+      onMessage: onMessage,
+      onMessageOpenedApp: onMessageOpenedApp,
+      onBackgroundMessage: onBackgroundMessage,
+    );
   }
 
   @override

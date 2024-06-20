@@ -21,7 +21,7 @@ class CrashLog {
         (log) => log.setError(
           exception: exception,
           stackTrace: error,
-          fatal: false,
+          fatal: fatal,
         ),
       ),
     );

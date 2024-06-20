@@ -1,7 +1,12 @@
+import '../../entities/received_notifications_entity.dart';
 import '../../interfaces/either.dart';
 
 abstract class IFirebaseNotificationsService {
-  Future<Either<Exception, Unit>> configure();
+  Future<Either<Exception, Unit>> configure({
+    Function(ReceivedNotificationEntity)? onMessage,
+    Function(ReceivedNotificationEntity)? onMessageOpenedApp,
+    Function(ReceivedNotificationEntity)? onBackgroundMessage,
+  });
   Future<Either<Exception, Unit>> subscribeToTopic({
     required String topic,
   });
