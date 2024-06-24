@@ -2,9 +2,9 @@ import 'package:flutter/foundation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../domain/interfaces/either.dart';
-import '../../infra/drivers/i_sentry_crash_log_driver.dart';
+import '../../infra/drivers/i_sentry_crashlytics_driver.dart';
 
-class SentryCrashlyticsDriver extends ISentryCrashLogDriver {
+class SentryCrashlyticsDriver extends ISentryCrashlyticsDriver {
   SentryCrashlyticsDriver();
 
   @override

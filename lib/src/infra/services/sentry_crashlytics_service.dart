@@ -2,17 +2,17 @@ import 'package:flutter/foundation.dart';
 import 'package:sentry_flutter/sentry_flutter.dart';
 
 import '../../domain/interfaces/either.dart';
-import '../../domain/services/i_sentry_crash_log_service.dart';
-import '../drivers/i_sentry_crash_log_driver.dart';
+import '../../domain/services/i_sentry_crashlytics_service.dart';
+import '../drivers/i_sentry_crashlytics_driver.dart';
 
-class SentryCrashLogService extends ISentryCrashLogService {
-  SentryCrashLogService({
+class SentryCrashlyticsService extends ISentryCrashlyticsService {
+  SentryCrashlyticsService({
     required this.dnsKey,
-    required this.sentryCrashLogDriver,
+    required this.sentryCrashlyticsDriver,
   });
 
   final String dnsKey;
-  final ISentryCrashLogDriver sentryCrashLogDriver;
+  final ISentryCrashlyticsDriver sentryCrashlyticsDriver;
 
   @override
   Future<Either<Exception, Unit>> init({Map<String, dynamic>? params}) async {
@@ -47,7 +47,7 @@ class SentryCrashLogService extends ISentryCrashLogService {
     StackTrace? stackTrace,
     bool fatal = false,
   }) {
-    return sentryCrashLogDriver.setError(
+    return sentryCrashlyticsDriver.setError(
       exception: exception,
       stackTrace: stackTrace,
       fatal: fatal,
@@ -58,11 +58,11 @@ class SentryCrashLogService extends ISentryCrashLogService {
   Future<Either<Exception, Unit>> identify({
     required Map<String, dynamic> user,
   }) {
-    return sentryCrashLogDriver.identify(user: user);
+    return sentryCrashlyticsDriver.identify(user: user);
   }
 
   @override
   Future<Either<Exception, Unit>> unidentify() {
-    return sentryCrashLogDriver.unidentify();
+    return sentryCrashlyticsDriver.unidentify();
   }
 }

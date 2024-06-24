@@ -9,15 +9,15 @@ import '../../../domain/interfaces/either.dart';
 import '../../../infra/drivers/firebase/i_firebase_analytics_driver.dart';
 
 class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
-  FirebaseAnalyticsDriver({required this.analytics, required this.crashLog});
+  FirebaseAnalyticsDriver({required this.instance, required this.crashLog});
 
-  final FirebaseAnalytics analytics;
+  final FirebaseAnalytics instance;
   final CrashLog crashLog;
 
   @override
   Future<Either<Exception, Unit>> init({Map<String, dynamic>? params}) async {
     try {
-      FirebaseAnalyticsObserver(analytics: analytics);
+      FirebaseAnalyticsObserver(analytics: instance);
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.init: $exception');
@@ -32,7 +32,7 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     Object? params,
   }) async {
     try {
-      await analytics.logEvent(
+      await instance.logEvent(
         name: event.name,
         callOptions: AnalyticsCallOptions(global: true),
         parameters: {'json': jsonEncode(event.parameters)},
@@ -41,6 +41,25 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.createEvent: $exception');
+      crashLog.capture(exception: exception, stackTrace: stackTrace);
+      return Left(Exception(exception));
+    }
+  }
+
+  @override
+  Future<Either<Exception, Unit>> login({
+    String? loginMethod,
+    required String name,
+    required String value,
+    Map<String, Object>? params,
+  }) async {
+    try {
+      await instance.logLogin(loginMethod: loginMethod, parameters: params);
+      await instance.setUserProperty(name: name, value: value);
+      debugPrint('FirebaseAnalyticsDriver login efetuado com sucesso.');
+      return Right(unit);
+    } catch (exception, stackTrace) {
+      debugPrint('FirebaseAnalyticsDriver.login: $exception');
       crashLog.capture(exception: exception, stackTrace: stackTrace);
       return Left(Exception(exception));
     }

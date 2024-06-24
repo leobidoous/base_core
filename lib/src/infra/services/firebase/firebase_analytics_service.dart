@@ -1,17 +1,11 @@
-import 'package:firebase_analytics/firebase_analytics.dart';
-
 import '../../../domain/entities/log_event_entity.dart';
 import '../../../domain/interfaces/either.dart';
-import '../../../domain/services/i_app_tracking_service.dart';
+import '../../../domain/services/firebase/i_firebase_analytics_service.dart';
 import '../../drivers/firebase/i_firebase_analytics_driver.dart';
 
-class FirebaseAnalyticsService extends IAppTrackingService {
-  FirebaseAnalyticsService({
-    required this.analytics,
-    required this.firebaseAnalyticsDriver,
-  });
+class FirebaseAnalyticsService extends IFirebaseAnalyticsService {
+  FirebaseAnalyticsService({required this.firebaseAnalyticsDriver});
 
-  final FirebaseAnalytics analytics;
   final IFirebaseAnalyticsDriver firebaseAnalyticsDriver;
 
   @override
@@ -25,5 +19,20 @@ class FirebaseAnalyticsService extends IAppTrackingService {
     Object? params,
   }) {
     return firebaseAnalyticsDriver.createEvent(event: event, params: params);
+  }
+
+  @override
+  Future<Either<Exception, Unit>> login({
+    String? loginMethod,
+    required String name,
+    required String value,
+    Map<String, Object>? params,
+  }) {
+    return firebaseAnalyticsDriver.login(
+      name: name,
+      value: value,
+      loginMethod: loginMethod,
+      params: params,
+    );
   }
 }

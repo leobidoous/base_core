@@ -52,15 +52,25 @@ abstract class CustomController<E, S> extends ValueNotifier<S>
     }
   }
 
-  Future<void> execute(
+  Future<Either<E, S>> execute(
     Future<Either<E, S>> Function() function, {
     force = false,
   }) async {
     clearError();
     setLoading(true);
-    await function().then((value) {
-      return value.fold((l) => setError(l), (r) => update(r, force: force));
-    }).whenComplete(() => setLoading(false));
+    final response = await function();
+    response.fold(
+      (l) {
+        setError(l);
+        return Left(l);
+      },
+      (r) {
+        update(r, force: force);
+        return Right(r);
+      },
+    );
+    setLoading(false);
+    return response;
   }
 
   @override

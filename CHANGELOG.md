@@ -1,6 +1,10 @@
+## 1.2.6
+
+* Update firebase analytics implementations
+
 ## 1.2.5
 
-* Update fdependencies versions
+* Update dependencies versions
 
 ## 1.2.4
 
