@@ -26,10 +26,9 @@ abstract class CustomController<E, S> extends ValueNotifier<S>
   }
 
   void clearError({bool update = false}) {
+    if (_error.value == null) return;
     _error.value = null;
-    if (update) {
-      notifyListeners();
-    }
+    if (update) notifyListeners();
   }
 
   bool get isLoading => _loading.value;

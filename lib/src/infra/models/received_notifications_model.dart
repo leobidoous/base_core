@@ -39,6 +39,7 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
         'body': body,
         'payload': payload,
       });
+
   ReceivedNotificationEntity get toEntity => this;
 
   @override

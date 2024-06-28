@@ -3,10 +3,6 @@ import 'dart:developer' show log;
 import 'package:flutter/material.dart' show NavigatorObserver, Route;
 
 class RouterObserver extends NavigatorObserver {
-  factory RouterObserver() => _instance;
-
-  RouterObserver._internal();
-  static final RouterObserver _instance = RouterObserver._internal();
 
   final List<Route<dynamic>?> _routeStack = List.empty(growable: true);
 

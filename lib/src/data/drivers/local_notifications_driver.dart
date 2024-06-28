@@ -38,9 +38,9 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
         '@mipmap/ic_launcher',
       );
       final settingsIOS = DarwinInitializationSettings(
-        requestAlertPermission: true,
-        requestBadgePermission: true,
-        requestSoundPermission: true,
+        requestAlertPermission: false,
+        requestBadgePermission: false,
+        requestSoundPermission: false,
         onDidReceiveLocalNotification: (
           int id,
           String? title,
@@ -106,9 +106,9 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
         iOS: iOSDetails,
       );
       await _localNotificationsPlugin.show(
-         notification.id,
-        notification.title,
+        notification.id,
         notification.body,
+        notification.title,
         platformChannelSpecifics,
         payload: notification.payload,
       );

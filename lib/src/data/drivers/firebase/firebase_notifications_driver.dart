@@ -12,10 +12,11 @@ import '../../../infra/drivers/firebase/i_firebase_storage_driver.dart';
 import '../../../infra/drivers/i_local_notifications_driver.dart';
 import '../../../infra/models/received_notifications_model.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler(
-  RemoteMessage message,
+Future<void> _firebaseMessagingBackgroundHandler({
+  required RemoteMessage message,
   Function(ReceivedNotificationEntity)? onBackgroundMessage,
-) async {
+  required ILocalNotificationsDriver localNotificationsDriver,
+}) async {
   final notification = ReceivedNotificationModel(
     id: message.messageId?.hashCode ?? message.hashCode,
     title: message.notification?.title ?? '',
@@ -23,8 +24,11 @@ Future<void> _firebaseMessagingBackgroundHandler(
     payload: jsonEncode(message.data),
   );
 
-  debugPrint('onBackgroundMessage: $notification');
-  onBackgroundMessage?.call(notification);
+  if (onBackgroundMessage != null) {
+    onBackgroundMessage(notification);
+  } else {
+    localNotificationsDriver.showNotification(notification: notification);
+  }
 }
 
 class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
@@ -61,11 +65,9 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
     Function(ReceivedNotificationEntity)? onBackgroundMessage,
   }) async {
     try {
-      await localNotificationsDriver.init();
-
       // Define as opções de apresentação para notificações da Apple
       //  quando recebidas em primeiro plano.
-      instance.setForegroundNotificationPresentationOptions(
+      await instance.setForegroundNotificationPresentationOptions(
         alert: true,
         badge: true,
         sound: true,
@@ -79,9 +81,11 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
           payload: jsonEncode(message.data),
         );
 
-        debugPrint('onMessage: $notification');
-        localNotificationsDriver.showNotification(notification: notification);
-        onMessage?.call(notification);
+        if (onMessage != null) {
+          onMessage(notification);
+        } else {
+          localNotificationsDriver.showNotification(notification: notification);
+        }
       });
 
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
@@ -92,14 +96,18 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
           payload: jsonEncode(message.data),
         );
 
-        debugPrint('onMessageOpenedApp: $notification');
-        onMessageOpenedApp?.call(notification);
+        if (onMessageOpenedApp != null) {
+          onMessageOpenedApp(notification);
+        } else {
+          localNotificationsDriver.showNotification(notification: notification);
+        }
       });
 
       FirebaseMessaging.onBackgroundMessage(
         (message) async => await _firebaseMessagingBackgroundHandler(
-          message,
-          onBackgroundMessage,
+          message: message,
+          onBackgroundMessage: onBackgroundMessage,
+          localNotificationsDriver: localNotificationsDriver,
         ),
       );
 

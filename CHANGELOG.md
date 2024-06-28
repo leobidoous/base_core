@@ -1,3 +1,11 @@
+## 1.2.8
+
+* Update firebase notifications 
+
+## 1.2.7
+
+* Add CustomRouterObserver 
+
 ## 1.2.6
 
 * Update firebase analytics implementations
