@@ -5,7 +5,6 @@ abstract class IFirebaseNotificationsService {
   Future<Either<Exception, Unit>> configure({
     Function(ReceivedNotificationEntity)? onMessage,
     Function(ReceivedNotificationEntity)? onMessageOpenedApp,
-    Function(ReceivedNotificationEntity)? onBackgroundMessage,
   });
   Future<Either<Exception, Unit>> subscribeToTopic({
     required String topic,

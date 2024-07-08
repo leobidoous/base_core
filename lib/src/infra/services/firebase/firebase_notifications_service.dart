@@ -12,12 +12,10 @@ class FirebaseNotificationsService extends IFirebaseNotificationsService {
   Future<Either<Exception, Unit>> configure({
     Function(ReceivedNotificationEntity)? onMessage,
     Function(ReceivedNotificationEntity)? onMessageOpenedApp,
-    Function(ReceivedNotificationEntity)? onBackgroundMessage,
   }) {
     return firebaseNotificationsDriver.configure(
       onMessage: onMessage,
       onMessageOpenedApp: onMessageOpenedApp,
-      onBackgroundMessage: onBackgroundMessage,
     );
   }
 

@@ -12,25 +12,6 @@ import '../../../infra/drivers/firebase/i_firebase_storage_driver.dart';
 import '../../../infra/drivers/i_local_notifications_driver.dart';
 import '../../../infra/models/received_notifications_model.dart';
 
-Future<void> _firebaseMessagingBackgroundHandler({
-  required RemoteMessage message,
-  Function(ReceivedNotificationEntity)? onBackgroundMessage,
-  required ILocalNotificationsDriver localNotificationsDriver,
-}) async {
-  final notification = ReceivedNotificationModel(
-    id: message.messageId?.hashCode ?? message.hashCode,
-    title: message.notification?.title ?? '',
-    body: message.notification?.title ?? '',
-    payload: jsonEncode(message.data),
-  );
-
-  if (onBackgroundMessage != null) {
-    onBackgroundMessage(notification);
-  } else {
-    localNotificationsDriver.showNotification(notification: notification);
-  }
-}
-
 class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
   FirebaseNotificationsDriver({
     required this.instance,
@@ -62,11 +43,10 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
   Future<Either<Exception, Unit>> configure({
     Function(ReceivedNotificationEntity)? onMessage,
     Function(ReceivedNotificationEntity)? onMessageOpenedApp,
-    Function(ReceivedNotificationEntity)? onBackgroundMessage,
   }) async {
     try {
       // Define as opções de apresentação para notificações da Apple
-      //  quando recebidas em primeiro plano.
+      // quando recebidas em primeiro plano.
       await instance.setForegroundNotificationPresentationOptions(
         alert: true,
         badge: true,
@@ -102,14 +82,6 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
           localNotificationsDriver.showNotification(notification: notification);
         }
       });
-
-      FirebaseMessaging.onBackgroundMessage(
-        (message) async => await _firebaseMessagingBackgroundHandler(
-          message: message,
-          onBackgroundMessage: onBackgroundMessage,
-          localNotificationsDriver: localNotificationsDriver,
-        ),
-      );
 
       debugPrint('FirebaseNotificationsDriver configurado com sucesso.');
       return Right(unit);

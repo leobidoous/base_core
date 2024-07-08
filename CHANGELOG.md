@@ -1,3 +1,7 @@
+## 1.2.9
+
+* Fix firebase notifications 
+
 ## 1.2.8
 
 * Update firebase notifications 

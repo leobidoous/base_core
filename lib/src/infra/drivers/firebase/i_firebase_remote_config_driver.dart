@@ -1,4 +1,3 @@
-
 import '../../../domain/interfaces/either.dart';
 
 abstract class IFirebaseRemoteConfigDriver {

@@ -3,7 +3,7 @@ description: Um package auxiliar para manter as dependências globais de um apli
 homepage: https://github.com/leobidoous
 repository: https://github.com/leobidoous/base_core
 issue_tracker: https://github.com/leobidoous/base_core/issues
-version: 1.2.8
+version: 1.2.9
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
@@ -13,16 +13,16 @@ dependencies:
     sdk: flutter
 
   #===== Firebase depedencies ===================
-  firebase_auth: ^5.1.0
-  firebase_core: ^3.1.0
-  cloud_firestore: ^5.0.1
-  firebase_storage: ^12.0.1
-  firebase_database: ^11.0.1
-  firebase_messaging: ^15.0.1
-  firebase_analytics: ^11.0.1
-  firebase_crashlytics: ^4.0.1
-  firebase_remote_config: ^5.0.1
-  firebase_in_app_messaging: ^0.8.0+1
+  firebase_auth: ^5.1.1
+  firebase_core: ^3.1.1
+  cloud_firestore: ^5.0.2
+  firebase_storage: ^12.1.0
+  firebase_database: ^11.0.2
+  firebase_messaging: ^15.0.2
+  firebase_analytics: ^11.1.0
+  firebase_crashlytics: ^4.0.2
+  firebase_remote_config: ^5.0.2
+  firebase_in_app_messaging: ^0.8.0+2
   #==============================================
 
   #===== New dependecies for new app flutter =====
