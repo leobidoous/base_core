@@ -1,3 +1,7 @@
+## 1.2.10
+
+* Change firebase analytics events 
+
 ## 1.2.9
 
 * Fix firebase notifications 

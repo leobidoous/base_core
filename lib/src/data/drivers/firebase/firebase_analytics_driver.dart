@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 
@@ -26,6 +24,16 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     }
   }
 
+  Map<String, Object> _convertToMapStringObject(Map params) {
+    return params.map((key, value) {
+      if (value is String || value is num) {
+        return MapEntry(key, value);
+      } else {
+        return MapEntry(key, value.toString());
+      }
+    });
+  }
+
   @override
   Future<Either<Exception, Unit>> createEvent({
     required LogEventEntity event,
@@ -35,7 +43,7 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
       await instance.logEvent(
         name: event.name,
         callOptions: AnalyticsCallOptions(global: true),
-        parameters: {'json': jsonEncode(event.parameters)},
+        parameters: _convertToMapStringObject(event.parameters ?? {}),
       );
       debugPrint('>>> Analytics Event: ${event.name} <<<');
       return Right(unit);

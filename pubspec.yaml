@@ -3,7 +3,7 @@ description: Um package auxiliar para manter as dependências globais de um apli
 homepage: https://github.com/leobidoous
 repository: https://github.com/leobidoous/base_core
 issue_tracker: https://github.com/leobidoous/base_core/issues
-version: 1.2.9
+version: 1.2.10
 
 environment:
   sdk: '>=3.4.0 <4.0.0'
