@@ -10,7 +10,7 @@ class LoadMock {
     Map<String, dynamic> Function(dynamic data)? saveInLocalDatabase,
   }) async {
     try {
-      final data = await rootBundle.loadString('assets/mocks/$path');
+      final data = await rootBundle.loadString(path);
       var result = jsonDecode(data);
 
       if (saveInLocalDatabase != null) {

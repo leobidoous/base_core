@@ -1,3 +1,11 @@
+## 1.2.12
+
+* Upgrade dependencies
+
+## 1.2.11
+
+* Fix load mock util
+
 ## 1.2.10
 
 * Change firebase analytics events 
