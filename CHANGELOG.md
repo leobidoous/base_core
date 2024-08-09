@@ -1,3 +1,9 @@
+## 1.2.13
+
+* Add unecessary reload in update in custom controller
+* Remove currency formatter dependency
+* Fix string extension: tryParseCurrencyToDouble
+
 ## 1.2.12
 
 * Upgrade dependencies

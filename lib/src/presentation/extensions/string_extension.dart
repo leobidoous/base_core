@@ -1,14 +1,18 @@
-/// String extensions for digital account
 extension StringExt on String {
   double? get tryParseToDouble {
     return double.tryParse(toString().replaceFirst(',', '.'));
   }
 
   double? get tryParseCurrencyToDouble {
-    if (split('.').length == 2 && !contains(',')) {
-      return double.tryParse(this);
+    String value = replaceAll(RegExp('[^0-9,.]'), '');
+    if (value.split('.').length == 2 && !value.contains(',')) {
+      return double.tryParse(value);
+    } else if (value.split(',').length > 2 && value.contains('.')) {
+      return double.tryParse(value.replaceAll(',', ''));
     }
-    return double.tryParse(replaceAll('.', '').replaceAll(',', '.'));
+    value = value.replaceAll('.', '');
+    value = value.replaceAll(',', '.');
+    return double.tryParse(value);
   }
 
   int? get tryParseToInt => int.tryParse(this);

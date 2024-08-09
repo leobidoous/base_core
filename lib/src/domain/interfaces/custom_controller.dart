@@ -32,10 +32,10 @@ abstract class CustomController<E, S> extends ValueNotifier<S>
   }
 
   bool get isLoading => _loading.value;
-  void setLoading(bool value) {
+  void setLoading(bool value, {bool update = true}) {
     if (!_wasDisposed) {
       _loading.value = value;
-      notifyListeners();
+      if (update) notifyListeners();
     }
   }
 
@@ -43,7 +43,7 @@ abstract class CustomController<E, S> extends ValueNotifier<S>
   void update(S state, {force = false}) {
     if (!_wasDisposed) {
       clearError();
-      setLoading(false);
+      setLoading(false, update: false);
       if (value != state || force) {
         value = state;
         notifyListeners();

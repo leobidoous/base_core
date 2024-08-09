@@ -107,7 +107,6 @@ export 'package:base_core/src/presentation/observers/custom_router_observer.dart
 export 'package:base_core/src/presentation/widgets/custom_listenable_builder.dart';
 export 'package:cloud_firestore/cloud_firestore.dart' show FirebaseFirestore;
 export 'package:connectivity_plus/connectivity_plus.dart';
-export 'package:currency_text_input_formatter/currency_text_input_formatter.dart';
 export 'package:dio/dio.dart' hide ResponseType;
 export 'package:equatable/equatable.dart' show EquatableMixin, Equatable;
 export 'package:firebase_analytics/firebase_analytics.dart'
