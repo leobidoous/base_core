@@ -8,6 +8,11 @@ class FirebaseRemoteConfigService extends IFirebaseRemoteConfigService {
   final IFirebaseRemoteConfigDriver firebaseRemoteConfigDriver;
 
   @override
+  Future<Either<Exception, Unit>> init() {
+    return firebaseRemoteConfigDriver.init();
+  }
+
+  @override
   Future<Either<Exception, Object>> getAll() {
     return firebaseRemoteConfigDriver.getAll();
   }

@@ -1,6 +1,7 @@
 import '../../../domain/interfaces/either.dart';
 
 abstract class IFirebaseRemoteConfigDriver {
+  Future<Either<Exception, Unit>> init();
   Future<Either<Exception, Object>> getAll();
   Future<Either<Exception, double>> getDouble({required String key});
   Future<Either<Exception, int>> getInt({required String key});

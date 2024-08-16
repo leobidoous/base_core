@@ -1,3 +1,7 @@
+## 1.3.0
+
+* Upgrade version
+
 ## 1.2.13
 
 * Add unecessary reload in update in custom controller

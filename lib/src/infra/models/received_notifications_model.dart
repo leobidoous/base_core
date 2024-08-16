@@ -11,14 +11,25 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
     required super.title,
     required super.body,
     required super.payload,
+    super.senderId,
+    super.category,
+    super.collapseKey,
+    super.contentAvailable,
+    super.from,
+    super.messageId,
+    super.messageType,
+    super.mutableContent,
+    super.sentTime,
+    super.threadId,
+    super.ttl,
   });
 
   factory ReceivedNotificationModel.fromMap(Map<String, dynamic> map) {
     return ReceivedNotificationModel(
+      id: int.tryParse(map['id'].toString()) ?? 0,
       title: map['title'],
       body: map['body'],
       payload: map['payload'],
-      id: int.tryParse(map['id'].toString()) ?? 0,
     );
   }
 
@@ -34,16 +45,43 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
   }
 
   String get toJson => json.encode({
-        'id': id,
-        'title': title,
-        'body': body,
-        'payload': payload,
+        id,
+        title,
+        body,
+        payload,
+        senderId,
+        category,
+        collapseKey,
+        contentAvailable,
+        from,
+        messageId,
+        messageType,
+        mutableContent,
+        sentTime,
+        threadId,
+        ttl,
       });
 
   ReceivedNotificationEntity get toEntity => this;
 
   @override
-  List<Object?> get props => [id, title, body, payload];
+  List<Object?> get props => [
+        id,
+        title,
+        body,
+        payload,
+        senderId,
+        category,
+        collapseKey,
+        contentAvailable,
+        from,
+        messageId,
+        messageType,
+        mutableContent,
+        sentTime,
+        threadId,
+        ttl,
+      ];
 
   @override
   bool? get stringify => true;

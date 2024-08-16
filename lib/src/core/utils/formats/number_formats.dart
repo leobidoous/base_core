@@ -15,6 +15,9 @@ class NumberFormat {
       decimalDigits: decimalDigits,
     ).format;
     try {
+      if (value.toString().contains('e')) {
+        return format(value);
+      }
       return format(value.toString().tryParseCurrencyToDouble).trim();
     } catch (e) {
       return format(0.0);

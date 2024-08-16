@@ -11,6 +11,25 @@ class FirebaseRemoteConfigDriver extends IFirebaseRemoteConfigDriver {
   final CrashLog crashLog;
 
   @override
+  Future<Either<Exception, Unit>> init() async {
+    try {
+      await instance.setConfigSettings(
+        RemoteConfigSettings(
+          fetchTimeout: const Duration(seconds: 60),
+          minimumFetchInterval: const Duration(minutes: 0),
+        ),
+      );
+      await instance.ensureInitialized();
+      await instance.activate();
+      await instance.fetchAndActivate();
+      return Right(unit);
+    } catch (e, s) {
+      crashLog.capture(exception: e, stackTrace: s);
+      return Left(Exception('$e $s'));
+    }
+  }
+
+  @override
   Future<Either<Exception, Object>> getAll() async {
     try {
       return Right(instance.getAll());

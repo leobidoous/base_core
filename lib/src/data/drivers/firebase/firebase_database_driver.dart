@@ -15,9 +15,15 @@ class FirebaseDatabaseDriver extends IFirebaseDatabaseDriver {
   Future<Either<Exception, Unit>> docDelete({
     required String document,
     required String id,
-  }) {
-    // TODO: implement docDelete
-    throw UnimplementedError();
+  }) async {
+    try {
+      final ref = instance.ref(document).child(document);
+      await ref.remove();
+      return Right(unit);
+    } catch (e, s) {
+      crashLog.capture(exception: e, stackTrace: s);
+      return Left(Exception('$e $s'));
+    }
   }
 
   @override
@@ -40,9 +46,15 @@ class FirebaseDatabaseDriver extends IFirebaseDatabaseDriver {
     required Map<String, dynamic> data,
     required String document,
     String? id,
-  }) {
-    // TODO: implement docSet
-    throw UnimplementedError();
+  }) async {
+    try {
+      final ref = instance.ref(document).child(document);
+      await ref.set(data);
+      return Right(unit);
+    } catch (e, s) {
+      crashLog.capture(exception: e, stackTrace: s);
+      return Left(Exception('$e $s'));
+    }
   }
 
   @override
@@ -50,9 +62,15 @@ class FirebaseDatabaseDriver extends IFirebaseDatabaseDriver {
     required String id,
     required String document,
     required Map<String, dynamic> data,
-  }) {
-    // TODO: implement docUpdate
-    throw UnimplementedError();
+  }) async {
+    try {
+      final ref = instance.ref(document).child(document);
+      await ref.update(data);
+      return Right(unit);
+    } catch (e, s) {
+      crashLog.capture(exception: e, stackTrace: s);
+      return Left(Exception('$e $s'));
+    }
   }
 
   @override
