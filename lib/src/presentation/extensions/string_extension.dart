@@ -25,7 +25,7 @@ extension StringExt on String {
         if (word.length == 1) return word.toUpperCase();
 
         final first = word.substring(0, 1).toUpperCase();
-        final rest = word.substring(1);
+        final rest = word.substring(1).toLowerCase();
         return first + rest;
       }).join(' ');
     }

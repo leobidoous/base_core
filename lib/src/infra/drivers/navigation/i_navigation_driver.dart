@@ -49,6 +49,7 @@ abstract class INavigationDriver {
     Object path, {
     Object? arguments,
     bool forRoot = true,
+    BuildContext? context,
   });
 
   ///
@@ -58,6 +59,7 @@ abstract class INavigationDriver {
     Object path, {
     Object? arguments,
     bool forRoot = true,
+    BuildContext? context,
   });
 
   ///
@@ -78,6 +80,7 @@ abstract class INavigationDriver {
     Object secondpath, {
     Object? arguments,
     bool forRoot = true,
+    BuildContext? context,
   });
 
   ///
@@ -88,6 +91,7 @@ abstract class INavigationDriver {
     Object secondpath, {
     Object? arguments,
     bool forRoot = true,
+    BuildContext? context,
   });
 
   ///
@@ -103,7 +107,11 @@ abstract class INavigationDriver {
   ///
   /// Calls pop repeatedly on the navigator until the predicate returns true.
   ///
-  void popUntil(Object path);
+  void popUntil(
+    Object path, {
+    bool forRoot = true,
+    BuildContext? context,
+  });
 
   ///
   /// Verify if can pop until path.
@@ -136,6 +144,7 @@ abstract class INavigationDriver {
     TO? result,
     Object? arguments,
     bool forRoot = true,
+    BuildContext? context,
   });
 
   ///
