@@ -1,3 +1,7 @@
+## 1.3.2
+
+* Add lint rule
+
 ## 1.3.1
 
 * Update INavigationDriver
