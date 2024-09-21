@@ -1,3 +1,7 @@
+## 1.3.3
+
+* Upgrade dependencies
+
 ## 1.3.2
 
 * Add lint rule
