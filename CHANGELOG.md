@@ -1,6 +1,7 @@
 ## 1.3.6
 
 * Fix CustomController 
+* Set firebase versions to SDK 10.29.0 version
 
 ## 1.3.5
 
