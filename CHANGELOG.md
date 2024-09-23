@@ -1,3 +1,11 @@
+## 1.3.6
+
+* Fix CustomController 
+
+## 1.3.5
+
+* Fix firebase versions 
+
 ## 1.3.4
 
 * Upgrade dependencies
