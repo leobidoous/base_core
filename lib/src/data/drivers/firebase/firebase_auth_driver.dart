@@ -23,7 +23,7 @@ class FirebaseAuthDriver extends IFirebaseAuthDriver {
 
   @override
   Future<Either<Exception, Unit>> signInWithCustomToken({
-    required String token, 
+    required String token,
   }) async {
     try {
       await instance.signInWithCustomToken(token);

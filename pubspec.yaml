@@ -3,7 +3,7 @@ description: Um package auxiliar para manter as dependências globais de um apli
 homepage: https://github.com/leobidoous
 repository: https://github.com/leobidoous/base_core
 issue_tracker: https://github.com/leobidoous/base_core/issues
-version: 1.3.6
+version: 1.3.7
 
 environment:
   sdk: ">=3.4.0 <4.0.0"
@@ -14,16 +14,16 @@ dependencies:
 
   #===== Firebase depedencies ===================
   # Waiting GoogleDataTransport > 10.0.0 to all dependencies
-  firebase_auth: 5.1.4
-  firebase_core: 3.3.0
-  cloud_firestore: 5.2.1
-  firebase_storage: 12.1.3
-  firebase_database: 11.0.4
-  firebase_messaging: 15.0.4
-  firebase_analytics: 11.2.1
-  firebase_crashlytics: 4.0.4
-  firebase_remote_config: 5.0.4
-  firebase_in_app_messaging: 0.8.0+4
+  firebase_auth: ^5.3.1
+  firebase_core: ^3.6.0
+  cloud_firestore: ^5.4.3
+  firebase_storage: ^12.3.2
+  firebase_database: ^11.1.4
+  firebase_messaging: ^15.1.3
+  firebase_analytics: ^11.3.3
+  firebase_crashlytics: ^4.1.3
+  firebase_remote_config: ^5.1.3
+  firebase_in_app_messaging: ^0.8.0+8
   #==============================================
 
   #===== New dependecies for new app flutter =====
@@ -33,7 +33,7 @@ dependencies:
   equatable: ^2.0.5
   local_auth: ^2.3.0
   share_plus: ^10.0.0
-  geolocator: ^12.0.0
+  geolocator: ^13.0.1
   path_provider: ^2.1.4
   sentry_flutter: ^8.9.0
   local_auth_darwin: ^1.4.0
@@ -50,7 +50,7 @@ dependencies:
 dev_dependencies:
   flutter_test:
     sdk: flutter
-  flutter_lints: ^4.0.0
+  flutter_lints: ^5.0.0
 
 flutter:
   uses-material-design: true
