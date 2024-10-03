@@ -62,8 +62,11 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     Map<String, Object>? params,
   }) async {
     try {
-      await instance.logLogin(loginMethod: loginMethod, parameters: params);
-      await instance.setUserProperty(name: name, value: value);
+      await Future.wait([
+        instance.logLogin(loginMethod: loginMethod, parameters: params),
+        instance.setUserId(id: value),
+        instance.setUserProperty(name: name, value: value),
+      ]);
       debugPrint('FirebaseAnalyticsDriver login efetuado com sucesso.');
       return Right(unit);
     } catch (exception, stackTrace) {
