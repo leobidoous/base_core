@@ -1,4 +1,4 @@
-library base_core;
+library;
 
 export 'package:base_core/src/core/utils/base_path.dart';
 export 'package:base_core/src/core/utils/crash_log.dart';

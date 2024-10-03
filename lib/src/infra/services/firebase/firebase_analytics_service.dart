@@ -31,8 +31,8 @@ class FirebaseAnalyticsService extends IFirebaseAnalyticsService {
     return firebaseAnalyticsDriver.login(
       name: name,
       value: value,
-      loginMethod: loginMethod,
       params: params,
+      loginMethod: loginMethod,
     );
   }
 }
