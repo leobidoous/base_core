@@ -15,7 +15,7 @@ class FirebaseRemoteConfigDriver extends IFirebaseRemoteConfigDriver {
     try {
       await instance.setConfigSettings(
         RemoteConfigSettings(
-          minimumFetchInterval:  Duration.zero,
+          minimumFetchInterval: Duration.zero,
           fetchTimeout: const Duration(seconds: 60),
         ),
       );

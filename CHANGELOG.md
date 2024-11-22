@@ -1,3 +1,11 @@
+## 1.3.9
+
+* Upgrade package dependencies
+
+## 1.3.8
+
+* Add setUserProperty to IFirebaseAnalyticsDriver
+
 ## 1.3.7
 
 * Upgrade Firebase versions

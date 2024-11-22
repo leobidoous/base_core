@@ -65,12 +65,28 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
       await Future.wait([
         instance.logLogin(loginMethod: loginMethod, parameters: params),
         instance.setUserId(id: value),
-        instance.setUserProperty(name: name, value: value),
+        setUserProperty(name: name, value: value),
       ]);
       debugPrint('FirebaseAnalyticsDriver login efetuado com sucesso.');
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.login: $exception');
+      crashLog.capture(exception: exception, stackTrace: stackTrace);
+      return Left(Exception(exception));
+    }
+  }
+
+  @override
+  Future<Either<Exception, Unit>> setUserProperty({
+    required String name,
+    required String value,
+  }) async {
+    try {
+      await instance.setUserProperty(name: name, value: value);
+      debugPrint('FirebaseAnalyticsDriver setUserProperty.');
+      return Right(unit);
+    } catch (exception, stackTrace) {
+      debugPrint('FirebaseAnalyticsDriver.setUserProperty: $exception');
       crashLog.capture(exception: exception, stackTrace: stackTrace);
       return Left(Exception(exception));
     }

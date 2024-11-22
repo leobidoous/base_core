@@ -35,4 +35,12 @@ class FirebaseAnalyticsService extends IFirebaseAnalyticsService {
       loginMethod: loginMethod,
     );
   }
+
+  @override
+  Future<Either<Exception, Unit>> setUserProperty({
+    required String name,
+    required String value,
+  }) {
+    return firebaseAnalyticsDriver.setUserProperty(name: name, value: value);
+  }
 }

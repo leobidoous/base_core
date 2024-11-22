@@ -1,12 +1,10 @@
 import 'dart:async';
 
-import 'package:equatable/equatable.dart' show EquatableMixin;
 import 'package:flutter/foundation.dart' show ValueNotifier, debugPrint;
 
 import 'either.dart';
 
-abstract class CustomController<E, S> extends ValueNotifier<S>
-    with EquatableMixin {
+abstract class CustomController<E, S> extends ValueNotifier<S> {
   CustomController(super.value);
 
   bool _wasDisposed = false;
@@ -73,35 +71,6 @@ abstract class CustomController<E, S> extends ValueNotifier<S>
     setLoading(false);
     return response;
   }
-
-  @override
-  List<Object?> get props {
-    try {
-      return [
-        value,
-        error,
-        hashCode,
-        isLoading,
-        wasDisposed,
-      ];
-    } catch (exception) {
-      try {
-        return [
-          value,
-          error,
-          isLoading,
-          wasDisposed,
-        ];
-      } catch (exception) {
-        throw Exception(
-          '''You are probably trying to compare $S after changing your value.''',
-        );
-      }
-    }
-  }
-
-  @override
-  bool? get stringify => true;
 
   @override
   void dispose() {
