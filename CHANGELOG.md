@@ -1,3 +1,11 @@
+## 1.3.11
+
+* Fix Firebase Analytics
+
+## 1.3.10
+
+* Add addTo into Firebase Analytics
+
 ## 1.3.9
 
 * Upgrade package dependencies

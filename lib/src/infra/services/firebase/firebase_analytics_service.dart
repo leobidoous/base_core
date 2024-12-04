@@ -43,4 +43,25 @@ class FirebaseAnalyticsService extends IFirebaseAnalyticsService {
   }) {
     return firebaseAnalyticsDriver.setUserProperty(name: name, value: value);
   }
+
+  @override
+  Future<Either<Exception, Unit>> addToCart({
+    required Map<String, dynamic> params,
+  }) {
+    return firebaseAnalyticsDriver.addToCart(params: params);
+  }
+
+  @override
+  Future<Either<Exception, Unit>> beginCheckout({
+    required Map<String, dynamic> params,
+  }) {
+    return firebaseAnalyticsDriver.beginCheckout(params: params);
+  }
+
+  @override
+  Future<Either<Exception, Unit>> purchase({
+    required Map<String, dynamic> params,
+  }) {
+    return firebaseAnalyticsDriver.purchase(params: params);
+  }
 }

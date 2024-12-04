@@ -13,4 +13,13 @@ abstract class IFirebaseAnalyticsDriver extends IAppTrackingDriver {
     required String value,
     Map<String, Object>? params,
   });
+  Future<Either<Exception, Unit>> addToCart({
+    required Map<String, dynamic> params,
+  });
+  Future<Either<Exception, Unit>> beginCheckout({
+    required Map<String, dynamic> params,
+  });
+  Future<Either<Exception, Unit>> purchase({
+    required Map<String, dynamic> params,
+  });
 }
