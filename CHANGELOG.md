@@ -1,3 +1,8 @@
+## 1.3.12
+
+* Upgrade package dependencies
+* Add firebase analytics functions
+
 ## 1.3.11
 
 * Fix Firebase Analytics

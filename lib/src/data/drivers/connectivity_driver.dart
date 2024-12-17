@@ -15,6 +15,7 @@ class ConnectivityDriver implements IConnectivityDriver {
   Future<bool> get isOnline async {
     final result = await connectivity.checkConnectivity();
     return result.contains(ConnectivityResult.wifi) ||
+        result.contains(ConnectivityResult.ethernet) ||
         result.contains(ConnectivityResult.mobile);
   }
 

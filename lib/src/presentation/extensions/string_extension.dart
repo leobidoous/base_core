@@ -39,4 +39,19 @@ extension StringExt on String {
     }
     return cap(splited);
   }
+
+  String get initials {
+    final name = trim().split(' ');
+    if (name.isEmpty) {
+      return '-';
+    } else if (name.length == 1) {
+      if (name.first.isEmpty) {
+      } else if (name.first.length > 1) {
+        return name.first.substring(0, 2).toUpperCase();
+      }
+      return '-';
+    } else {
+      return '${name.first[0]}${name.last[0]}'.toUpperCase();
+    }
+  }
 }

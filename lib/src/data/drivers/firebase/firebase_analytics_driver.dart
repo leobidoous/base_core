@@ -29,7 +29,7 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
       if (value is String || value is num) {
         return MapEntry(key, value);
       } else {
-        return MapEntry(key, value.toString());
+        return MapEntry(key, value.toString().substring(0, 100));
       }
     });
   }
@@ -45,7 +45,9 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
         callOptions: AnalyticsCallOptions(global: true),
         parameters: _convertToMapStringObject(event.parameters ?? {}),
       );
-      debugPrint('>>> FirebaseAnalyticsDriver.createEvent: ${event.name} <<<');
+      debugPrint(
+        '''>>> FirebaseAnalyticsDriver.createEvent [${event.name}] ${event.parameters} <<<''',
+      );
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.createEvent: $exception');
@@ -67,6 +69,9 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
         instance.setUserId(id: value),
         setUserProperty(name: name, value: value),
       ]);
+      for (MapEntry<String, Object> item in params?.entries ?? []) {
+        setUserProperty(name: item.key, value: item.value.toString());
+      }
       debugPrint('FirebaseAnalyticsDriver login efetuado com sucesso.');
       return Right(unit);
     } catch (exception, stackTrace) {
@@ -131,14 +136,14 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
           .toList();
       await instance.logAddToCart(
         items: items,
-        parameters: params['parameters'],
         currency: params['currency']?.toString() ?? 'BRL',
         value: double.tryParse(params['value'].toString()),
+        parameters: _convertToMapStringObject(params['parameters'] ?? {}),
         callOptions: AnalyticsCallOptions(
           global: params['callOptions']?['global'] ?? false,
         ),
       );
-      debugPrint('FirebaseAnalyticsDriver.addToCart');
+      debugPrint('FirebaseAnalyticsDriver.addToCart $params');
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.addToCart: $exception');
@@ -157,15 +162,15 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
           .toList();
       await instance.logBeginCheckout(
         items: items,
-        parameters: params['parameters'],
         coupon: params['coupon']?.toString(),
         currency: params['currency']?.toString() ?? 'BRL',
         value: double.tryParse(params['value'].toString()),
+        parameters: _convertToMapStringObject(params['parameters'] ?? {}),
         callOptions: AnalyticsCallOptions(
           global: params['callOptions']?['global'] ?? false,
         ),
       );
-      debugPrint('FirebaseAnalyticsDriver.beginCheckout');
+      debugPrint('FirebaseAnalyticsDriver.beginCheckout $params');
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.beginCheckout: $exception');
@@ -184,7 +189,6 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
           .toList();
       await instance.logPurchase(
         items: items,
-        parameters: params['parameters'],
         coupon: params['coupon']?.toString(),
         currency: params['currency'] ?? 'BRL',
         affiliation: params['affiliation']?.toString(),
@@ -192,11 +196,12 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
         value: double.tryParse(params['value'].toString()),
         transactionId: params['transactionId']?.toString(),
         shipping: double.tryParse(params['shipping'].toString()),
+        parameters: _convertToMapStringObject(params['parameters'] ?? {}),
         callOptions: AnalyticsCallOptions(
           global: params['callOptions']?['global'] ?? false,
         ),
       );
-      debugPrint('FirebaseAnalyticsDriver.logPurchase');
+      debugPrint('FirebaseAnalyticsDriver.logPurchase $params');
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.logPurchase: $exception');

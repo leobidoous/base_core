@@ -52,6 +52,9 @@ class PermissionService extends IPermissionService {
         case PermissionType.appTrackingTransparency:
           response = await Permission.appTrackingTransparency.status;
           break;
+        case PermissionType.contacts:
+          response = await Permission.contacts.status;
+          break;
         default:
           break;
       }

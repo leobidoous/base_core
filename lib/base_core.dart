@@ -3,7 +3,6 @@ library;
 export 'package:base_core/src/core/utils/base_path.dart';
 export 'package:base_core/src/core/utils/crash_log.dart';
 export 'package:base_core/src/core/utils/custom_dio_logger.dart';
-export 'package:base_core/src/core/utils/event_log.dart';
 export 'package:base_core/src/core/utils/formats/date_formats.dart';
 export 'package:base_core/src/core/utils/formats/number_formats.dart';
 export 'package:base_core/src/core/utils/load_mock.dart';
