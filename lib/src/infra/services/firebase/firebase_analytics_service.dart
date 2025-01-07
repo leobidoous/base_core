@@ -64,4 +64,37 @@ class FirebaseAnalyticsService extends IFirebaseAnalyticsService {
   }) {
     return firebaseAnalyticsDriver.purchase(params: params);
   }
+
+  @override
+  Future<Either<Exception, Unit>> logAddPaymentInfo({
+    required Map<String, dynamic> params,
+  }) {
+    return firebaseAnalyticsDriver.logAddPaymentInfo(params: params);
+  }
+
+  @override
+  Future<Either<Exception, Unit>> logAddShippingInfo({
+    required Map<String, dynamic> params,
+  }) {
+    return firebaseAnalyticsDriver.logAddShippingInfo(params: params);
+  }
+
+  @override
+  Future<Either<Exception, Unit>> logSelectItem({
+    required Map<String, dynamic> params,
+  }) {
+    return firebaseAnalyticsDriver.logSelectItem(params: params);
+  }
+
+  @override
+  Future<Either<Exception, Unit>> logViewItem({
+    required Map<String, dynamic> params,
+  }) {
+    return firebaseAnalyticsDriver.logViewItem(params: params);
+  }
+
+  @override
+  Future<Either<Exception, Unit>> logout({required String name}) {
+    return firebaseAnalyticsDriver.logout(name: name);
+  }
 }

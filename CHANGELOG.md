@@ -1,3 +1,19 @@
+## 1.3.16
+
+* remove Sentry package
+
+## 1.3.15
+
+* update firebase analytics functions
+
+## 1.3.14
+
+* update firebase analytics functions
+
+## 1.3.13
+
+* update firebase analytics functions
+
 ## 1.3.12
 
 * Upgrade package dependencies

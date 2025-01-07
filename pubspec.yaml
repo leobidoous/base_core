@@ -3,7 +3,7 @@ description: Um package auxiliar para manter as dependências globais de um apli
 homepage: https://github.com/leobidoous
 repository: https://github.com/leobidoous/base_core
 issue_tracker: https://github.com/leobidoous/base_core/issues
-version: 1.3.12
+version: 1.3.16
 
 environment:
   sdk: ^3.5.3
@@ -35,7 +35,6 @@ dependencies:
   share_plus: ^10.0.0
   geolocator: ^13.0.1
   path_provider: ^2.1.4
-  sentry_flutter: ^8.9.0
   local_auth_darwin: ^1.4.0
   connectivity_plus: ^6.0.5
   package_info_plus: ^8.0.2

@@ -8,6 +8,9 @@ abstract class IFirebaseAnalyticsService extends IAppTrackingService {
     required String value,
     Map<String, Object>? params,
   });
+  Future<Either<Exception, Unit>> logout({
+    required String name,
+  });
   Future<Either<Exception, Unit>> setUserProperty({
     required String name,
     required String value,
@@ -19,6 +22,18 @@ abstract class IFirebaseAnalyticsService extends IAppTrackingService {
     required Map<String, dynamic> params,
   });
   Future<Either<Exception, Unit>> purchase({
+    required Map<String, dynamic> params,
+  });
+  Future<Either<Exception, Unit>> logSelectItem({
+    required Map<String, dynamic> params,
+  });
+  Future<Either<Exception, Unit>> logViewItem({
+    required Map<String, dynamic> params,
+  });
+  Future<Either<Exception, Unit>> logAddPaymentInfo({
+    required Map<String, dynamic> params,
+  });
+  Future<Either<Exception, Unit>> logAddShippingInfo({
     required Map<String, dynamic> params,
   });
 }

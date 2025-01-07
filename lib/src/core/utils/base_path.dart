@@ -49,6 +49,13 @@ class BasePath<T> with EquatableMixin {
   /// Relative path
   String get relativePath => path.replaceFirst('/', '');
 
+  /// path name
+  String get name {
+    final name = path.replaceAll('/', '');
+    if (name.isEmpty) return 'app';
+    return name;
+  }
+
   String prevPath([int qtd = 1]) {
     String previousRelative = '../' * qtd;
     return '$previousRelative$relativePath';
