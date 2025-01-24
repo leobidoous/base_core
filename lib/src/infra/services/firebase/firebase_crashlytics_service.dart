@@ -17,10 +17,12 @@ class FirebaseCrashlyticsService extends IFirebaseCrashlyticsService {
   @override
   Future<Either<Exception, Unit>> init({Map<String, dynamic>? params}) async {
     try {
-      await instance.setCrashlyticsCollectionEnabled(true);
+      if (!kIsWeb) await instance.setCrashlyticsCollectionEnabled(true);
       FlutterError.onError = instance.recordFlutterError;
+      debugPrint('FirebaseCrashlyticsService iniciado com sucesso.');
       return Right(unit);
     } catch (exception, stackTrace) {
+      debugPrint('FirebaseCrashlyticsService.init: $exception');
       return setError(exception: exception, stackTrace: stackTrace);
     }
   }

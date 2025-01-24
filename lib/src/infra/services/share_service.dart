@@ -19,8 +19,9 @@ class ShareService extends IShareService {
   @override
   Future<Either<Exception, Unit>> shareWidgets({
     required List<GlobalKey> keys,
+    double pixelRatio = 1.0,
   }) {
-    return shareDriver.shareWidgets(keys: keys);
+    return shareDriver.shareWidgets(keys: keys, pixelRatio: pixelRatio);
   }
 
   @override

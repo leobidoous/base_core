@@ -24,7 +24,7 @@ class FirebaseCrashlyticsDriver extends ICrashLogDriver {
       );
       return Right(unit);
     } catch (exception) {
-      debugPrint('Error in recordError FirebaseCrashlyticsDriver.');
+      debugPrint('FirebaseCrashlyticsDriver.setError: $exception');
       return Left(Exception(exception));
     }
   }

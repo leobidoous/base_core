@@ -1,18 +1,26 @@
+## 1.3.18
+
+* Add crash log as required into dio client driver
+
+## 1.3.17
+
+* Add pixelRatio param to ShareController
+
 ## 1.3.16
 
-* remove Sentry package
+* Remove Sentry package
 
 ## 1.3.15
 
-* update firebase analytics functions
+* Update firebase analytics functions
 
 ## 1.3.14
 
-* update firebase analytics functions
+* Update firebase analytics functions
 
 ## 1.3.13
 
-* update firebase analytics functions
+* Update firebase analytics functions
 
 ## 1.3.12
 
