@@ -1,3 +1,7 @@
+## 1.3.19
+
+* Upgrade dependencies
+
 ## 1.3.18
 
 * Add crash log as required into dio client driver
