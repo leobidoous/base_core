@@ -23,13 +23,9 @@ import '../../infra/drivers/i_local_notifications_driver.dart'
 
 class LocalNotificationsDriver extends ILocalNotificationsDriver
     with Disposable {
-  LocalNotificationsDriver({
-    required this.onReceiveNotification,
-    required this.selectNotificationSubject,
-  });
+  LocalNotificationsDriver({required this.onReceiveNotification});
   final _localNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  final BehaviorSubject<ReceivedNotificationEntity> onReceiveNotification;
-  final BehaviorSubject<NotificationResponse> selectNotificationSubject;
+  final BehaviorSubject<NotificationResponse> onReceiveNotification;
 
   @override
   Future<Either<Exception, Unit>> init() async {
@@ -41,21 +37,6 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
         requestAlertPermission: false,
         requestBadgePermission: false,
         requestSoundPermission: false,
-        onDidReceiveLocalNotification: (
-          int id,
-          String? title,
-          String? body,
-          String? payload,
-        ) async {
-          onReceiveNotification.add(
-            ReceivedNotificationEntity(
-              id: id,
-              title: title,
-              body: body,
-              payload: payload,
-            ),
-          );
-        },
       );
 
       final settings = InitializationSettings(
@@ -66,7 +47,7 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
         settings,
         onDidReceiveNotificationResponse: (NotificationResponse payload) async {
           debugPrint('notification payload: $payload');
-          selectNotificationSubject.add(payload);
+          onReceiveNotification.add(payload);
         },
       );
       debugPrint('LocalNotificationsDriver iniciado com sucesso.');
@@ -123,6 +104,5 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
   @override
   void dispose() {
     onReceiveNotification.close();
-    selectNotificationSubject.close();
   }
 }

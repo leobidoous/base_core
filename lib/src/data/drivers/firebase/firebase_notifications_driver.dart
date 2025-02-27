@@ -9,7 +9,6 @@ import '../../../domain/interfaces/either.dart';
 import '../../../infra/drivers/firebase/i_firebase_notifications_driver.dart'
     show IFirebaseNotificationsDriver;
 import '../../../infra/drivers/firebase/i_firebase_storage_driver.dart';
-import '../../../infra/drivers/i_local_notifications_driver.dart';
 import '../../../infra/models/received_notifications_model.dart';
 
 class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
@@ -17,13 +16,11 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
     required this.instance,
     required this.crashLog,
     required this.storageDriver,
-    required this.localNotificationsDriver,
   });
 
   final CrashLog crashLog;
   final FirebaseMessaging instance;
   final IFirebaseStorageDriver storageDriver;
-  final ILocalNotificationsDriver localNotificationsDriver;
 
   @override
   Future<Either<Exception, String>> getToken() async {
@@ -61,26 +58,18 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
           payload: jsonEncode(message.data),
         );
 
-        if (onMessage != null) {
-          onMessage(notification);
-        } else {
-          localNotificationsDriver.showNotification(notification: notification);
-        }
+        if (onMessage != null) onMessage(notification);
       });
 
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
         final notification = ReceivedNotificationModel(
           id: message.messageId?.hashCode ?? message.hashCode,
           title: message.notification?.title ?? '',
-          body: message.notification?.title ?? '',
+          body: message.notification?.body ?? '',
           payload: jsonEncode(message.data),
         );
 
-        if (onMessageOpenedApp != null) {
-          onMessageOpenedApp(notification);
-        } else {
-          localNotificationsDriver.showNotification(notification: notification);
-        }
+        if (onMessageOpenedApp != null) onMessageOpenedApp(notification);
       });
 
       debugPrint('FirebaseNotificationsDriver configurado com sucesso.');

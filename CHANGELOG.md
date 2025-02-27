@@ -1,3 +1,15 @@
+## 1.3.22
+
+* Upgrade dependencies
+
+## 1.3.21
+
+* Update firebase driver init 
+
+## 1.3.20
+
+* Upgrade local notifications
+
 ## 1.3.19
 
 * Upgrade dependencies

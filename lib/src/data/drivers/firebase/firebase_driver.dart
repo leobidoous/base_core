@@ -9,45 +9,52 @@ import '../../../infra/drivers/firebase/i_firebase_driver.dart'
 class FirebaseDriver extends IFirebaseDriver {
   @override
   Future<Either<Exception, Unit>> init({
-    String apiKey = '',
-    String appId = '',
-    String messagingSenderId = '',
-    String projectId = '',
-    String? authDomain,
-    String? databaseURL,
-    String? storageBucket,
-    String? measurementId,
-    String? trackingId,
-    String? deepLinkURLScheme,
-    String? androidClientId,
-    String? iosClientId,
-    String? iosBundleId,
-    String? appGroupId,
+    Map<String, String?> config = const {},
   }) async {
     try {
       FirebaseOptions? options;
+
+      final appId = config['appId'] ?? '';
+      final apiKey = config['apiKey'] ?? '';
+      final trackingId = config['trackingId'];
+      final authDomain = config['authDomain'];
+      final appGroupId = config['appGroupId'];
+      final iosBundleId = config['iosBundleId'];
+      final iosClientId = config['iosClientId'];
+      final databaseURL = config['databaseURL'];
+      final projectId = config['projectId'] ?? '';
+      final storageBucket = config['storageBucket'];
+      final measurementId = config['measurementId'];
+      final androidClientId = config['androidClientId'];
+      final deepLinkURLScheme = config['deepLinkURLScheme'];
+      final messagingSenderId = config['messagingSenderId'] ?? '';
+
       if (apiKey.isNotEmpty &&
           appId.isNotEmpty &&
           messagingSenderId.isNotEmpty &&
           projectId.isNotEmpty) {
         options = FirebaseOptions(
-          apiKey: apiKey,
           appId: appId,
-          messagingSenderId: messagingSenderId,
+          apiKey: apiKey,
           projectId: projectId,
           authDomain: authDomain,
+          trackingId: trackingId,
+          appGroupId: appGroupId,
+          iosBundleId: iosBundleId,
+          iosClientId: iosClientId,
           databaseURL: databaseURL,
           storageBucket: storageBucket,
           measurementId: measurementId,
-          trackingId: trackingId,
-          deepLinkURLScheme: deepLinkURLScheme,
           androidClientId: androidClientId,
-          iosClientId: iosClientId,
-          iosBundleId: iosBundleId,
-          appGroupId: appGroupId,
+          deepLinkURLScheme: deepLinkURLScheme,
+          messagingSenderId: messagingSenderId,
         );
       }
-      await Firebase.initializeApp(options: options);
+      await Firebase.initializeApp(
+        name: config['name'],
+        options: options,
+        demoProjectId: config['demoProjectId'],
+      );
       debugPrint('FirebaseDriver iniciado com sucesso.');
       return Right(unit);
     } catch (e) {
