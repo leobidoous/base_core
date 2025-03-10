@@ -1,3 +1,7 @@
+## 1.3.23
+
+* Upgrade dependencies and update share driver
+
 ## 1.3.22
 
 * Upgrade dependencies

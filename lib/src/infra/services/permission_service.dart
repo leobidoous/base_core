@@ -60,7 +60,7 @@ class PermissionService extends IPermissionService {
       }
       return Right(permissionStatusFromType(response?.name));
     } catch (e) {
-      return Left(Exception());
+      return Left(Exception(e));
     }
   }
 

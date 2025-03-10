@@ -12,10 +12,16 @@ import '../../infra/drivers/i_share_driver.dart';
 class ShareDriver extends IShareDriver {
   @override
   Future<Either<Exception, Unit>> shareFiles({
-    required List<File> files,
+    required List<XFile> files,
+    String? subject,
+    String? text,
   }) async {
     try {
-      await Share.shareXFiles(files.map((f) => XFile(f.path)).toList());
+      await Share.shareXFiles(
+        files.map((f) => XFile(f.path)).toList(),
+        subject: subject,
+        text: text,
+      );
       return Right(unit);
     } catch (e, s) {
       return Left(Exception('$e $s'));
@@ -26,6 +32,8 @@ class ShareDriver extends IShareDriver {
   Future<Either<Exception, Unit>> shareWidgets({
     required List<GlobalKey> keys,
     double pixelRatio = 1.0,
+    String? subject,
+    String? text,
   }) async {
     try {
       final files = List.empty(growable: true);
@@ -50,7 +58,11 @@ class ShareDriver extends IShareDriver {
           debugPrint('ShareDriver.shareWidgets error: $e');
         }
       }
-      await Share.shareXFiles(files.map((f) => XFile(f.path)).toList());
+      await Share.shareXFiles(
+        files.map((f) => XFile(f.path)).toList(),
+        subject: subject,
+        text: text,
+      );
       return Right(unit);
     } catch (e, s) {
       return Left(Exception('$e $s'));
@@ -58,9 +70,12 @@ class ShareDriver extends IShareDriver {
   }
 
   @override
-  Future<Either<Exception, Unit>> shareText({required String text}) async {
+  Future<Either<Exception, Unit>> shareText({
+    required String text,
+    String? subject,
+  }) async {
     try {
-      await Share.share(text);
+      await Share.share(text, subject: subject);
       return Right(unit);
     } catch (e, s) {
       return Left(Exception('$e $s'));
