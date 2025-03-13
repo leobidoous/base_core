@@ -5,9 +5,15 @@ import '../../../domain/interfaces/either.dart';
 import '../../../infra/drivers/i_crash_log_driver.dart';
 
 class FirebaseCrashlyticsDriver extends ICrashLogDriver {
-  FirebaseCrashlyticsDriver({required this.instance});
+  FirebaseCrashlyticsDriver();
 
-  final FirebaseCrashlytics instance;
+  FirebaseCrashlytics get instance {
+    try {
+      return FirebaseCrashlytics.instance;
+    } catch (e) {
+      return throw (e);
+    }
+  }
 
   @override
   Future<Either<Exception, Unit>> setError({

@@ -1,3 +1,7 @@
+## 1.3.24
+
+* Add firebase imports validations
+
 ## 1.3.23
 
 * Upgrade dependencies and update share driver

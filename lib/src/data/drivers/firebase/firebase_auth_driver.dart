@@ -5,10 +5,18 @@ import '../../../domain/interfaces/either.dart';
 import '../../../infra/drivers/firebase/i_firebase_auth_driver.dart';
 
 class FirebaseAuthDriver extends IFirebaseAuthDriver {
-  FirebaseAuthDriver({required this.instance, required this.crashLog});
+  FirebaseAuthDriver({required this.crashLog});
 
-  final FirebaseAuth instance;
   final CrashLog crashLog;
+
+  FirebaseAuth get instance {
+    try {
+      return FirebaseAuth.instance;
+    } catch (e, s) {
+      crashLog.capture(exception: e, stackTrace: s);
+      return throw (e);
+    }
+  }
 
   @override
   Future<Either<Exception, Unit>> logout() async {

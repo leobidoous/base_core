@@ -13,14 +13,21 @@ import '../../../infra/models/received_notifications_model.dart';
 
 class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
   FirebaseNotificationsDriver({
-    required this.instance,
     required this.crashLog,
     required this.storageDriver,
   });
 
   final CrashLog crashLog;
-  final FirebaseMessaging instance;
   final IFirebaseStorageDriver storageDriver;
+
+  FirebaseMessaging get instance {
+    try {
+      return FirebaseMessaging.instance;
+    } catch (e, s) {
+      crashLog.capture(exception: e, stackTrace: s);
+      return throw (e);
+    }
+  }
 
   @override
   Future<Either<Exception, String>> getToken() async {
