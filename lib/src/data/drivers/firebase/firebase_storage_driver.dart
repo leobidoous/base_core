@@ -7,10 +7,18 @@ import '../../../domain/interfaces/either.dart';
 import '../../../infra/drivers/firebase/i_firebase_storage_driver.dart';
 
 class FirebaseStorageDriver extends IFirebaseStorageDriver {
-  FirebaseStorageDriver({required this.instance, required this.crashLog});
+  FirebaseStorageDriver({required this.crashLog});
 
-  final FirebaseFirestore instance;
   final CrashLog crashLog;
+
+  FirebaseFirestore get instance {
+    try {
+      return FirebaseFirestore.instance;
+    } catch (e, s) {
+      crashLog.capture(exception: e, stackTrace: s);
+      return throw (e);
+    }
+  }
 
   @override
   Future<Either<Exception, Stream<QuerySnapshot<Map<String, dynamic>>>>>

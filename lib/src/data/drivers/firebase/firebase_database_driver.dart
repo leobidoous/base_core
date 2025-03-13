@@ -6,10 +6,18 @@ import '../../../domain/interfaces/either.dart';
 import '../../../infra/drivers/firebase/i_firebase_database_driver.dart';
 
 class FirebaseDatabaseDriver extends IFirebaseDatabaseDriver {
-  FirebaseDatabaseDriver({required this.instance, required this.crashLog});
+  FirebaseDatabaseDriver({required this.crashLog});
 
-  final FirebaseDatabase instance;
   final CrashLog crashLog;
+
+  FirebaseDatabase get instance {
+    try {
+      return FirebaseDatabase.instance;
+    } catch (e, s) {
+      crashLog.capture(exception: e, stackTrace: s);
+      return throw (e);
+    }
+  }
 
   @override
   Future<Either<Exception, Unit>> docDelete({

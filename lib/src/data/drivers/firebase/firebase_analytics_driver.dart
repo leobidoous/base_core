@@ -7,10 +7,18 @@ import '../../../domain/interfaces/either.dart';
 import '../../../infra/drivers/firebase/i_firebase_analytics_driver.dart';
 
 class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
-  FirebaseAnalyticsDriver({required this.instance, required this.crashLog});
+  FirebaseAnalyticsDriver({required this.crashLog});
 
-  final FirebaseAnalytics instance;
   final CrashLog crashLog;
+
+  FirebaseAnalytics get instance {
+    try {
+      return FirebaseAnalytics.instance;
+    } catch (e, s) {
+      crashLog.capture(exception: e, stackTrace: s);
+      return throw (e);
+    }
+  }
 
   @override
   Future<Either<Exception, Unit>> init({Map<String, dynamic>? params}) async {

@@ -5,10 +5,18 @@ import '../../../domain/interfaces/either.dart';
 import '../../../infra/drivers/firebase/i_firebase_remote_config_driver.dart';
 
 class FirebaseRemoteConfigDriver extends IFirebaseRemoteConfigDriver {
-  FirebaseRemoteConfigDriver({required this.instance, required this.crashLog});
+  FirebaseRemoteConfigDriver({required this.crashLog});
 
-  final FirebaseRemoteConfig instance;
   final CrashLog crashLog;
+
+  FirebaseRemoteConfig get instance {
+    try {
+      return FirebaseRemoteConfig.instance;
+    } catch (e, s) {
+      crashLog.capture(exception: e, stackTrace: s);
+      return throw (e);
+    }
+  }
 
   @override
   Future<Either<Exception, Unit>> init() async {
