@@ -1,4 +1,5 @@
 import 'package:flutter/foundation.dart';
+import 'package:flutter/services.dart';
 import 'package:local_auth/local_auth.dart' hide BiometricType;
 import 'package:local_auth_android/local_auth_android.dart' hide BiometricType;
 import 'package:local_auth_darwin/local_auth_darwin.dart' hide BiometricType;
@@ -35,6 +36,8 @@ class LocalAuthDriver extends ILocalAuthDriver {
         ],
       );
       return Right(response);
+    } on PlatformException catch (e) {
+      return Left(Exception(e.message));
     } catch (e) {
       return Left(Exception(e));
     }
@@ -55,6 +58,8 @@ class LocalAuthDriver extends ILocalAuthDriver {
   Future<Either<Exception, bool>> canCheckBiometrics() async {
     try {
       return Right(await _auth.canCheckBiometrics);
+    } on PlatformException catch (e) {
+      return Left(Exception(e.message));
     } catch (e) {
       return Left(Exception(e));
     }
@@ -64,6 +69,8 @@ class LocalAuthDriver extends ILocalAuthDriver {
   Future<Either<Exception, bool>> isDeviceSupported() async {
     try {
       return Right(await _auth.isDeviceSupported());
+    } on PlatformException catch (e) {
+      return Left(Exception(e.message));
     } catch (e) {
       return Left(Exception(e));
     }
@@ -74,6 +81,8 @@ class LocalAuthDriver extends ILocalAuthDriver {
     try {
       await _auth.stopAuthentication();
       return Right(unit);
+    } on PlatformException catch (e) {
+      return Left(Exception(e.message));
     } catch (e) {
       return Left(Exception(e));
     }
