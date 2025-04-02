@@ -6,13 +6,17 @@ import '../../../domain/services/firebase/i_firebase_crashlytics_service.dart';
 import '../../drivers/i_crash_log_driver.dart';
 
 class FirebaseCrashlyticsService extends IFirebaseCrashlyticsService {
-  FirebaseCrashlyticsService({
-    required this.instance,
-    required this.firebaseCrashlyticsDriver,
-  });
+  FirebaseCrashlyticsService({required this.firebaseCrashlyticsDriver});
 
-  final FirebaseCrashlytics instance;
   final ICrashLogDriver firebaseCrashlyticsDriver;
+
+  FirebaseCrashlytics get instance {
+    try {
+      return FirebaseCrashlytics.instance;
+    } catch (e) {
+      return throw (e);
+    }
+  }
 
   @override
   Future<Either<Exception, Unit>> init({Map<String, dynamic>? params}) async {

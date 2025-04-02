@@ -1,3 +1,7 @@
+## 1.3.26
+
+* Add firebase imports validations
+
 ## 1.3.25
 
 * Upgrade dependencies and update local auth
