@@ -1,7 +1,7 @@
 import 'dart:convert' show jsonEncode;
 
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 
 import '../../../core/utils/crash_log.dart';
 import '../../../domain/entities/received_notifications_entity.dart';
@@ -93,7 +93,7 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
     required String topic,
   }) async {
     try {
-      await instance.subscribeToTopic(topic);
+      await instance.subscribeToTopic(topic).timeout(Durations.long2);
       debugPrint('Subscribed in topic: $topic');
       return Right(unit);
     } catch (exception, strackTrace) {
@@ -108,7 +108,7 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
     required String topic,
   }) async {
     try {
-      await instance.unsubscribeFromTopic(topic);
+      await instance.unsubscribeFromTopic(topic).timeout(Durations.long2);
       debugPrint('Unsubscribed from topic: $topic');
       return Right(unit);
     } catch (exception, strackTrace) {

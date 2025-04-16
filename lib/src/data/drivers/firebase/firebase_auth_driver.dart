@@ -19,9 +19,21 @@ class FirebaseAuthDriver extends IFirebaseAuthDriver {
   }
 
   @override
+  Future<Either<Exception, Unit>> signInAnonymously() async {
+    try {
+      await instance.signInAnonymously();
+      return Right(unit);
+    } catch (e, s) {
+      crashLog.capture(exception: e, stackTrace: s);
+      return Left(Exception('$e $s'));
+    }
+  }
+  
+  @override
   Future<Either<Exception, Unit>> logout() async {
     try {
       await instance.signOut();
+      await instance.signInAnonymously();
       return Right(unit);
     } catch (e, s) {
       crashLog.capture(exception: e, stackTrace: s);

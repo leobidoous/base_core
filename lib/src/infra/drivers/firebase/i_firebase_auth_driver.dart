@@ -15,4 +15,5 @@ abstract class IFirebaseAuthDriver {
   Future<Either<Exception, Unit>> signInWithCustomToken({
     required String token,
   });
+  Future<Either<Exception, Unit>> signInAnonymously();
 }

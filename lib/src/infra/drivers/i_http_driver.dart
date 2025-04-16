@@ -17,27 +17,27 @@ class HttpDriverResponse {
 
 class HttpDriverOptions {
   HttpDriverOptions({
-    this.accessToken,
+    this.apiKey,
     this.baseUrl,
     this.tenantId,
     this.channelId,
-    this.apiKey,
+    this.customerId,
+    this.contentType,
+    this.accessToken,
     this.responseType,
+    this.extraHeaders,
     this.apiMapKey = 'apiKey',
     this.accessTokenType = 'Bearer',
-    this.customerId,
-    this.extraHeaders,
-    this.contentType,
   });
-  final HttpAccessToken? accessToken;
-  final ResponseType? responseType;
-  final HttpBaseUrl? baseUrl;
-  final String? contentType;
-  final String accessTokenType;
-  final String? tenantId;
-  final String? channelId;
   final String? apiKey;
+  final String? tenantId;
   final String? apiMapKey;
+  final String? channelId;
+  final String? contentType;
+  final HttpBaseUrl? baseUrl;
+  final String accessTokenType;
+  final ResponseType? responseType;
+  final HttpAccessToken? accessToken;
 
   final HttpCustomerId? customerId;
   final Map<String, dynamic>? extraHeaders;

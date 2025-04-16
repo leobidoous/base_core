@@ -8,6 +8,7 @@ class PaginationEntity {
     this.sortingOrder,
     this.sortingBy = '',
   });
+
   int? limit;
   int? offset;
   int? pageNumber;

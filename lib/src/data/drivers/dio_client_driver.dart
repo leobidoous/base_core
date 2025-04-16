@@ -15,6 +15,12 @@ class DioClientDriver extends IHttpDriver with Disposable {
   final dio.Dio client;
   final CrashLog crashLog;
 
+  dio.Dio _client([HttpDriverOptions? options]) => options == null
+      ? client
+      : client.clone(
+          options: client.options.copyWith(baseUrl: options.baseUrl?.call()),
+        );
+
   HttpDriverResponse _responseError(dio.DioException e, {StackTrace? s}) {
     try {
       late String statusMessage;
@@ -102,7 +108,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
     HttpDriverOptions? options,
   }) async {
     try {
-      final response = await client.delete(
+      final response = await _client(options).delete(
         path,
         data: data,
         queryParameters: queryParameters,
@@ -124,7 +130,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
     HttpDriverProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final response = await client.get(
+      final response = await _client(options).get(
         path,
         queryParameters: queryParameters,
         options: _options(options),
@@ -149,7 +155,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
       final filename = options?.extraHeaders?['filename'] ?? '';
       final String tempPath = '${tempDir.path}/$filename';
 
-      final response = await client.download(
+      final response = await _client(options).download(
         path,
         tempPath,
         options: _options(options),
@@ -173,7 +179,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
     HttpDriverProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final response = await client.patch(
+      final response = await _client(options).patch(
         path,
         data: data,
         queryParameters: queryParameters,
@@ -196,7 +202,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
     HttpDriverProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final response = await client.post(
+      final response = await _client(options).post(
         path,
         data: data,
         queryParameters: queryParameters,
@@ -219,7 +225,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
     HttpDriverProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final response = await client.put(
+      final response = await _client(options).put(
         path,
         data: data,
         queryParameters: queryParameters,
@@ -249,7 +255,9 @@ class DioClientDriver extends IHttpDriver with Disposable {
   }
 
   @override
-  Map<String, String>? get getHeaders => throw UnimplementedError();
+  Map<String, String>? get getHeaders => _client().options.headers.map(
+        (key, value) => MapEntry(key, value.toString()),
+      );
 
   @override
   Future interceptRequests(Future request) {
@@ -278,35 +286,42 @@ class DioClientDriver extends IHttpDriver with Disposable {
     dio.ListFormat? listFormat,
   }) {
     return DioClientDriver(
-      client: client
-        ..options = client.options.copyWith(
-          method: method ?? client.options.method,
-          baseUrl: baseUrl ?? client.options.baseUrl,
-          queryParameters: queryParameters ?? client.options.queryParameters,
-          connectTimeout: connectTimeout ?? client.options.connectTimeout,
-          receiveTimeout: receiveTimeout ?? client.options.receiveTimeout,
-          sendTimeout: sendTimeout ?? client.options.sendTimeout,
-          extra: extra ?? client.options.extra,
-          headers: headers ?? client.options.headers,
-          responseType: responseType ?? client.options.responseType,
-          contentType: contentType ?? client.options.contentType,
-          validateStatus: validateStatus ?? client.options.validateStatus,
-          receiveDataWhenStatusError: receiveDataWhenStatusError ??
-              client.options.receiveDataWhenStatusError,
-          followRedirects: followRedirects ?? client.options.followRedirects,
-          maxRedirects: maxRedirects ?? client.options.maxRedirects,
-          persistentConnection:
-              persistentConnection ?? client.options.persistentConnection,
-          requestEncoder: requestEncoder ?? client.options.requestEncoder,
-          responseDecoder: responseDecoder ?? client.options.responseDecoder,
-          listFormat: listFormat ?? client.options.listFormat,
-        ),
+      client: _client()
+        ..options = _client().options.copyWith(
+              method: method ?? _client().options.method,
+              baseUrl: baseUrl ?? _client().options.baseUrl,
+              queryParameters:
+                  queryParameters ?? _client().options.queryParameters,
+              connectTimeout:
+                  connectTimeout ?? _client().options.connectTimeout,
+              receiveTimeout:
+                  receiveTimeout ?? _client().options.receiveTimeout,
+              sendTimeout: sendTimeout ?? _client().options.sendTimeout,
+              extra: extra ?? _client().options.extra,
+              headers: headers ?? _client().options.headers,
+              responseType: responseType ?? _client().options.responseType,
+              contentType: contentType ?? _client().options.contentType,
+              validateStatus:
+                  validateStatus ?? _client().options.validateStatus,
+              receiveDataWhenStatusError: receiveDataWhenStatusError ??
+                  _client().options.receiveDataWhenStatusError,
+              followRedirects:
+                  followRedirects ?? _client().options.followRedirects,
+              maxRedirects: maxRedirects ?? _client().options.maxRedirects,
+              persistentConnection: persistentConnection ??
+                  _client().options.persistentConnection,
+              requestEncoder:
+                  requestEncoder ?? _client().options.requestEncoder,
+              responseDecoder:
+                  responseDecoder ?? _client().options.responseDecoder,
+              listFormat: listFormat ?? _client().options.listFormat,
+            ),
       crashLog: crashLog,
     );
   }
 
   @override
   void dispose() {
-    client.close();
+    _client().close();
   }
 }
