@@ -13,11 +13,11 @@ class PackageInfoModel extends PackageInfoEntity {
   factory PackageInfoModel.fromMap(Map<String, dynamic> map) {
     return PackageInfoModel(
       name: map['name'] ?? '',
-      appName: map['app-name'] ?? '',
-      version: map['version-number'] ?? '',
-      buildNumber: map['build-number'] ?? 0,
-      forceUpdate: map['force-update'] == true,
-      buildSignature: map['build-signature'] ?? '',
+      appName: map['appName'] ?? '',
+      version: map['versionNumber'] ?? '',
+      buildNumber: map['buildNumber'] ?? 0,
+      forceUpdate: map['forceUpdate'] == true,
+      buildSignature: map['buildSignature'] ?? '',
     );
   }
 

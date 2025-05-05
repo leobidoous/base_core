@@ -93,7 +93,7 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
     required String topic,
   }) async {
     try {
-      await instance.subscribeToTopic(topic).timeout(Durations.long2);
+      await instance.subscribeToTopic(topic);
       debugPrint('Subscribed in topic: $topic');
       return Right(unit);
     } catch (exception, strackTrace) {

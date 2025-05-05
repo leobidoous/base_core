@@ -1,3 +1,8 @@
+## 1.3.27
+
+* Fix DioClientDriver
+* Update FirebaseAuth
+
 ## 1.3.26
 
 * Add firebase imports validations

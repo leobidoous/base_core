@@ -28,7 +28,7 @@ class FirebaseAuthDriver extends IFirebaseAuthDriver {
       return Left(Exception('$e $s'));
     }
   }
-  
+
   @override
   Future<Either<Exception, Unit>> logout() async {
     try {

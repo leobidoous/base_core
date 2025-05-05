@@ -42,7 +42,8 @@ class ShareService extends IShareService {
   Future<Either<Exception, Unit>> shareText({
     required String text,
     String? subject,
-  }) {
+  }) async {
+    if (text.isEmpty) return Left(Exception('Texto não pode ser vazio.'));
     return shareDriver.shareText(text: text, subject: subject);
   }
 }

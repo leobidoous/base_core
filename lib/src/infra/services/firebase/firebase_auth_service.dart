@@ -41,7 +41,7 @@ class FirebaseAuthService extends IFirebaseAuthService {
 
   @override
   User? get getCurrentUser => firebaseAuthDriver.getCurrentUser;
-  
+
   @override
   Future<Either<Exception, Unit>> signInAnonymously() {
     return firebaseAuthDriver.signInAnonymously();
