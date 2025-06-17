@@ -23,12 +23,10 @@ class FirebaseRemoteConfigDriver extends IFirebaseRemoteConfigDriver {
     try {
       await instance.setConfigSettings(
         RemoteConfigSettings(
-          minimumFetchInterval: Duration.zero,
           fetchTimeout: const Duration(seconds: 60),
+          minimumFetchInterval: const Duration(minutes: 1),
         ),
       );
-      await instance.ensureInitialized();
-      await instance.activate();
       await instance.fetchAndActivate();
       return Right(unit);
     } catch (e, s) {
@@ -38,7 +36,7 @@ class FirebaseRemoteConfigDriver extends IFirebaseRemoteConfigDriver {
   }
 
   @override
-  Future<Either<Exception, Object>> getAll() async {
+  Either<Exception, Object> getAll() {
     try {
       return Right(instance.getAll());
     } catch (e, s) {
@@ -48,7 +46,7 @@ class FirebaseRemoteConfigDriver extends IFirebaseRemoteConfigDriver {
   }
 
   @override
-  Future<Either<Exception, double>> getDouble({required String key}) async {
+  Either<Exception, double> getDouble({required String key}) {
     try {
       return Right(instance.getDouble(key));
     } catch (e, s) {
@@ -58,7 +56,7 @@ class FirebaseRemoteConfigDriver extends IFirebaseRemoteConfigDriver {
   }
 
   @override
-  Future<Either<Exception, int>> getInt({required String key}) async {
+  Either<Exception, int> getInt({required String key}) {
     try {
       return Right(instance.getInt(key));
     } catch (e, s) {
@@ -68,7 +66,7 @@ class FirebaseRemoteConfigDriver extends IFirebaseRemoteConfigDriver {
   }
 
   @override
-  Future<Either<Exception, String>> getString({required String key}) async {
+  Either<Exception, String> getString({required String key}) {
     try {
       return Right(instance.getString(key));
     } catch (e, s) {
@@ -78,7 +76,7 @@ class FirebaseRemoteConfigDriver extends IFirebaseRemoteConfigDriver {
   }
 
   @override
-  Future<Either<Exception, Object>> getValue({required String key}) async {
+  Either<Exception, Object> getValue({required String key}) {
     try {
       return Right(instance.getValue(key));
     } catch (e, s) {
@@ -88,7 +86,7 @@ class FirebaseRemoteConfigDriver extends IFirebaseRemoteConfigDriver {
   }
 
   @override
-  Future<Either<Exception, bool>> getBool({required String key}) async {
+  Either<Exception, bool> getBool({required String key}) {
     try {
       return Right(instance.getBool(key));
     } catch (e, s) {

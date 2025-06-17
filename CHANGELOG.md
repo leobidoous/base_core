@@ -1,3 +1,7 @@
+## 1.3.28
+
+* Upgrade dependencies
+
 ## 1.3.27
 
 * Fix DioClientDriver

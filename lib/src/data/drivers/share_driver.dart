@@ -10,6 +10,8 @@ import '../../domain/interfaces/either.dart';
 import '../../infra/drivers/i_share_driver.dart';
 
 class ShareDriver extends IShareDriver {
+  SharePlus get instance => SharePlus.instance;
+
   @override
   Future<Either<Exception, Unit>> shareFiles({
     required List<XFile> files,
@@ -17,10 +19,12 @@ class ShareDriver extends IShareDriver {
     String? text,
   }) async {
     try {
-      await Share.shareXFiles(
-        files.map((f) => XFile(f.path)).toList(),
-        subject: subject,
-        text: text,
+      await instance.share(
+        ShareParams(
+          files: files.map((f) => XFile(f.path)).toList(),
+          subject: subject,
+          text: text,
+        ),
       );
       return Right(unit);
     } catch (e, s) {
@@ -58,10 +62,12 @@ class ShareDriver extends IShareDriver {
           debugPrint('ShareDriver.shareWidgets error: $e');
         }
       }
-      await Share.shareXFiles(
-        files.map((f) => XFile(f.path)).toList(),
-        subject: subject,
-        text: text,
+      await instance.share(
+        ShareParams(
+          files: files.map((f) => XFile(f.path)).toList(),
+          subject: subject,
+          text: text,
+        ),
       );
       return Right(unit);
     } catch (e, s) {
@@ -75,7 +81,7 @@ class ShareDriver extends IShareDriver {
     String? subject,
   }) async {
     try {
-      await Share.share(text, subject: subject);
+      await instance.share(ShareParams(text: text, subject: subject));
       return Right(unit);
     } catch (e, s) {
       return Left(Exception('$e $s'));

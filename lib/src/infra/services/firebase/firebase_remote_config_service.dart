@@ -13,32 +13,32 @@ class FirebaseRemoteConfigService extends IFirebaseRemoteConfigService {
   }
 
   @override
-  Future<Either<Exception, Object>> getAll() {
+  Either<Exception, Object> getAll() {
     return firebaseRemoteConfigDriver.getAll();
   }
 
   @override
-  Future<Either<Exception, double>> getDouble({required String key}) {
+  Either<Exception, double> getDouble({required String key}) {
     return firebaseRemoteConfigDriver.getDouble(key: key);
   }
 
   @override
-  Future<Either<Exception, int>> getInt({required String key}) {
+  Either<Exception, int> getInt({required String key}) {
     return firebaseRemoteConfigDriver.getInt(key: key);
   }
 
   @override
-  Future<Either<Exception, String>> getString({required String key}) {
+  Either<Exception, String> getString({required String key}) {
     return firebaseRemoteConfigDriver.getString(key: key);
   }
 
   @override
-  Future<Either<Exception, Object>> getValue({required String key}) {
+  Either<Exception, Object> getValue({required String key}) {
     return firebaseRemoteConfigDriver.getValue(key: key);
   }
 
   @override
-  Future<Either<Exception, bool>> getBool({required String key}) {
+  Either<Exception, bool> getBool({required String key}) {
     return firebaseRemoteConfigDriver.getBool(key: key);
   }
 }

@@ -10,6 +10,9 @@ abstract class INavigationDriver {
   /// Returns the [INavigationArgumentsDriver] instance
   INavigationArgumentsDriver get args;
 
+  /// Set the new [INavigationArgumentsDriver] instance
+  void setArgs(Object value);
+
   /// value is '/';
   String get initialRoute;
 
