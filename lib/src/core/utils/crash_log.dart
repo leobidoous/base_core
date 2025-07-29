@@ -8,7 +8,7 @@ class CrashLog {
   final List<ICrashLogService> logs;
 
   Future<void> capture({
-    required exception,
+    required dynamic exception,
     StackTrace? stackTrace,
     bool fatal = false,
   }) async {

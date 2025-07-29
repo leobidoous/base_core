@@ -1,3 +1,14 @@
+## 1.3.30
+
+* Changed the type of the `exception` parameter in `CrashLog.capture` method from `required exception` to `required dynamic exception`.
+* Updated imports in `i_location_service.dart`, `i_location_driver.dart`, and `location_service.dart` to include specific entities and failures.
+* Updated `pubspec.lock` to reflect dependency version updates, including Firebase packages and other dependencies.
+* Bumped version in `pubspec.yaml` to 1.3.30 and updated `flutter_lints` to version 6.0.0.
+
+## 1.3.29
+
+* Upgrade dependencies
+
 ## 1.3.28
 
 * Upgrade dependencies

@@ -1,5 +1,6 @@
-import '../../../base_core.dart' show Either, ILocationFailure, PositionEntity;
-
+import '../../domain/entities/position_entity.dart' show PositionEntity;
+import '../../domain/failures/i_location_failure.dart' show ILocationFailure;
+import '../../domain/interfaces/either.dart' show Either;
 import '../../domain/services/i_location_service.dart';
 import '../drivers/i_location_driver.dart';
 
