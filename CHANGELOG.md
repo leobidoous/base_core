@@ -1,3 +1,7 @@
+## 1.3.31
+
+* Upgrade dependencies
+
 ## 1.3.30
 
 * Changed the type of the `exception` parameter in `CrashLog.capture` method from `required exception` to `required dynamic exception`.
