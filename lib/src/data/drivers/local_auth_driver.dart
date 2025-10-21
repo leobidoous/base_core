@@ -16,24 +16,16 @@ class LocalAuthDriver extends ILocalAuthDriver {
   @override
   Future<Either<Exception, bool>> authenticate({
     String localizedReason = '',
-    bool useErrorDialogs = true,
     bool stickyAuth = false,
     bool sensitiveTransaction = true,
     bool biometricOnly = false,
   }) async {
     try {
       final response = await _auth.authenticate(
-        options: AuthenticationOptions(
-          useErrorDialogs: useErrorDialogs,
-          stickyAuth: stickyAuth,
-          sensitiveTransaction: sensitiveTransaction,
-          biometricOnly: biometricOnly,
-        ),
+        biometricOnly: biometricOnly,
+        persistAcrossBackgrounding: stickyAuth,
         localizedReason: localizedReason,
-        authMessages: [
-          const AndroidAuthMessages(),
-          const IOSAuthMessages(),
-        ],
+        authMessages: [const AndroidAuthMessages(), const IOSAuthMessages()],
       );
       return Right(response);
     } on PlatformException catch (e) {

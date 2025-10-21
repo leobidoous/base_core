@@ -23,7 +23,7 @@ dependencies:
   firebase_analytics: ^12.0.2
   firebase_crashlytics: ^5.0.2
   firebase_remote_config: ^6.0.2
-  firebase_in_app_messaging: 0.9.0+2
+  firebase_in_app_messaging: ^0.9.0+3
   #==============================================
 
   #===== New dependecies for new app flutter =====
@@ -31,15 +31,15 @@ dependencies:
   intl: ^0.20.2
   rxdart: ^0.28.0
   equatable: ^2.0.7
-  local_auth: ^2.3.0
+  local_auth: ^3.0.0
   share_plus: ^12.0.0
   geolocator: ^14.0.2
   path_provider: ^2.1.5
-  local_auth_darwin: ^1.6.1
+  local_auth_darwin: ^2.0.0
   connectivity_plus: ^7.0.0
   package_info_plus: ^8.3.1
   shared_preferences: ^2.5.3
-  local_auth_android: ^1.0.53
+  local_auth_android: ^2.0.0
   permission_handler: ^12.0.1
   flutter_secure_storage: ^9.2.4
   mask_text_input_formatter: ^2.9.0

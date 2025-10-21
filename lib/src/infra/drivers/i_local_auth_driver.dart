@@ -4,7 +4,6 @@ import '../../domain/interfaces/either.dart';
 abstract class ILocalAuthDriver {
   Future<Either<Exception, bool>> authenticate({
     String localizedReason = '',
-    bool useErrorDialogs = true,
     bool stickyAuth = false,
     bool sensitiveTransaction = true,
     bool biometricOnly = false,
