@@ -1,7 +1,7 @@
 import 'dart:io';
 import 'dart:ui' as ui;
 
-import 'package:flutter/material.dart' show GlobalKey;
+import 'package:flutter/material.dart' show BuildContext, GlobalKey;
 import 'package:flutter/rendering.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:share_plus/share_plus.dart';
@@ -14,16 +14,19 @@ class ShareDriver extends IShareDriver {
 
   @override
   Future<Either<Exception, Unit>> shareFiles({
+    required BuildContext context,
     required List<XFile> files,
     String? subject,
     String? text,
   }) async {
     try {
+      final box = context.findRenderObject() as RenderBox;
       await instance.share(
         ShareParams(
           files: files.map((f) => XFile(f.path)).toList(),
           subject: subject,
           text: text,
+          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
         ),
       );
       return Right(unit);
@@ -34,12 +37,14 @@ class ShareDriver extends IShareDriver {
 
   @override
   Future<Either<Exception, Unit>> shareWidgets({
+    required BuildContext context,
     required List<GlobalKey> keys,
     double pixelRatio = 1.0,
     String? subject,
     String? text,
   }) async {
     try {
+      final box = context.findRenderObject() as RenderBox;
       final files = List.empty(growable: true);
       for (var key in keys) {
         try {
@@ -67,6 +72,7 @@ class ShareDriver extends IShareDriver {
           files: files.map((f) => XFile(f.path)).toList(),
           subject: subject,
           text: text,
+          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
         ),
       );
       return Right(unit);
@@ -77,11 +83,19 @@ class ShareDriver extends IShareDriver {
 
   @override
   Future<Either<Exception, Unit>> shareText({
+    required BuildContext context,
     required String text,
     String? subject,
   }) async {
     try {
-      await instance.share(ShareParams(text: text, subject: subject));
+      final box = context.findRenderObject() as RenderBox;
+      await instance.share(
+        ShareParams(
+          text: text,
+          subject: subject,
+          sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
+        ),
+      );
       return Right(unit);
     } catch (e, s) {
       return Left(Exception('$e $s'));

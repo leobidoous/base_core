@@ -15,11 +15,12 @@ class DioClientDriver extends IHttpDriver with Disposable {
   final dio.Dio client;
   final CrashLog crashLog;
 
-  dio.Dio _client([HttpDriverOptions? options]) => options == null
-      ? client
-      : client.clone(
-          options: client.options.copyWith(baseUrl: options.baseUrl?.call()),
-        );
+  dio.Dio _client([HttpDriverOptions? options]) =>
+      options == null
+          ? client
+          : client.clone(
+            options: client.options.copyWith(baseUrl: options.baseUrl?.call()),
+          );
 
   HttpDriverResponse _responseError(dio.DioException e, {StackTrace? s}) {
     try {
@@ -41,7 +42,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
           }
           break;
         default:
-          statusMessage = '${e.message}\n$data';
+          statusMessage = '[${e.response?.statusCode}] ${e.message}\n$data';
           break;
       }
 
@@ -50,7 +51,19 @@ class DioClientDriver extends IHttpDriver with Disposable {
           exception: e,
           stackTrace: StackTrace.current,
           path: e.requestOptions.baseUrl + e.requestOptions.path,
-          params: e.requestOptions.data ?? e.requestOptions.queryParameters,
+          params:
+              e.requestOptions.data is Map<String, dynamic>
+                  ? {
+                    ...e.requestOptions.data,
+                    ...e.requestOptions.queryParameters,
+                    if (e.response?.data is Map<String, dynamic>)
+                      ...e.response?.data,
+                  }
+                  : {
+                    ...{'requestBodyData': e.requestOptions.data.toString()},
+                    ...{'responseBodyData': e.response?.data.toString()},
+                    ...e.requestOptions.queryParameters,
+                  },
         ),
         stackTrace: s,
       );
@@ -65,8 +78,8 @@ class DioClientDriver extends IHttpDriver with Disposable {
 
       return HttpDriverResponse(
         data: exception,
-        statusCode: -1,
         statusMessage: stackTrace.toString(),
+        statusCode: e.response?.statusCode ?? -1,
       );
     }
   }
@@ -130,11 +143,9 @@ class DioClientDriver extends IHttpDriver with Disposable {
     HttpDriverProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final response = await _client(options).get(
-        path,
-        queryParameters: queryParameters,
-        options: _options(options),
-      );
+      final response = await _client(
+        options,
+      ).get(path, queryParameters: queryParameters, options: _options(options));
       return Right(_responseSuccess(response));
     } on dio.DioException catch (e, s) {
       return Left(_responseError(e, s: s));
@@ -256,8 +267,8 @@ class DioClientDriver extends IHttpDriver with Disposable {
 
   @override
   Map<String, String>? get getHeaders => _client().options.headers.map(
-        (key, value) => MapEntry(key, value.toString()),
-      );
+    (key, value) => MapEntry(key, value.toString()),
+  );
 
   @override
   Future interceptRequests(Future request) {
@@ -286,8 +297,9 @@ class DioClientDriver extends IHttpDriver with Disposable {
     dio.ListFormat? listFormat,
   }) {
     return DioClientDriver(
-      client: _client()
-        ..options = _client().options.copyWith(
+      client:
+          _client()
+            ..options = _client().options.copyWith(
               method: method ?? _client().options.method,
               baseUrl: baseUrl ?? _client().options.baseUrl,
               queryParameters:
@@ -303,12 +315,14 @@ class DioClientDriver extends IHttpDriver with Disposable {
               contentType: contentType ?? _client().options.contentType,
               validateStatus:
                   validateStatus ?? _client().options.validateStatus,
-              receiveDataWhenStatusError: receiveDataWhenStatusError ??
+              receiveDataWhenStatusError:
+                  receiveDataWhenStatusError ??
                   _client().options.receiveDataWhenStatusError,
               followRedirects:
                   followRedirects ?? _client().options.followRedirects,
               maxRedirects: maxRedirects ?? _client().options.maxRedirects,
-              persistentConnection: persistentConnection ??
+              persistentConnection:
+                  persistentConnection ??
                   _client().options.persistentConnection,
               requestEncoder:
                   requestEncoder ?? _client().options.requestEncoder,

@@ -1,3 +1,18 @@
+## 1.4.2
+
+* Update share driver implementation for better file sharing functionality
+* Improve share controller with enhanced platform compatibility
+
+## 1.4.1
+
+* Upgrade dependencies to latest versions
+* Update Firebase packages to latest compatible versions  
+* Improve HTTP error handling in DioClientDriver with status code formatting
+* Update connectivity_plus from 6.1.5 to 7.0.0
+* Update share_plus from 11.1.0 to 12.0.0
+* Update multiple Firebase dependencies with security and performance improvements
+* Update local_auth dependencies for better biometric authentication support
+
 ## 1.4.0
 
 * `BREAKING FEAT`: Bump flutter version to 3.35.1

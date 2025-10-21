@@ -33,9 +33,7 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
   Future<Either<Exception, String>> getToken() async {
     try {
       final token = await instance.getToken();
-      if (token == null) {
-        return Left(Exception('Token está vazio'));
-      }
+      if (token == null) return Left(Exception('Token está vazio'));
       return Right(token);
     } catch (exception, strackTrace) {
       await crashLog.capture(exception: exception, stackTrace: strackTrace);
