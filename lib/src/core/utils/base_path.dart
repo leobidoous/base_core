@@ -65,5 +65,5 @@ class BasePath<T> with EquatableMixin {
   String toString() => completePath;
 
   @override
-  List<Object?> get props => [path, rootPath];
+  List<Object?> get props => [completePath];
 }

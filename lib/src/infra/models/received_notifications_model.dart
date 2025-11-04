@@ -25,11 +25,18 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
   });
 
   factory ReceivedNotificationModel.fromMap(Map<String, dynamic> map) {
+    // Gerar um ID único baseado no timestamp se não houver ID no map
+    final id =
+        map['id'] != null
+            ? int.tryParse(map['id'].toString()) ??
+                DateTime.now().millisecondsSinceEpoch.remainder(100000)
+            : DateTime.now().millisecondsSinceEpoch.remainder(100000);
+
     return ReceivedNotificationModel(
-      id: int.tryParse(map['id'].toString()) ?? 0,
-      title: map['title'],
-      body: map['body'],
-      payload: map['payload'],
+      id: id,
+      body: map['body']?.toString() ?? '',
+      title: map['title']?.toString() ?? '',
+      payload: map['payload']?.toString() ?? '',
     );
   }
 
@@ -45,43 +52,43 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
   }
 
   String get toJson => json.encode({
-        id,
-        title,
-        body,
-        payload,
-        senderId,
-        category,
-        collapseKey,
-        contentAvailable,
-        from,
-        messageId,
-        messageType,
-        mutableContent,
-        sentTime,
-        threadId,
-        ttl,
-      });
+    id,
+    title,
+    body,
+    payload,
+    senderId,
+    category,
+    collapseKey,
+    contentAvailable,
+    from,
+    messageId,
+    messageType,
+    mutableContent,
+    sentTime,
+    threadId,
+    ttl,
+  });
 
   ReceivedNotificationEntity get toEntity => this;
 
   @override
   List<Object?> get props => [
-        id,
-        title,
-        body,
-        payload,
-        senderId,
-        category,
-        collapseKey,
-        contentAvailable,
-        from,
-        messageId,
-        messageType,
-        mutableContent,
-        sentTime,
-        threadId,
-        ttl,
-      ];
+    id,
+    title,
+    body,
+    payload,
+    senderId,
+    category,
+    collapseKey,
+    contentAvailable,
+    from,
+    messageId,
+    messageType,
+    mutableContent,
+    sentTime,
+    threadId,
+    ttl,
+  ];
 
   @override
   bool? get stringify => true;

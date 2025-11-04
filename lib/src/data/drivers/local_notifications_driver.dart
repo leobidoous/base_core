@@ -86,10 +86,11 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
         android: androidDetails,
         iOS: iOSDetails,
       );
+
       await _localNotificationsPlugin.show(
         notification.id,
-        notification.body,
         notification.title,
+        notification.body,
         platformChannelSpecifics,
         payload: notification.payload,
       );

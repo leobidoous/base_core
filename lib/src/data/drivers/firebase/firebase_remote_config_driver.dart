@@ -1,4 +1,5 @@
 import 'package:firebase_remote_config/firebase_remote_config.dart';
+import 'package:flutter/foundation.dart' show debugPrint;
 
 import '../../../core/utils/crash_log.dart';
 import '../../../domain/interfaces/either.dart';
@@ -28,8 +29,10 @@ class FirebaseRemoteConfigDriver extends IFirebaseRemoteConfigDriver {
         ),
       );
       await instance.fetchAndActivate();
+      debugPrint('FirebaseRemoteConfigDriver iniciado com sucesso.');
       return Right(unit);
     } catch (e, s) {
+      debugPrint('Erro ao iniciar FirebaseRemoteConfigDriver.');
       crashLog.capture(exception: e, stackTrace: s);
       return Left(Exception('$e $s'));
     }
