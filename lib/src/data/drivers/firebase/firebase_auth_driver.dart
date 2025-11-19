@@ -76,9 +76,7 @@ class FirebaseAuthDriver extends IFirebaseAuthDriver {
     required String phoneNumber,
   }) async {
     try {
-      final response = await instance.signInWithPhoneNumber(
-        phoneNumber,
-      );
+      final response = await instance.signInWithPhoneNumber(phoneNumber);
       return Right(response);
     } catch (e, s) {
       crashLog.capture(exception: e, stackTrace: s);

@@ -13,26 +13,17 @@ class LogEventModel extends LogEventEntity with EquatableMixin {
   }
 
   factory LogEventModel.fromEntity(LogEventEntity entity) {
-    return LogEventModel(
-      name: entity.name,
-      parameters: entity.parameters,
-    );
+    return LogEventModel(name: entity.name, parameters: entity.parameters);
   }
 
   LogEventEntity get toEntity => this;
 
   Map<String, dynamic> get toMap {
-    return {
-      'name': name,
-      'customer': parameters,
-    };
+    return {'name': name, 'customer': parameters};
   }
 
   @override
-  List<Object?> get props => [
-        name,
-        parameters,
-      ];
+  List<Object?> get props => [name, parameters];
 
   @override
   bool? get stringify => true;

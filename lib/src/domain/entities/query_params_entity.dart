@@ -4,10 +4,7 @@ class QueryParamsEntity {
   final int pageNumber;
   final int pageSize;
 
-  QueryParamsEntity copyWith({
-    int? pageNumber,
-    int? pageSize,
-  }) {
+  QueryParamsEntity copyWith({int? pageNumber, int? pageSize}) {
     return QueryParamsEntity(
       pageNumber: pageNumber ?? this.pageNumber,
       pageSize: pageSize ?? this.pageSize,

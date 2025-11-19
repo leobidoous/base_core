@@ -23,5 +23,5 @@ enum ConnectivityStatus {
   vpn,
 
   /// Other: Device is connected to an unknown network
-  other
+  other,
 }

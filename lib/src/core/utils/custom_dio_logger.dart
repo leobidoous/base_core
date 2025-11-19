@@ -75,9 +75,10 @@ class CustomDioLogger extends Interceptor {
       if (data != null) {
         if (data is Map) _printMapAsTable(options.data as Map?, header: 'Body');
         if (data is FormData) {
-          final formDataMap = <String, dynamic>{}
-            ..addEntries(data.fields)
-            ..addEntries(data.files);
+          final formDataMap =
+              <String, dynamic>{}
+                ..addEntries(data.fields)
+                ..addEntries(data.files);
           _printMapAsTable(formDataMap, header: 'Form data | ${data.boundary}');
         } else {
           _printBlock(data.toString());
@@ -123,8 +124,9 @@ class CustomDioLogger extends Interceptor {
     _printResponseHeader(response);
     if (responseHeader) {
       final responseHeaders = <String, String>{};
-      response.headers
-          .forEach((k, list) => responseHeaders[k] = list.toString());
+      response.headers.forEach(
+        (k, list) => responseHeaders[k] = list.toString(),
+      );
       _printMapAsTable(responseHeaders, header: 'Headers');
     }
 

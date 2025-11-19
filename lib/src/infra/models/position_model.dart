@@ -22,17 +22,11 @@ class PositionModel extends PositionEntity with EquatableMixin {
   PositionEntity get toEntity => this;
 
   Map<String, dynamic> get toMap {
-    return {
-      'latitude': latitude,
-      'longitude': longitude,
-    };
+    return {'latitude': latitude, 'longitude': longitude};
   }
 
   @override
-  List<Object?> get props => [
-        latitude,
-        longitude,
-      ];
+  List<Object?> get props => [latitude, longitude];
 
   @override
   bool? get stringify => true;

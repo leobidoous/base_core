@@ -21,25 +21,27 @@ class ConnectivityDriver implements IConnectivityDriver {
 
   @override
   StreamSubscription<List<ConnectivityStatus>> get onConnectivityChanged {
-    return connectivity.onConnectivityChanged.map((event) {
-      return event.map((status) {
-        switch (status) {
-          case ConnectivityResult.bluetooth:
-            return ConnectivityStatus.bluetooth;
-          case ConnectivityResult.wifi:
-            return ConnectivityStatus.wifi;
-          case ConnectivityResult.ethernet:
-            return ConnectivityStatus.ethernet;
-          case ConnectivityResult.mobile:
-            return ConnectivityStatus.mobile;
-          case ConnectivityResult.none:
-            return ConnectivityStatus.none;
-          case ConnectivityResult.vpn:
-            return ConnectivityStatus.vpn;
-          case ConnectivityResult.other:
-            return ConnectivityStatus.other;
-        }
-      }).toList();
-    }).listen((event) => event);
+    return connectivity.onConnectivityChanged
+        .map((event) {
+          return event.map((status) {
+            switch (status) {
+              case ConnectivityResult.bluetooth:
+                return ConnectivityStatus.bluetooth;
+              case ConnectivityResult.wifi:
+                return ConnectivityStatus.wifi;
+              case ConnectivityResult.ethernet:
+                return ConnectivityStatus.ethernet;
+              case ConnectivityResult.mobile:
+                return ConnectivityStatus.mobile;
+              case ConnectivityResult.none:
+                return ConnectivityStatus.none;
+              case ConnectivityResult.vpn:
+                return ConnectivityStatus.vpn;
+              case ConnectivityResult.other:
+                return ConnectivityStatus.other;
+            }
+          }).toList();
+        })
+        .listen((event) => event);
   }
 }

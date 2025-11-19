@@ -145,9 +145,10 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     required Map<String, dynamic> params,
   }) async {
     try {
-      final items = List<Map<String, dynamic>>.from((params['items'] ?? []))
-          .map(_analyticsEventItem)
-          .toList();
+      final items =
+          List<Map<String, dynamic>>.from(
+            (params['items'] ?? []),
+          ).map(_analyticsEventItem).toList();
       await instance.logAddToCart(
         items: items,
         currency: params['currency']?.toString() ?? 'BRL',
@@ -171,9 +172,10 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     required Map<String, dynamic> params,
   }) async {
     try {
-      final items = List<Map<String, dynamic>>.from((params['items'] ?? []))
-          .map(_analyticsEventItem)
-          .toList();
+      final items =
+          List<Map<String, dynamic>>.from(
+            (params['items'] ?? []),
+          ).map(_analyticsEventItem).toList();
       await instance.logBeginCheckout(
         items: items,
         coupon: params['coupon']?.toString(),
@@ -198,9 +200,10 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     required Map<String, dynamic> params,
   }) async {
     try {
-      final items = List<Map<String, dynamic>>.from((params['items'] ?? []))
-          .map(_analyticsEventItem)
-          .toList();
+      final items =
+          List<Map<String, dynamic>>.from(
+            (params['items'] ?? []),
+          ).map(_analyticsEventItem).toList();
       await instance.logPurchase(
         items: items,
         coupon: params['coupon']?.toString(),
@@ -229,9 +232,10 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     required Map<String, dynamic> params,
   }) async {
     try {
-      final items = List<Map<String, dynamic>>.from((params['items'] ?? []))
-          .map(_analyticsEventItem)
-          .toList();
+      final items =
+          List<Map<String, dynamic>>.from(
+            (params['items'] ?? []),
+          ).map(_analyticsEventItem).toList();
       instance.logSelectItem(
         items: items,
         itemListId: params['itemListId']?.toString(),
@@ -255,9 +259,10 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     required Map<String, dynamic> params,
   }) async {
     try {
-      final items = List<Map<String, dynamic>>.from((params['items'] ?? []))
-          .map(_analyticsEventItem)
-          .toList();
+      final items =
+          List<Map<String, dynamic>>.from(
+            (params['items'] ?? []),
+          ).map(_analyticsEventItem).toList();
       instance.logViewItem(
         items: items,
         currency: params['currency']?.toString() ?? 'BRL',
@@ -278,9 +283,10 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     required Map<String, dynamic> params,
   }) async {
     try {
-      final items = List<Map<String, dynamic>>.from((params['items'] ?? []))
-          .map(_analyticsEventItem)
-          .toList();
+      final items =
+          List<Map<String, dynamic>>.from(
+            (params['items'] ?? []),
+          ).map(_analyticsEventItem).toList();
       instance.logAddPaymentInfo(
         items: items,
         coupon: params['coupon']?.toString(),
@@ -306,9 +312,10 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     required Map<String, dynamic> params,
   }) async {
     try {
-      final items = List<Map<String, dynamic>>.from((params['items'] ?? []))
-          .map(_analyticsEventItem)
-          .toList();
+      final items =
+          List<Map<String, dynamic>>.from(
+            (params['items'] ?? []),
+          ).map(_analyticsEventItem).toList();
       instance.logAddShippingInfo(
         items: items,
         coupon: params['coupon']?.toString(),
@@ -330,9 +337,7 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
   }
 
   @override
-  Future<Either<Exception, Unit>> logout({
-    required String name,
-  }) async {
+  Future<Either<Exception, Unit>> logout({required String name}) async {
     try {
       await Future.wait([
         instance.setUserId(id: null),

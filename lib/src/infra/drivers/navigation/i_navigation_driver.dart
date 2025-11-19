@@ -48,7 +48,7 @@ abstract class INavigationDriver {
   /// Pop Until or Push and replace a named route
   ///
   Future<T?>
-      popUntilOrPushReplacementNamed<T extends Object?, TO extends Object?>(
+  popUntilOrPushReplacementNamed<T extends Object?, TO extends Object?>(
     Object path, {
     Object? arguments,
     bool forRoot = true,
@@ -110,11 +110,7 @@ abstract class INavigationDriver {
   ///
   /// Calls pop repeatedly on the navigator until the predicate returns true.
   ///
-  void popUntil(
-    Object path, {
-    bool forRoot = true,
-    BuildContext? context,
-  });
+  void popUntil(Object path, {bool forRoot = true, BuildContext? context});
 
   ///
   /// Verify if can pop until path.

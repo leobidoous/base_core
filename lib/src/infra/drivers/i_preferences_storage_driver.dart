@@ -13,12 +13,8 @@ abstract class IPreferencesStorageDriver {
     required String key,
     required List<String> value,
   });
-  Future<Either<Exception, Unit>> removeStringByKey({
-    required String key,
-  });
-  Future<Either<Exception, String>> getStringByKey({
-    required String key,
-  });
+  Future<Either<Exception, Unit>> removeStringByKey({required String key});
+  Future<Either<Exception, String>> getStringByKey({required String key});
   Future<Either<Exception, List<String>>> getStringListByKey({
     required String key,
   });

@@ -51,8 +51,9 @@ class ShareDriver extends IShareDriver {
           final boundary =
               key.currentContext!.findRenderObject() as RenderRepaintBoundary;
           final image = await boundary.toImage(pixelRatio: pixelRatio);
-          final byteData =
-              await image.toByteData(format: ui.ImageByteFormat.png);
+          final byteData = await image.toByteData(
+            format: ui.ImageByteFormat.png,
+          );
           final pngBytes = byteData!.buffer.asUint8List();
 
           // Get directory to save the file

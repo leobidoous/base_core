@@ -19,15 +19,17 @@ extension StringExt on String {
 
   String capitalize({bool onlyFirstWord = false}) {
     String cap(List<String> sentence) {
-      return sentence.map((word) {
-        if (word.isEmpty) return word;
+      return sentence
+          .map((word) {
+            if (word.isEmpty) return word;
 
-        if (word.length == 1) return word.toUpperCase();
+            if (word.length == 1) return word.toUpperCase();
 
-        final first = word.substring(0, 1).toUpperCase();
-        final rest = word.substring(1).toLowerCase();
-        return first + rest;
-      }).join(' ');
+            final first = word.substring(0, 1).toUpperCase();
+            final rest = word.substring(1).toLowerCase();
+            return first + rest;
+          })
+          .join(' ');
     }
 
     final splited = split(' ');

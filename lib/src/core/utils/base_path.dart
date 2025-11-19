@@ -41,9 +41,7 @@ class BasePath<T> with EquatableMixin {
   }
 
   BasePath<S> concate<S>(BasePath child) {
-    return BasePath<S>(
-      [this, child.relativePath].join().replaceAll('//', '/'),
-    );
+    return BasePath<S>([this, child.relativePath].join().replaceAll('//', '/'));
   }
 
   /// Relative path

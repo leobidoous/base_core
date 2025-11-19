@@ -5,11 +5,7 @@ import '../../domain/interfaces/either.dart';
 enum ResponseType { json, stream, plain, bytes }
 
 class HttpDriverResponse {
-  HttpDriverResponse({
-    required this.data,
-    this.statusCode,
-    this.statusMessage,
-  });
+  HttpDriverResponse({required this.data, this.statusCode, this.statusMessage});
   final int? statusCode;
   String? statusMessage;
   final dynamic data;

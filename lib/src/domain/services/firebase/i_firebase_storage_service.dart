@@ -6,9 +6,7 @@ import '../../../domain/interfaces/either.dart';
 
 abstract class IFirebaseStorageService {
   Future<Either<Exception, Stream<QuerySnapshot<Map<String, dynamic>>>>>
-      getCollectionStream({
-    required QuerySnapshotFiltersEntity filters,
-  });
+  getCollectionStream({required QuerySnapshotFiltersEntity filters});
 
   Future<Either<Exception, QuerySnapshot<Map<String, dynamic>>>> getCollection({
     required QuerySnapshotFiltersEntity filters,

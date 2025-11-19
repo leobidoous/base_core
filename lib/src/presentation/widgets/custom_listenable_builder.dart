@@ -16,7 +16,8 @@ class CustomListenableBuilder<T, E, S> extends StatelessWidget {
     bool isLoading,
     bool hasError,
     E? error,
-  ) builder;
+  )
+  builder;
 
   @override
   Widget build(BuildContext context) {

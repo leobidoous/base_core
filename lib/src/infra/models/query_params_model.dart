@@ -5,10 +5,7 @@ import 'package:equatable/equatable.dart';
 import '../../domain/entities/query_params_entity.dart';
 
 class QueryParamsModel extends QueryParamsEntity with EquatableMixin {
-  QueryParamsModel({
-    super.pageNumber,
-    super.pageSize,
-  });
+  QueryParamsModel({super.pageNumber, super.pageSize});
 
   factory QueryParamsModel.fromMap(Map<String, dynamic> map) {
     return QueryParamsModel(
@@ -30,19 +27,13 @@ class QueryParamsModel extends QueryParamsEntity with EquatableMixin {
   String get toJson => json.encode(toMap);
 
   Map<String, dynamic> get toMap {
-    return {
-      'PageNumber': pageNumber,
-      'PageSize': pageSize,
-    };
+    return {'PageNumber': pageNumber, 'PageSize': pageSize};
   }
 
   QueryParamsEntity get toEntity => this;
 
   @override
-  List<Object?> get props => [
-        pageNumber,
-        pageSize,
-      ];
+  List<Object?> get props => [pageNumber, pageSize];
 
   @override
   bool? get stringify => true;

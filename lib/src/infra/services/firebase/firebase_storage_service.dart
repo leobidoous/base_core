@@ -62,7 +62,7 @@ class FirebaseStorageService extends IFirebaseStorageService {
 
   @override
   Future<Either<Exception, Stream<QuerySnapshot<Map<String, dynamic>>>>>
-      getCollectionStream({required QuerySnapshotFiltersEntity filters}) {
+  getCollectionStream({required QuerySnapshotFiltersEntity filters}) {
     return firebaseStorageDriver.getCollectionStream(filters: filters);
   }
 }

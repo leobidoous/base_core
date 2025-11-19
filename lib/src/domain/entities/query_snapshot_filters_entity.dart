@@ -55,7 +55,8 @@ class QuerySnapshotFiltersEntity {
           whereFieldIsGreaterThan ?? this.whereFieldIsGreaterThan,
       whereFieldIsLessThanOrEqualTo:
           whereFieldIsLessThanOrEqualTo ?? this.whereFieldIsLessThanOrEqualTo,
-      whereFieldIsGreaterThanOrEqualTo: whereFieldIsGreaterThanOrEqualTo ??
+      whereFieldIsGreaterThanOrEqualTo:
+          whereFieldIsGreaterThanOrEqualTo ??
           this.whereFieldIsGreaterThanOrEqualTo,
     );
   }

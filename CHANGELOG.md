@@ -1,3 +1,8 @@
+## 1.4.3
+
+* Upgrade dependencies to latest versions
+* Update package dependencies for improved stability
+
 ## 1.4.2
 
 * Update share driver implementation for better file sharing functionality

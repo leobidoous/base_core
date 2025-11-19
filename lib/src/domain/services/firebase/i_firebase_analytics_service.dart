@@ -8,9 +8,7 @@ abstract class IFirebaseAnalyticsService extends IAppTrackingService {
     required String value,
     Map<String, Object>? params,
   });
-  Future<Either<Exception, Unit>> logout({
-    required String name,
-  });
+  Future<Either<Exception, Unit>> logout({required String name});
   Future<Either<Exception, Unit>> setUserProperty({
     required String name,
     required String value,

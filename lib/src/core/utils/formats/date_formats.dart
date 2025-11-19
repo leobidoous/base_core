@@ -9,9 +9,7 @@ class DateFormat {
   }) {
     if (date == null) return '';
 
-    return df.DateFormat(pattern, locale).format(
-      date,
-    );
+    return df.DateFormat(pattern, locale).format(date);
   }
 
   static DateTime tryParseOrDateNow(

@@ -22,13 +22,11 @@ class FirebaseStorageDriver extends IFirebaseStorageDriver {
 
   @override
   Future<Either<Exception, Stream<QuerySnapshot<Map<String, dynamic>>>>>
-      getCollectionStream({
-    required QuerySnapshotFiltersEntity filters,
-  }) async {
+  getCollectionStream({required QuerySnapshotFiltersEntity filters}) async {
     try {
       Query<Map<String, dynamic>> instance = this.instance.collection(
-            filters.collection,
-          );
+        filters.collection,
+      );
 
       if (filters.whereFieldIsEqualTo != null) {
         filters.whereFieldIsEqualTo?.entries.forEach((e) {
@@ -102,8 +100,8 @@ class FirebaseStorageDriver extends IFirebaseStorageDriver {
   }) async {
     try {
       Query<Map<String, dynamic>> instance = this.instance.collection(
-            filters.collection,
-          );
+        filters.collection,
+      );
 
       if (filters.whereFieldIsEqualTo != null) {
         filters.whereFieldIsEqualTo?.entries.forEach((e) {
