@@ -117,9 +117,12 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
   }
 
   @override
-  Future<Either<Exception, Unit>> saveToken({required String userId}) async {
+  Future<Either<Exception, Unit>> saveToken({
+    required String userId,
+    String collection = 'users',
+  }) async {
     final response = await storageDriver.docGet(
-      collection: 'users',
+      collection: collection,
       doc: userId,
     );
     final token = await getToken();
@@ -127,7 +130,7 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
       return response.fold(
         (l) async {
           final response = await storageDriver.docSet(
-            collection: 'users',
+            collection: collection,
             id: userId,
             data: {
               'deviceTokens': [token],
@@ -143,7 +146,7 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
             );
             if (!deviceTokens.contains(token)) {
               final response = await storageDriver.docSet(
-                collection: 'users/',
+                collection: collection,
                 id: userId,
                 data: {'deviceTokens': deviceTokens..add(token)},
               );

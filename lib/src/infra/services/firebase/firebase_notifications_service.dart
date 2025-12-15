@@ -37,7 +37,13 @@ class FirebaseNotificationsService extends IFirebaseNotificationsService {
   }
 
   @override
-  Future<Either<Exception, Unit>> saveToken({required String userId}) {
-    return firebaseNotificationsDriver.saveToken(userId: userId);
+  Future<Either<Exception, Unit>> saveToken({
+    required String userId,
+    String collection = 'users',
+  }) {
+    return firebaseNotificationsDriver.saveToken(
+      userId: userId,
+      collection: collection,
+    );
   }
 }
