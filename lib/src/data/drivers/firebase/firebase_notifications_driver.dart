@@ -106,7 +106,7 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
     required String topic,
   }) async {
     try {
-      await instance.unsubscribeFromTopic(topic).timeout(Durations.long2);
+      await instance.unsubscribeFromTopic(topic);
       debugPrint('Unsubscribed from topic: $topic');
       return Right(unit);
     } catch (exception, strackTrace) {
