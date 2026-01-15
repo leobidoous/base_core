@@ -115,4 +115,13 @@ class PermissionService extends IPermissionService {
       return Left(Exception(e));
     }
   }
+
+  @override
+  Future<Either<Exception, bool>> openAppPermissionSettings() async {
+    try {
+      return Right(await openAppSettings());
+    } catch (e) {
+      return Left(Exception(e));
+    }
+  }
 }

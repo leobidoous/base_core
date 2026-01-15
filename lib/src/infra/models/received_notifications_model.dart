@@ -26,11 +26,10 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
 
   factory ReceivedNotificationModel.fromMap(Map<String, dynamic> map) {
     // Gerar um ID único baseado no timestamp se não houver ID no map
-    final id =
-        map['id'] != null
-            ? int.tryParse(map['id'].toString()) ??
-                DateTime.now().millisecondsSinceEpoch.remainder(100000)
-            : DateTime.now().millisecondsSinceEpoch.remainder(100000);
+    final id = map['id'] != null
+        ? int.tryParse(map['id'].toString()) ??
+              DateTime.now().millisecondsSinceEpoch.remainder(100000)
+        : DateTime.now().millisecondsSinceEpoch.remainder(100000);
 
     return ReceivedNotificationModel(
       id: id,

@@ -5,7 +5,7 @@ import '../../infra/drivers/i_secure_storage_driver.dart';
 
 class SecureStorageDriver extends ISecureStorageDriver {
   final _storage = const FlutterSecureStorage(
-    aOptions: AndroidOptions(encryptedSharedPreferences: true),
+    aOptions: AndroidOptions(),
     iOptions: IOSOptions(accessibility: KeychainAccessibility.first_unlock),
   );
 

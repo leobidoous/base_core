@@ -9,4 +9,5 @@ abstract class IPermissionService {
   Future<Either<Exception, PermissionStatusType>> getPermissionStatus({
     required PermissionType permission,
   });
+  Future<Either<Exception, bool>> openAppPermissionSettings();
 }

@@ -15,12 +15,11 @@ class DioClientDriver extends IHttpDriver with Disposable {
   final dio.Dio client;
   final CrashLog crashLog;
 
-  dio.Dio _client([HttpDriverOptions? options]) =>
-      options == null
-          ? client
-          : client.clone(
-            options: client.options.copyWith(baseUrl: options.baseUrl?.call()),
-          );
+  dio.Dio _client([HttpDriverOptions? options]) => options == null
+      ? client
+      : client.clone(
+          options: client.options.copyWith(baseUrl: options.baseUrl?.call()),
+        );
 
   HttpDriverResponse _responseError(dio.DioException e, {StackTrace? s}) {
     try {
@@ -51,19 +50,18 @@ class DioClientDriver extends IHttpDriver with Disposable {
           exception: e,
           stackTrace: StackTrace.current,
           path: e.requestOptions.baseUrl + e.requestOptions.path,
-          params:
-              e.requestOptions.data is Map<String, dynamic>
-                  ? {
-                    ...e.requestOptions.data,
-                    ...e.requestOptions.queryParameters,
-                    if (e.response?.data is Map<String, dynamic>)
-                      ...e.response?.data,
-                  }
-                  : {
-                    ...{'requestBodyData': e.requestOptions.data.toString()},
-                    ...{'responseBodyData': e.response?.data.toString()},
-                    ...e.requestOptions.queryParameters,
-                  },
+          params: e.requestOptions.data is Map<String, dynamic>
+              ? {
+                  ...e.requestOptions.data,
+                  ...e.requestOptions.queryParameters,
+                  if (e.response?.data is Map<String, dynamic>)
+                    ...e.response?.data,
+                }
+              : {
+                  ...{'requestBodyData': e.requestOptions.data.toString()},
+                  ...{'responseBodyData': e.response?.data.toString()},
+                  ...e.requestOptions.queryParameters,
+                },
         ),
         stackTrace: s,
       );
@@ -96,8 +94,8 @@ class DioClientDriver extends IHttpDriver with Disposable {
       contentType: options?.contentType,
       headers: {
         if (options != null && options.accessToken != null)
-          'Authorization':
-              '${options.accessTokenType} ${options.accessToken}'.trim(),
+          'Authorization': '${options.accessTokenType} ${options.accessToken}'
+              .trim(),
         if (options != null && options.apiKey != null)
           '${options.apiMapKey}': '${options.apiKey}',
         ...?options?.extraHeaders,
@@ -297,39 +295,30 @@ class DioClientDriver extends IHttpDriver with Disposable {
     dio.ListFormat? listFormat,
   }) {
     return DioClientDriver(
-      client:
-          _client()
-            ..options = _client().options.copyWith(
-              method: method ?? _client().options.method,
-              baseUrl: baseUrl ?? _client().options.baseUrl,
-              queryParameters:
-                  queryParameters ?? _client().options.queryParameters,
-              connectTimeout:
-                  connectTimeout ?? _client().options.connectTimeout,
-              receiveTimeout:
-                  receiveTimeout ?? _client().options.receiveTimeout,
-              sendTimeout: sendTimeout ?? _client().options.sendTimeout,
-              extra: extra ?? _client().options.extra,
-              headers: headers ?? _client().options.headers,
-              responseType: responseType ?? _client().options.responseType,
-              contentType: contentType ?? _client().options.contentType,
-              validateStatus:
-                  validateStatus ?? _client().options.validateStatus,
-              receiveDataWhenStatusError:
-                  receiveDataWhenStatusError ??
-                  _client().options.receiveDataWhenStatusError,
-              followRedirects:
-                  followRedirects ?? _client().options.followRedirects,
-              maxRedirects: maxRedirects ?? _client().options.maxRedirects,
-              persistentConnection:
-                  persistentConnection ??
-                  _client().options.persistentConnection,
-              requestEncoder:
-                  requestEncoder ?? _client().options.requestEncoder,
-              responseDecoder:
-                  responseDecoder ?? _client().options.responseDecoder,
-              listFormat: listFormat ?? _client().options.listFormat,
-            ),
+      client: _client()
+        ..options = _client().options.copyWith(
+          method: method ?? _client().options.method,
+          baseUrl: baseUrl ?? _client().options.baseUrl,
+          queryParameters: queryParameters ?? _client().options.queryParameters,
+          connectTimeout: connectTimeout ?? _client().options.connectTimeout,
+          receiveTimeout: receiveTimeout ?? _client().options.receiveTimeout,
+          sendTimeout: sendTimeout ?? _client().options.sendTimeout,
+          extra: extra ?? _client().options.extra,
+          headers: headers ?? _client().options.headers,
+          responseType: responseType ?? _client().options.responseType,
+          contentType: contentType ?? _client().options.contentType,
+          validateStatus: validateStatus ?? _client().options.validateStatus,
+          receiveDataWhenStatusError:
+              receiveDataWhenStatusError ??
+              _client().options.receiveDataWhenStatusError,
+          followRedirects: followRedirects ?? _client().options.followRedirects,
+          maxRedirects: maxRedirects ?? _client().options.maxRedirects,
+          persistentConnection:
+              persistentConnection ?? _client().options.persistentConnection,
+          requestEncoder: requestEncoder ?? _client().options.requestEncoder,
+          responseDecoder: responseDecoder ?? _client().options.responseDecoder,
+          listFormat: listFormat ?? _client().options.listFormat,
+        ),
       crashLog: crashLog,
     );
   }

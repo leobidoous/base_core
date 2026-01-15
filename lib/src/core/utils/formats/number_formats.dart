@@ -9,12 +9,11 @@ class NumberFormat {
     String? symbol = 'R\$',
     int? decimalDigits,
   }) {
-    final format =
-        nf.NumberFormat.currency(
-          locale: locale,
-          symbol: symbol,
-          decimalDigits: decimalDigits,
-        ).format;
+    final format = nf.NumberFormat.currency(
+      locale: locale,
+      symbol: symbol,
+      decimalDigits: decimalDigits,
+    ).format;
     try {
       if (value.toString().contains('e')) {
         return format(value);
