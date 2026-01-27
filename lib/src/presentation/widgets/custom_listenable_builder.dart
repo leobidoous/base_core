@@ -5,8 +5,8 @@ import '../../domain/interfaces/custom_controller.dart';
 class CustomListenableBuilder<T, E, S> extends StatelessWidget {
   const CustomListenableBuilder({
     super.key,
-    required this.controller,
     required this.builder,
+    required this.controller,
   });
 
   final CustomController<E, S> controller;

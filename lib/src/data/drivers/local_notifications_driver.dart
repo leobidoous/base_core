@@ -9,8 +9,6 @@ import 'package:flutter_local_notifications/flutter_local_notifications.dart'
         InitializationSettings,
         AndroidNotificationDetails,
         NotificationDetails,
-        Importance,
-        Priority,
         DarwinNotificationDetails;
 import 'package:rxdart/subjects.dart' show BehaviorSubject;
 
@@ -44,7 +42,7 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
         iOS: settingsIOS,
       );
       await _localNotificationsPlugin.initialize(
-        settings,
+        settings: settings,
         onDidReceiveNotificationResponse: (NotificationResponse payload) async {
           debugPrint('notification payload: $payload');
           onReceiveNotification.add(payload);
@@ -77,8 +75,8 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
         'high_importance_channel',
         'High Importance Notifications',
         channelDescription: 'This channel is used for important notifications.',
-        importance: Importance.max,
-        priority: Priority.high,
+        importance: .max,
+        priority: .high,
         ticker: 'ticker',
       );
       const iOSDetails = DarwinNotificationDetails();
@@ -88,11 +86,11 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
       );
 
       await _localNotificationsPlugin.show(
-        notification.id,
-        notification.title,
-        notification.body,
-        platformChannelSpecifics,
+        id: notification.id,
+        body: notification.body,
+        title: notification.title,
         payload: notification.payload,
+        notificationDetails: platformChannelSpecifics,
       );
       debugPrint('LocalNotificationsDriver exibida com sucesso: $notification');
       return Right(unit);
