@@ -2,9 +2,16 @@ import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:flutter/foundation.dart';
 
 import '../../../core/utils/crash_log.dart';
+import '../../../domain/entities/firebase_add_to_cart_entity.dart';
+import '../../../domain/entities/firebase_analytics_item_entity.dart';
+import '../../../domain/entities/firebase_begin_checkout_entity.dart';
+import '../../../domain/entities/firebase_purchase_entity.dart';
 import '../../../domain/entities/log_event_entity.dart';
 import '../../../domain/interfaces/either.dart';
 import '../../../infra/drivers/firebase/i_firebase_analytics_driver.dart';
+import '../../../infra/models/firebase_add_to_cart_model.dart';
+import '../../../infra/models/firebase_begin_checkout_model.dart';
+import '../../../infra/models/firebase_purchase_model.dart';
 
 class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
   FirebaseAnalyticsDriver({required this.crashLog});
@@ -111,7 +118,121 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     }
   }
 
-  AnalyticsEventItem _analyticsEventItem(Map<String, dynamic> i) {
+  /// Converts FirebaseAnalyticsItemEntity to AnalyticsEventItem
+  AnalyticsEventItem _toAnalyticsEventItem(FirebaseAnalyticsItemEntity item) {
+    return AnalyticsEventItem(
+      affiliation: item.affiliation,
+      coupon: item.coupon,
+      creativeName: item.creativeName,
+      creativeSlot: item.creativeSlot,
+      discount: item.discount,
+      index: item.index,
+      itemBrand: item.itemBrand,
+      itemCategory: item.itemCategory,
+      itemCategory2: item.itemCategory2,
+      itemCategory3: item.itemCategory3,
+      itemCategory4: item.itemCategory4,
+      itemCategory5: item.itemCategory5,
+      itemId: item.itemId,
+      itemListId: item.itemListId,
+      itemListName: item.itemListName,
+      itemName: item.itemName,
+      itemVariant: item.itemVariant,
+      locationId: item.locationId,
+      price: item.price,
+      promotionId: item.promotionId,
+      promotionName: item.promotionName,
+      quantity: item.quantity,
+      currency: item.currency,
+      parameters: item.parameters,
+    );
+  }
+
+  @override
+  Future<Either<Exception, Unit>> addToCart({
+    required FirebaseAddToCartEntity data,
+    Map<String, Object>? parameters,
+    bool global = false,
+  }) async {
+    try {
+      final items = data.items.map(_toAnalyticsEventItem).toList();
+      await instance.logAddToCart(
+        items: items,
+        currency: data.currency ?? 'BRL',
+        value: data.value?.toDouble(),
+        parameters: _convertToMapStringObject(parameters),
+        callOptions: AnalyticsCallOptions(global: global),
+      );
+      debugPrint(
+        '''FirebaseAnalyticsDriver.addToCart ${FirebaseAddToCartModel.fromEntity(data).toMap}''',
+      );
+      return Right(unit);
+    } catch (exception, stackTrace) {
+      debugPrint('FirebaseAnalyticsDriver.addToCart: $exception');
+      crashLog.capture(exception: exception, stackTrace: stackTrace);
+      return Left(Exception(exception));
+    }
+  }
+
+  @override
+  Future<Either<Exception, Unit>> beginCheckout({
+    required FirebaseBeginCheckoutEntity data,
+    Map<String, Object>? parameters,
+    bool global = false,
+  }) async {
+    try {
+      final items = data.items.map(_toAnalyticsEventItem).toList();
+      await instance.logBeginCheckout(
+        items: items,
+        coupon: data.coupon,
+        currency: data.currency ?? 'BRL',
+        value: data.value?.toDouble(),
+        parameters: _convertToMapStringObject(parameters),
+        callOptions: AnalyticsCallOptions(global: global),
+      );
+      debugPrint(
+        '''FirebaseAnalyticsDriver.beginCheckout ${FirebaseBeginCheckoutModel.fromEntity(data).toMap}''',
+      );
+      return Right(unit);
+    } catch (exception, stackTrace) {
+      debugPrint('FirebaseAnalyticsDriver.beginCheckout: $exception');
+      crashLog.capture(exception: exception, stackTrace: stackTrace);
+      return Left(Exception(exception));
+    }
+  }
+
+  @override
+  Future<Either<Exception, Unit>> purchase({
+    required FirebasePurchaseEntity data,
+    Map<String, Object>? parameters,
+    bool global = false,
+  }) async {
+    try {
+      final items = data.items.map(_toAnalyticsEventItem).toList();
+      await instance.logPurchase(
+        items: items,
+        coupon: data.coupon,
+        currency: data.currency ?? 'BRL',
+        affiliation: data.affiliation,
+        tax: data.tax?.toDouble(),
+        value: data.value?.toDouble(),
+        transactionId: data.transactionId,
+        shipping: data.shipping?.toDouble(),
+        parameters: _convertToMapStringObject(parameters),
+        callOptions: AnalyticsCallOptions(global: global),
+      );
+      debugPrint(
+        '''FirebaseAnalyticsDriver.logPurchase ${FirebasePurchaseModel.fromEntity(data).toMap}''',
+      );
+      return Right(unit);
+    } catch (exception, stackTrace) {
+      debugPrint('FirebaseAnalyticsDriver.logPurchase: $exception');
+      crashLog.capture(exception: exception, stackTrace: stackTrace);
+      return Left(Exception(exception));
+    }
+  }
+
+  AnalyticsEventItem _analyticsEventItemFromMap(Map<String, dynamic> i) {
     return AnalyticsEventItem(
       coupon: i['coupon']?.toString(),
       itemId: i['itemId']?.toString(),
@@ -141,107 +262,23 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
   }
 
   @override
-  Future<Either<Exception, Unit>> addToCart({
-    required Map<String, dynamic> params,
-  }) async {
-    try {
-      final items = List<Map<String, dynamic>>.from(
-        (params['items'] ?? []),
-      ).map(_analyticsEventItem).toList();
-      await instance.logAddToCart(
-        items: items,
-        currency: params['currency']?.toString() ?? 'BRL',
-        value: double.tryParse(params['value'].toString()),
-        parameters: _convertToMapStringObject(params['parameters']),
-        callOptions: AnalyticsCallOptions(
-          global: params['callOptions']?['global'] ?? false,
-        ),
-      );
-      debugPrint('FirebaseAnalyticsDriver.addToCart $params');
-      return Right(unit);
-    } catch (exception, stackTrace) {
-      debugPrint('FirebaseAnalyticsDriver.addToCart: $exception');
-      crashLog.capture(exception: exception, stackTrace: stackTrace);
-      return Left(Exception(exception));
-    }
-  }
-
-  @override
-  Future<Either<Exception, Unit>> beginCheckout({
-    required Map<String, dynamic> params,
-  }) async {
-    try {
-      final items = List<Map<String, dynamic>>.from(
-        (params['items'] ?? []),
-      ).map(_analyticsEventItem).toList();
-      await instance.logBeginCheckout(
-        items: items,
-        coupon: params['coupon']?.toString(),
-        currency: params['currency']?.toString() ?? 'BRL',
-        value: double.tryParse(params['value'].toString()),
-        parameters: _convertToMapStringObject(params['parameters']),
-        callOptions: AnalyticsCallOptions(
-          global: params['callOptions']?['global'] ?? false,
-        ),
-      );
-      debugPrint('FirebaseAnalyticsDriver.beginCheckout $params');
-      return Right(unit);
-    } catch (exception, stackTrace) {
-      debugPrint('FirebaseAnalyticsDriver.beginCheckout: $exception');
-      crashLog.capture(exception: exception, stackTrace: stackTrace);
-      return Left(Exception(exception));
-    }
-  }
-
-  @override
-  Future<Either<Exception, Unit>> purchase({
-    required Map<String, dynamic> params,
-  }) async {
-    try {
-      final items = List<Map<String, dynamic>>.from(
-        (params['items'] ?? []),
-      ).map(_analyticsEventItem).toList();
-      await instance.logPurchase(
-        items: items,
-        coupon: params['coupon']?.toString(),
-        currency: params['currency'] ?? 'BRL',
-        affiliation: params['affiliation']?.toString(),
-        tax: double.tryParse(params['tax'].toString()),
-        value: double.tryParse(params['value'].toString()),
-        transactionId: params['transactionId']?.toString(),
-        shipping: double.tryParse(params['shipping'].toString()),
-        parameters: _convertToMapStringObject(params['parameters']),
-        callOptions: AnalyticsCallOptions(
-          global: params['callOptions']?['global'] ?? false,
-        ),
-      );
-      debugPrint('FirebaseAnalyticsDriver.logPurchase $params');
-      return Right(unit);
-    } catch (exception, stackTrace) {
-      debugPrint('FirebaseAnalyticsDriver.logPurchase: $exception');
-      crashLog.capture(exception: exception, stackTrace: stackTrace);
-      return Left(Exception(exception));
-    }
-  }
-
-  @override
   Future<Either<Exception, Unit>> logSelectItem({
-    required Map<String, dynamic> params,
+    required List<Map<String, dynamic>> items,
+    String? itemListId,
+    String? itemListName,
+    Map<String, Object>? parameters,
+    bool global = false,
   }) async {
     try {
-      final items = List<Map<String, dynamic>>.from(
-        (params['items'] ?? []),
-      ).map(_analyticsEventItem).toList();
+      final analyticsItems = items.map(_analyticsEventItemFromMap).toList();
       instance.logSelectItem(
-        items: items,
-        itemListId: params['itemListId']?.toString(),
-        itemListName: params['itemListName']?.toString(),
-        parameters: _convertToMapStringObject(params['parameters']),
-        callOptions: AnalyticsCallOptions(
-          global: params['callOptions']?['global'] ?? false,
-        ),
+        items: analyticsItems,
+        itemListId: itemListId,
+        itemListName: itemListName,
+        parameters: _convertToMapStringObject(parameters),
+        callOptions: AnalyticsCallOptions(global: global),
       );
-      debugPrint('FirebaseAnalyticsDriver.logSelectItem $params');
+      debugPrint('FirebaseAnalyticsDriver.logSelectItem $items');
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.logSelectItem: $exception');
@@ -252,19 +289,20 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
 
   @override
   Future<Either<Exception, Unit>> logViewItem({
-    required Map<String, dynamic> params,
+    required List<Map<String, dynamic>> items,
+    String? currency,
+    double? value,
+    Map<String, Object>? parameters,
   }) async {
     try {
-      final items = List<Map<String, dynamic>>.from(
-        (params['items'] ?? []),
-      ).map(_analyticsEventItem).toList();
+      final analyticsItems = items.map(_analyticsEventItemFromMap).toList();
       instance.logViewItem(
-        items: items,
-        currency: params['currency']?.toString() ?? 'BRL',
-        value: double.tryParse(params['value'].toString()),
-        parameters: _convertToMapStringObject(params['parameters']),
+        items: analyticsItems,
+        currency: currency ?? 'BRL',
+        value: value,
+        parameters: _convertToMapStringObject(parameters),
       );
-      debugPrint('FirebaseAnalyticsDriver.logViewItem $params');
+      debugPrint('FirebaseAnalyticsDriver.logViewItem $items');
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.logViewItem: $exception');
@@ -275,24 +313,26 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
 
   @override
   Future<Either<Exception, Unit>> logAddPaymentInfo({
-    required Map<String, dynamic> params,
+    required List<Map<String, dynamic>> items,
+    String? coupon,
+    String? paymentType,
+    String? currency,
+    double? value,
+    Map<String, Object>? parameters,
+    bool global = false,
   }) async {
     try {
-      final items = List<Map<String, dynamic>>.from(
-        (params['items'] ?? []),
-      ).map(_analyticsEventItem).toList();
+      final analyticsItems = items.map(_analyticsEventItemFromMap).toList();
       instance.logAddPaymentInfo(
-        items: items,
-        coupon: params['coupon']?.toString(),
-        paymentType: params['paymentType']?.toString(),
-        currency: params['currency']?.toString() ?? 'BRL',
-        value: double.tryParse(params['value'].toString()),
-        parameters: _convertToMapStringObject(params['parameters']),
-        callOptions: AnalyticsCallOptions(
-          global: params['callOptions']?['global'] ?? false,
-        ),
+        items: analyticsItems,
+        coupon: coupon,
+        paymentType: paymentType,
+        currency: currency ?? 'BRL',
+        value: value,
+        parameters: _convertToMapStringObject(parameters),
+        callOptions: AnalyticsCallOptions(global: global),
       );
-      debugPrint('FirebaseAnalyticsDriver.logAddPaymentInfo $params');
+      debugPrint('FirebaseAnalyticsDriver.logAddPaymentInfo $items');
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.logAddPaymentInfo: $exception');
@@ -303,24 +343,26 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
 
   @override
   Future<Either<Exception, Unit>> logAddShippingInfo({
-    required Map<String, dynamic> params,
+    required List<Map<String, dynamic>> items,
+    String? coupon,
+    String? shippingTier,
+    String? currency,
+    double? value,
+    Map<String, Object>? parameters,
+    bool global = false,
   }) async {
     try {
-      final items = List<Map<String, dynamic>>.from(
-        (params['items'] ?? []),
-      ).map(_analyticsEventItem).toList();
+      final analyticsItems = items.map(_analyticsEventItemFromMap).toList();
       instance.logAddShippingInfo(
-        items: items,
-        coupon: params['coupon']?.toString(),
-        shippingTier: params['shippingTier']?.toString(),
-        currency: params['currency']?.toString() ?? 'BRL',
-        value: double.tryParse(params['value'].toString()),
-        parameters: _convertToMapStringObject(params['parameters']),
-        callOptions: AnalyticsCallOptions(
-          global: params['callOptions']?['global'] ?? false,
-        ),
+        items: analyticsItems,
+        coupon: coupon,
+        shippingTier: shippingTier,
+        currency: currency ?? 'BRL',
+        value: value,
+        parameters: _convertToMapStringObject(parameters),
+        callOptions: AnalyticsCallOptions(global: global),
       );
-      debugPrint('FirebaseAnalyticsDriver.logAddShippingInfo $params');
+      debugPrint('FirebaseAnalyticsDriver.logAddShippingInfo $items');
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.logAddShippingInfo: $exception');

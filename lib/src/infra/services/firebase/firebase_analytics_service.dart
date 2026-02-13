@@ -1,3 +1,6 @@
+import '../../../domain/entities/firebase_add_to_cart_entity.dart';
+import '../../../domain/entities/firebase_begin_checkout_entity.dart';
+import '../../../domain/entities/firebase_purchase_entity.dart';
 import '../../../domain/entities/log_event_entity.dart';
 import '../../../domain/interfaces/either.dart';
 import '../../../domain/services/firebase/i_firebase_analytics_service.dart';
@@ -46,51 +49,115 @@ class FirebaseAnalyticsService extends IFirebaseAnalyticsService {
 
   @override
   Future<Either<Exception, Unit>> addToCart({
-    required Map<String, dynamic> params,
+    required FirebaseAddToCartEntity data,
+    Map<String, Object>? parameters,
+    bool global = false,
   }) {
-    return firebaseAnalyticsDriver.addToCart(params: params);
+    return firebaseAnalyticsDriver.addToCart(
+      data: data,
+      parameters: parameters,
+      global: global,
+    );
   }
 
   @override
   Future<Either<Exception, Unit>> beginCheckout({
-    required Map<String, dynamic> params,
+    required FirebaseBeginCheckoutEntity data,
+    Map<String, Object>? parameters,
+    bool global = false,
   }) {
-    return firebaseAnalyticsDriver.beginCheckout(params: params);
+    return firebaseAnalyticsDriver.beginCheckout(
+      data: data,
+      parameters: parameters,
+      global: global,
+    );
   }
 
   @override
   Future<Either<Exception, Unit>> purchase({
-    required Map<String, dynamic> params,
+    required FirebasePurchaseEntity data,
+    Map<String, Object>? parameters,
+    bool global = false,
   }) {
-    return firebaseAnalyticsDriver.purchase(params: params);
+    return firebaseAnalyticsDriver.purchase(
+      data: data,
+      parameters: parameters,
+      global: global,
+    );
   }
 
   @override
   Future<Either<Exception, Unit>> logAddPaymentInfo({
-    required Map<String, dynamic> params,
+    required List<Map<String, dynamic>> items,
+    String? coupon,
+    String? paymentType,
+    String? currency,
+    double? value,
+    Map<String, Object>? parameters,
+    bool global = false,
   }) {
-    return firebaseAnalyticsDriver.logAddPaymentInfo(params: params);
+    return firebaseAnalyticsDriver.logAddPaymentInfo(
+      items: items,
+      coupon: coupon,
+      paymentType: paymentType,
+      currency: currency,
+      value: value,
+      parameters: parameters,
+      global: global,
+    );
   }
 
   @override
   Future<Either<Exception, Unit>> logAddShippingInfo({
-    required Map<String, dynamic> params,
+    required List<Map<String, dynamic>> items,
+    String? coupon,
+    String? shippingTier,
+    String? currency,
+    double? value,
+    Map<String, Object>? parameters,
+    bool global = false,
   }) {
-    return firebaseAnalyticsDriver.logAddShippingInfo(params: params);
+    return firebaseAnalyticsDriver.logAddShippingInfo(
+      items: items,
+      coupon: coupon,
+      shippingTier: shippingTier,
+      currency: currency,
+      value: value,
+      parameters: parameters,
+      global: global,
+    );
   }
 
   @override
   Future<Either<Exception, Unit>> logSelectItem({
-    required Map<String, dynamic> params,
+    required List<Map<String, dynamic>> items,
+    String? itemListId,
+    String? itemListName,
+    Map<String, Object>? parameters,
+    bool global = false,
   }) {
-    return firebaseAnalyticsDriver.logSelectItem(params: params);
+    return firebaseAnalyticsDriver.logSelectItem(
+      items: items,
+      itemListId: itemListId,
+      itemListName: itemListName,
+      parameters: parameters,
+      global: global,
+    );
   }
 
   @override
   Future<Either<Exception, Unit>> logViewItem({
-    required Map<String, dynamic> params,
+    required List<Map<String, dynamic>> items,
+    String? currency,
+    double? value,
+    Map<String, Object>? parameters,
   }) {
-    return firebaseAnalyticsDriver.logViewItem(params: params);
+    return firebaseAnalyticsDriver.logViewItem(
+      items: items,
+      currency: currency,
+      value: value,
+      parameters: parameters,
+    );
   }
 
   @override

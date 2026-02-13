@@ -1,0 +1,90 @@
+import '../../domain/entities/firebase_analytics_item_entity.dart';
+
+class FirebaseAnalyticsItemModel extends FirebaseAnalyticsItemEntity {
+  const FirebaseAnalyticsItemModel({
+    super.affiliation,
+    super.coupon,
+    super.creativeName,
+    super.creativeSlot,
+    super.discount,
+    super.index,
+    super.itemBrand,
+    super.itemCategory,
+    super.itemCategory2,
+    super.itemCategory3,
+    super.itemCategory4,
+    super.itemCategory5,
+    super.itemId,
+    super.itemListId,
+    super.itemListName,
+    super.itemName,
+    super.itemVariant,
+    super.locationId,
+    super.price,
+    super.promotionId,
+    super.promotionName,
+    super.quantity,
+    super.currency,
+    super.parameters,
+  });
+
+  factory FirebaseAnalyticsItemModel.fromEntity(
+    FirebaseAnalyticsItemEntity entity,
+  ) {
+    return FirebaseAnalyticsItemModel(
+      affiliation: entity.affiliation,
+      coupon: entity.coupon,
+      creativeName: entity.creativeName,
+      creativeSlot: entity.creativeSlot,
+      discount: entity.discount,
+      index: entity.index,
+      itemBrand: entity.itemBrand,
+      itemCategory: entity.itemCategory,
+      itemCategory2: entity.itemCategory2,
+      itemCategory3: entity.itemCategory3,
+      itemCategory4: entity.itemCategory4,
+      itemCategory5: entity.itemCategory5,
+      itemId: entity.itemId,
+      itemListId: entity.itemListId,
+      itemListName: entity.itemListName,
+      itemName: entity.itemName,
+      itemVariant: entity.itemVariant,
+      locationId: entity.locationId,
+      price: entity.price,
+      promotionId: entity.promotionId,
+      promotionName: entity.promotionName,
+      quantity: entity.quantity,
+      currency: entity.currency,
+      parameters: entity.parameters,
+    );
+  }
+
+  Map<String, dynamic> get toMap {
+    return {
+      if (affiliation != null) 'affiliation': affiliation,
+      if (coupon != null) 'coupon': coupon,
+      if (creativeName != null) 'creativeName': creativeName,
+      if (creativeSlot != null) 'creativeSlot': creativeSlot,
+      if (discount != null) 'discount': discount,
+      if (index != null) 'index': index,
+      if (itemBrand != null) 'itemBrand': itemBrand,
+      if (itemCategory != null) 'itemCategory': itemCategory,
+      if (itemCategory2 != null) 'itemCategory2': itemCategory2,
+      if (itemCategory3 != null) 'itemCategory3': itemCategory3,
+      if (itemCategory4 != null) 'itemCategory4': itemCategory4,
+      if (itemCategory5 != null) 'itemCategory5': itemCategory5,
+      if (itemId != null) 'itemId': itemId,
+      if (itemListId != null) 'itemListId': itemListId,
+      if (itemListName != null) 'itemListName': itemListName,
+      if (itemName != null) 'itemName': itemName,
+      if (itemVariant != null) 'itemVariant': itemVariant,
+      if (locationId != null) 'locationId': locationId,
+      if (price != null) 'price': price,
+      if (promotionId != null) 'promotionId': promotionId,
+      if (promotionName != null) 'promotionName': promotionName,
+      if (quantity != null) 'quantity': quantity,
+      if (currency != null) 'currency': currency,
+      if (parameters != null) 'parameters': parameters,
+    };
+  }
+}
