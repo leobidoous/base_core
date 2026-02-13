@@ -7,6 +7,7 @@ import 'package:path_provider/path_provider.dart';
 import '../../core/utils/crash_log.dart';
 import '../../domain/interfaces/disposable.dart';
 import '../../domain/interfaces/either.dart';
+import '../../infra/context/request_context.dart';
 import '../../infra/drivers/i_http_driver.dart';
 
 class DioClientDriver extends IHttpDriver with Disposable {
@@ -103,6 +104,15 @@ class DioClientDriver extends IHttpDriver with Disposable {
     );
   }
 
+  dio.CancelToken? _cancelToken(HttpDriverOptions? options) {
+    // Prioridade: 1) options.cancelToken, 2) RequestContext.current
+    final optionToken = options?.cancelToken as dio.CancelToken?;
+    if (optionToken != null) return optionToken;
+
+    // Tenta obter do contexto global (definido pelo CustomController)
+    return RequestContext.current;
+  }
+
   HttpDriverResponse _responseSuccess<T>(dio.Response<T> response) {
     return HttpDriverResponse(
       data: response.data,
@@ -124,6 +134,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
         data: data,
         queryParameters: queryParameters,
         options: _options(options),
+        cancelToken: _cancelToken(options),
       );
       return Right(_responseSuccess(response));
     } on dio.DioException catch (e, s) {
@@ -141,9 +152,12 @@ class DioClientDriver extends IHttpDriver with Disposable {
     HttpDriverProgressCallback? onReceiveProgress,
   }) async {
     try {
-      final response = await _client(
-        options,
-      ).get(path, queryParameters: queryParameters, options: _options(options));
+      final response = await _client(options).get(
+        path,
+        queryParameters: queryParameters,
+        options: _options(options),
+        cancelToken: _cancelToken(options),
+      );
       return Right(_responseSuccess(response));
     } on dio.DioException catch (e, s) {
       return Left(_responseError(e, s: s));
@@ -169,6 +183,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
         tempPath,
         options: _options(options),
         queryParameters: queryParameters,
+        cancelToken: _cancelToken(options),
       );
 
       return Right(_responseSuccess(response));
@@ -193,6 +208,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
         data: data,
         queryParameters: queryParameters,
         options: _options(options),
+        cancelToken: _cancelToken(options),
       );
       return Right(_responseSuccess(response));
     } on dio.DioException catch (e, s) {
@@ -216,6 +232,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
         data: data,
         queryParameters: queryParameters,
         options: _options(options),
+        cancelToken: _cancelToken(options),
       );
       return Right(_responseSuccess(response));
     } on dio.DioException catch (e, s) {
@@ -239,6 +256,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
         data: data,
         queryParameters: queryParameters,
         options: _options(options),
+        cancelToken: _cancelToken(options),
       );
       return Right(_responseSuccess(response));
     } on dio.DioException catch (e, s) {

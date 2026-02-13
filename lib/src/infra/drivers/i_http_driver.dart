@@ -22,6 +22,7 @@ class HttpDriverOptions {
     this.accessToken,
     this.responseType,
     this.extraHeaders,
+    this.cancelToken,
     this.apiMapKey = 'apiKey',
     this.accessTokenType = 'Bearer',
   });
@@ -34,6 +35,7 @@ class HttpDriverOptions {
   final String accessTokenType;
   final ResponseType? responseType;
   final HttpAccessToken? accessToken;
+  final HttpCancelToken? cancelToken;
 
   final HttpCustomerId? customerId;
   final Map<String, dynamic>? extraHeaders;
@@ -53,6 +55,7 @@ typedef HttpAccessToken = String;
 typedef HttpCustomerId = String Function();
 typedef HttpBaseUrl = String Function();
 typedef HttpCallbackType<T> = T Function();
+typedef HttpCancelToken = Object;
 
 abstract class IHttpDriver {
   Future<Either<HttpDriverResponse, HttpDriverResponse>> get(

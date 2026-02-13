@@ -1,17 +1,36 @@
 import 'dart:async';
 
+import 'package:dio/dio.dart' show CancelToken;
 import 'package:flutter/foundation.dart' show ValueNotifier, debugPrint;
 
+import '../../infra/context/request_context.dart';
 import 'either.dart';
 
 abstract class CustomController<E, S> extends ValueNotifier<S> {
   CustomController(super.value);
 
   bool _wasDisposed = false;
+  CancelToken? _cancelToken;
   final ValueNotifier<E?> _error = ValueNotifier(null);
   final ValueNotifier<bool> _loading = ValueNotifier(false);
 
   bool get wasDisposed => _wasDisposed;
+
+  /// CancelToken para ser usado nas requisições HTTP
+  /// Cria um novo token se necessário ou retorna o existente
+  CancelToken get cancelToken {
+    if (_cancelToken == null || _cancelToken!.isCancelled) {
+      _cancelToken = CancelToken();
+    }
+    return _cancelToken!;
+  }
+
+  /// Cancela todas as requisições pendentes
+  void cancelRequests([String? reason]) {
+    if (_cancelToken != null && !_cancelToken!.isCancelled) {
+      _cancelToken!.cancel(reason ?? 'Request cancelled by controller');
+    }
+  }
 
   E? get error => _error.value;
   bool get hasError => _error.value != null;
@@ -57,7 +76,14 @@ abstract class CustomController<E, S> extends ValueNotifier<S> {
   }) async {
     clearError();
     setLoading(true);
-    final response = await function();
+
+    // Executa a função dentro de um contexto com o cancelToken
+    // Isso permite que o DioClientDriver acesse o token automaticamente
+    final response = await RequestContext.runWithCancelToken(
+      cancelToken,
+      () => function(),
+    );
+
     response.fold(
       (l) {
         setError(l);
@@ -80,6 +106,7 @@ abstract class CustomController<E, S> extends ValueNotifier<S> {
         return;
       }
       debugPrint('$runtimeType has been disposed');
+      cancelRequests('Controller disposed');
       _error.dispose();
       _loading.dispose();
       _wasDisposed = true;
