@@ -12,11 +12,10 @@ class CrashLog {
     StackTrace? stackTrace,
     bool fatal = false,
   }) async {
-    if (kIsWeb) return;
-
     final error = stackTrace ?? StackTrace.current;
     debugPrint('---------------------------------');
-    debugPrint('Exception: $exception');
+    debugPrint('EXCEPTION: $exception');
+    debugPrint('ERROR: $error');
     debugPrint('---------------------------------');
     await Future.wait(
       logs.map(

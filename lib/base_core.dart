@@ -64,6 +64,7 @@ export 'package:base_core/src/domain/services/i_share_service.dart';
 export 'package:base_core/src/infra/context/request_context.dart';
 export 'package:base_core/src/infra/drivers/firebase/i_firebase_analytics_driver.dart';
 export 'package:base_core/src/infra/drivers/firebase/i_firebase_auth_driver.dart';
+export 'package:base_core/src/infra/drivers/firebase/i_firebase_crashlytics_driver.dart';
 export 'package:base_core/src/infra/drivers/firebase/i_firebase_database_driver.dart';
 export 'package:base_core/src/infra/drivers/firebase/i_firebase_driver.dart';
 export 'package:base_core/src/infra/drivers/firebase/i_firebase_notifications_driver.dart';

@@ -43,9 +43,12 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
       );
       await _localNotificationsPlugin.initialize(
         settings: settings,
-        onDidReceiveNotificationResponse: (NotificationResponse payload) async {
-          debugPrint('notification payload: $payload');
+        onDidReceiveNotificationResponse: (payload) async {
+          debugPrint('onDidReceiveNotificationResponse: $payload');
           onReceiveNotification.add(payload);
+        },
+        onDidReceiveBackgroundNotificationResponse: (details) {
+          debugPrint('onDidReceiveBackgroundNotificationResponse: $details');
         },
       );
       debugPrint('LocalNotificationsDriver iniciado com sucesso.');
@@ -57,13 +60,13 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
   }
 
   @override
-  Future<Either<Exception, Unit>> requestPermissions() {
-    throw UnimplementedError();
+  Future<Either<Exception, Unit>> requestPermissions() async {
+    return Right(unit);
   }
 
   @override
-  Future<Either<Exception, Unit>> scheduleNotification() {
-    throw UnimplementedError();
+  Future<Either<Exception, Unit>> scheduleNotification() async {
+    return Right(unit);
   }
 
   @override
