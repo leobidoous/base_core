@@ -73,4 +73,7 @@ abstract class IFirebaseAnalyticsDriver extends IAppTrackingDriver {
     Map<String, Object>? parameters,
     bool global,
   });
+
+  Future<int?> get getSessionId;
+  Future<String?> get appInstanceId;
 }

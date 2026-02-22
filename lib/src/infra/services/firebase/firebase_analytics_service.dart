@@ -164,4 +164,10 @@ class FirebaseAnalyticsService extends IFirebaseAnalyticsService {
   Future<Either<Exception, Unit>> logout({required String name}) {
     return firebaseAnalyticsDriver.logout(name: name);
   }
+
+  @override
+  Future<int?> get getSessionId => firebaseAnalyticsDriver.getSessionId;
+
+  @override
+  Future<String?> get appInstanceId => firebaseAnalyticsDriver.appInstanceId;
 }

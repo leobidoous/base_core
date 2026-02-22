@@ -71,4 +71,7 @@ abstract class IFirebaseAnalyticsService extends IAppTrackingService {
     Map<String, Object>? parameters,
     bool global,
   });
+
+  Future<int?> get getSessionId;
+  Future<String?> get appInstanceId;
 }

@@ -31,6 +31,7 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
   Future<Either<Exception, Unit>> init({Map<String, dynamic>? params}) async {
     try {
       FirebaseAnalyticsObserver(analytics: instance);
+      debugPrint('FirebaseAnalyticsDriver iniciado com sucesso.');
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.init: $exception');
@@ -109,7 +110,7 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
   }) async {
     try {
       await instance.setUserProperty(name: name, value: value);
-      debugPrint('FirebaseAnalyticsDriver setUserProperty.');
+      debugPrint('FirebaseAnalyticsDriver.setUserProperty: [$name]: $value.');
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.setUserProperty: $exception');
@@ -171,6 +172,32 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
       debugPrint('FirebaseAnalyticsDriver.addToCart: $exception');
       crashLog.capture(exception: exception, stackTrace: stackTrace);
       return Left(Exception(exception));
+    }
+  }
+
+  @override
+  Future<int?> get getSessionId async {
+    try {
+      final sessionId = await instance.getSessionId();
+      debugPrint('FirebaseAnalyticsDriver.getSessionId: $sessionId');
+      return sessionId;
+    } catch (exception, stackTrace) {
+      debugPrint('FirebaseAnalyticsDriver.getSessionId error: $exception');
+      crashLog.capture(exception: exception, stackTrace: stackTrace);
+      return null;
+    }
+  }
+
+  @override
+  Future<String?> get appInstanceId async {
+    try {
+      final instanceId = await instance.appInstanceId;
+      debugPrint('FirebaseAnalyticsDriver.appInstanceId: $instanceId');
+      return instanceId;
+    } catch (exception, stackTrace) {
+      debugPrint('FirebaseAnalyticsDriver.appInstanceId error: $exception');
+      crashLog.capture(exception: exception, stackTrace: stackTrace);
+      return null;
     }
   }
 
