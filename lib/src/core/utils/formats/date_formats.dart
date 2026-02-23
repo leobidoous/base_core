@@ -9,7 +9,7 @@ class DateFormat {
   }) {
     if (date == null) return '';
 
-    return df.DateFormat(pattern, locale).format(date);
+    return df.DateFormat(pattern, locale).format(date.toLocal());
   }
 
   static DateTime tryParseOrDateNow(
@@ -21,7 +21,12 @@ class DateFormat {
     if (date == null || date.isEmpty) {
       return DateTime.now();
     } else {
-      return tryParse(date, pattern: pattern, locale: locale, utc: utc) ??
+      return tryParse(
+            date,
+            pattern: pattern,
+            locale: locale,
+            utc: utc,
+          )?.toLocal() ??
           DateTime.now();
     }
   }
@@ -36,7 +41,7 @@ class DateFormat {
       return null;
     } else {
       try {
-        return df.DateFormat(pattern, locale).parse(date, utc);
+        return df.DateFormat(pattern, locale).parse(date, utc).toLocal();
       } catch (e) {
         return null;
       }
@@ -50,7 +55,7 @@ class DateFormat {
   }) {
     if (date == null) return '';
 
-    return df.DateFormat(pattern, locale).format(date);
+    return df.DateFormat(pattern, locale).format(date.toLocal());
   }
 
   static String toDateTime(
@@ -60,7 +65,7 @@ class DateFormat {
   }) {
     if (date == null) return '';
 
-    return df.DateFormat(pattern, locale).format(date);
+    return df.DateFormat(pattern, locale).format(date.toLocal());
   }
 
   static DateTime? fromString(
@@ -70,7 +75,7 @@ class DateFormat {
     bool utc = false,
   }) {
     try {
-      return df.DateFormat(format, locale).parse(date, utc);
+      return df.DateFormat(format, locale).parse(date, utc).toLocal();
     } catch (e) {
       return null;
     }
@@ -91,6 +96,6 @@ class DateFormat {
   }
 
   static DateTime? timestampToDate(Timestamp? date) {
-    return date?.toDate();
+    return date?.toDate().toLocal();
   }
 }
