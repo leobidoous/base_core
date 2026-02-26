@@ -174,10 +174,13 @@ class DioClientDriver extends IHttpDriver with Disposable {
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      final filename = options?.extraHeaders?['filename'] ?? '';
+      final filename =
+          options?.extraHeaders?['filename'] ?? 'download_$hashCode';
+      final mimeType = options?.extraHeaders?['mimeType'] ?? 'pdf';
 
       if (kIsWeb) {
-        // Para Web: fazer download direto no navegador
+        // Para Web: baixar bytes e retornar para processamento manual
+        // O caller deve usar dart:html para criar o download no navegador
         final response = await _client(options).get(
           path,
           options: _options(
@@ -192,7 +195,7 @@ class DioClientDriver extends IHttpDriver with Disposable {
         // Para App: salvar em diretório temporário
         final tempDir = await getTemporaryDirectory();
         await tempDir.create(recursive: true);
-        final String tempPath = '${tempDir.path}/$filename';
+        final String tempPath = '${tempDir.path}/$filename.$mimeType';
 
         final response = await _client(options).download(
           path,
