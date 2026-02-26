@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:dio/dio.dart' as dio;
+import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:path_provider/path_provider.dart';
 
 import '../../core/utils/crash_log.dart';
@@ -173,20 +174,36 @@ class DioClientDriver extends IHttpDriver with Disposable {
     Map<String, dynamic>? queryParameters,
   }) async {
     try {
-      final tempDir = await getTemporaryDirectory();
-      await tempDir.create(recursive: true);
       final filename = options?.extraHeaders?['filename'] ?? '';
-      final String tempPath = '${tempDir.path}/$filename';
 
-      final response = await _client(options).download(
-        path,
-        tempPath,
-        options: _options(options),
-        queryParameters: queryParameters,
-        cancelToken: _cancelToken(options),
-      );
+      if (kIsWeb) {
+        // Para Web: fazer download direto no navegador
+        final response = await _client(options).get(
+          path,
+          options: _options(
+            options,
+          ).copyWith(responseType: dio.ResponseType.bytes),
+          queryParameters: queryParameters,
+          cancelToken: _cancelToken(options),
+        );
 
-      return Right(_responseSuccess(response));
+        return Right(_responseSuccess(response));
+      } else {
+        // Para App: salvar em diretório temporário
+        final tempDir = await getTemporaryDirectory();
+        await tempDir.create(recursive: true);
+        final String tempPath = '${tempDir.path}/$filename';
+
+        final response = await _client(options).download(
+          path,
+          tempPath,
+          options: _options(options),
+          queryParameters: queryParameters,
+          cancelToken: _cancelToken(options),
+        );
+
+        return Right(_responseSuccess(response));
+      }
     } on dio.DioException catch (e, s) {
       return Left(_responseError(e, s: s));
     } catch (e) {
