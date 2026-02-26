@@ -24,8 +24,11 @@ class ShareDriver extends IShareDriver {
       await instance.share(
         ShareParams(
           files: files.map((f) => XFile(f.path)).toList(),
-          subject: subject,
           text: text,
+          subject: subject,
+          title: files.first.name,
+          previewThumbnail: files.first,
+          fileNameOverrides: files.map((f) => f.name).toList(),
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
         ),
       );
