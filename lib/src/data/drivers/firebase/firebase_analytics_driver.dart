@@ -86,9 +86,13 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     Map<String, Object>? params,
   }) async {
     try {
+      String nameNormalized = name.replaceAll(RegExp('[^a-zA-Z0-9_]'), '_');
+      if (nameNormalized.length > 24) {
+        nameNormalized = nameNormalized.substring(0, 24);
+      }
       await Future.wait([
         instance.setUserId(id: value),
-        setUserProperty(name: name, value: value),
+        setUserProperty(name: nameNormalized, value: value),
         instance.logLogin(loginMethod: loginMethod, parameters: params),
       ]);
       for (MapEntry<String, Object> item in params?.entries ?? []) {
