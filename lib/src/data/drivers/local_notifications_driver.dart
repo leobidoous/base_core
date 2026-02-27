@@ -47,9 +47,6 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
           debugPrint('onDidReceiveNotificationResponse: $payload');
           onReceiveNotification.add(payload);
         },
-        onDidReceiveBackgroundNotificationResponse: (details) {
-          debugPrint('onDidReceiveBackgroundNotificationResponse: $details');
-        },
       );
       debugPrint('LocalNotificationsDriver iniciado com sucesso.');
       return Right(unit);
