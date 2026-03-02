@@ -43,14 +43,15 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
 
   @override
   Future<Either<Exception, Unit>> configure({
-    Function(ReceivedNotificationEntity)? onMessage,
-    Function(ReceivedNotificationEntity)? onMessageOpenedApp,
+    bool setForegroundMessageAlert = true,
+    Function(ReceivedNotificationEntity message)? onMessage,
+    Function(ReceivedNotificationEntity message)? onMessageOpenedApp,
   }) async {
     try {
       // Define as opções de apresentação para notificações da Apple
       // quando recebidas em primeiro plano.
       await instance.setForegroundNotificationPresentationOptions(
-        alert: true,
+        alert: setForegroundMessageAlert,
         badge: true,
         sound: true,
       );
@@ -58,9 +59,20 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
       FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
         final notification = ReceivedNotificationModel(
           id: message.messageId?.hashCode ?? message.hashCode,
+          contentAvailable: message.contentAvailable,
           title: message.notification?.title ?? '',
           body: message.notification?.title ?? '',
+          mutableContent: message.mutableContent,
           payload: jsonEncode(message.data),
+          collapseKey: message.collapseKey,
+          messageType: message.messageType,
+          messageId: message.messageId,
+          category: message.category,
+          senderId: message.senderId,
+          sentTime: message.sentTime,
+          threadId: message.threadId,
+          from: message.from,
+          ttl: message.ttl,
         );
 
         if (onMessage != null) onMessage(notification);

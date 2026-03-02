@@ -3,6 +3,7 @@ import '../../interfaces/either.dart';
 
 abstract class IFirebaseNotificationsService {
   Future<Either<Exception, Unit>> configure({
+    bool setForegroundMessageAlert = true,
     Function(ReceivedNotificationEntity)? onMessage,
     Function(ReceivedNotificationEntity)? onMessageOpenedApp,
   });

@@ -34,11 +34,11 @@ abstract class CustomController<E, S> extends ValueNotifier<S> {
 
   E? get error => _error.value;
   bool get hasError => _error.value != null;
-  void setError(E value) {
+  void setError(E value, {bool update = true}) {
     if (!_wasDisposed) {
       _loading.value = false;
       _error.value = value;
-      notifyListeners();
+      if (update) notifyListeners();
     }
   }
 

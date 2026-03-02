@@ -7,8 +7,8 @@ class PositionModel extends PositionEntity with EquatableMixin {
 
   factory PositionModel.fromMap(Map<String, dynamic> map) {
     return PositionModel(
-      latitude: map['latitude'] ?? 0,
-      longitude: map['longitude'] ?? 0,
+      latitude: .tryParse(map['latitude'].toString()) ?? 0,
+      longitude: .tryParse(map['longitude'].toString()) ?? 0,
     );
   }
 

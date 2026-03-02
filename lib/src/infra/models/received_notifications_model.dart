@@ -1,4 +1,4 @@
-import 'dart:convert' show json;
+import 'dart:convert' show jsonEncode;
 
 import 'package:equatable/equatable.dart';
 
@@ -44,28 +44,28 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
   ) {
     return ReceivedNotificationModel(
       id: entity.id,
-      title: entity.title,
       body: entity.body,
+      title: entity.title,
       payload: entity.payload,
     );
   }
 
-  String get toJson => json.encode({
-    id,
-    title,
-    body,
-    payload,
-    senderId,
-    category,
-    collapseKey,
-    contentAvailable,
-    from,
-    messageId,
-    messageType,
-    mutableContent,
-    sentTime,
-    threadId,
-    ttl,
+  String get toJson => jsonEncode({
+    'id': id,
+    'title': title,
+    'body': body,
+    'payload': payload,
+    'senderId': senderId,
+    'category': category,
+    'collapseKey': collapseKey,
+    'contentAvailable': contentAvailable,
+    'from': from,
+    'messageId': messageId,
+    'messageType': messageType,
+    'mutableContent': mutableContent,
+    'sentTime': sentTime,
+    'threadId': threadId,
+    'ttl': ttl,
   });
 
   ReceivedNotificationEntity get toEntity => this;

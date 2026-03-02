@@ -1,32 +1,30 @@
+import 'dart:convert';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart'
     show
         FlutterLocalNotificationsPlugin,
-        NotificationResponse,
         AndroidInitializationSettings,
         DarwinInitializationSettings,
         InitializationSettings,
         AndroidNotificationDetails,
         NotificationDetails,
         DarwinNotificationDetails;
-import 'package:rxdart/subjects.dart' show BehaviorSubject;
 
-import '../../domain/entities/received_notifications_entity.dart'
-    show ReceivedNotificationEntity;
-import '../../domain/interfaces/disposable.dart';
+import '../../domain/entities/received_notifications_entity.dart';
 import '../../domain/interfaces/either.dart';
-import '../../infra/drivers/i_local_notifications_driver.dart'
-    show ILocalNotificationsDriver;
+import '../../infra/drivers/i_local_notifications_driver.dart';
+import '../../infra/models/received_notifications_model.dart';
 
-class LocalNotificationsDriver extends ILocalNotificationsDriver
-    with Disposable {
-  LocalNotificationsDriver({required this.onReceiveNotification});
+class LocalNotificationsDriver extends ILocalNotificationsDriver {
+  LocalNotificationsDriver();
   final _localNotificationsPlugin = FlutterLocalNotificationsPlugin();
-  final BehaviorSubject<NotificationResponse> onReceiveNotification;
 
   @override
-  Future<Either<Exception, Unit>> init() async {
+  Future<Either<Exception, Unit>> init({
+    Function(ReceivedNotificationEntity message)? onMessageOpenedApp,
+  }) async {
     try {
       const settingsAndroid = AndroidInitializationSettings(
         '@mipmap/ic_launcher',
@@ -44,8 +42,11 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
       await _localNotificationsPlugin.initialize(
         settings: settings,
         onDidReceiveNotificationResponse: (payload) async {
-          debugPrint('onDidReceiveNotificationResponse: $payload');
-          onReceiveNotification.add(payload);
+          onMessageOpenedApp?.call(
+            ReceivedNotificationModel.fromMap(
+              jsonDecode(payload.payload ?? '{}'),
+            ),
+          );
         },
       );
       debugPrint('LocalNotificationsDriver iniciado com sucesso.');
@@ -89,7 +90,12 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
         id: notification.id,
         body: notification.body,
         title: notification.title,
-        payload: notification.payload,
+        payload: ReceivedNotificationModel.fromMap({
+          'id': notification.id,
+          'body': notification.body,
+          'title': notification.title,
+          'payload': notification.payload,
+        }).toJson,
         notificationDetails: platformChannelSpecifics,
       );
       debugPrint('LocalNotificationsDriver exibida com sucesso: $notification');
@@ -98,10 +104,5 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver
       debugPrint('LocalNotificationsDriver não exibida.');
       return Left(Exception(e));
     }
-  }
-
-  @override
-  void dispose() {
-    onReceiveNotification.close();
   }
 }

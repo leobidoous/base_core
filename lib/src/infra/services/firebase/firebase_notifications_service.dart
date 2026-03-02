@@ -10,11 +10,13 @@ class FirebaseNotificationsService extends IFirebaseNotificationsService {
 
   @override
   Future<Either<Exception, Unit>> configure({
+    bool setForegroundMessageAlert = true,
     Function(ReceivedNotificationEntity)? onMessage,
     Function(ReceivedNotificationEntity)? onMessageOpenedApp,
   }) {
     return firebaseNotificationsDriver.configure(
       onMessage: onMessage,
+      setForegroundMessageAlert: setForegroundMessageAlert,
       onMessageOpenedApp: onMessageOpenedApp,
     );
   }
