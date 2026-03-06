@@ -13,46 +13,46 @@ class PermissionService extends IPermissionService {
     try {
       PermissionStatus? response;
       switch (permission) {
-        case PermissionType.location:
+        case .location:
           response = await Permission.location.status;
           break;
-        case PermissionType.locationAlways:
+        case .locationAlways:
           response = await Permission.locationAlways.status;
           break;
-        case PermissionType.locationWhenInUse:
+        case .locationWhenInUse:
           response = await Permission.locationWhenInUse.status;
           break;
-        case PermissionType.accessMediaLocation:
+        case .accessMediaLocation:
           response = await Permission.accessMediaLocation.status;
           break;
-        case PermissionType.camera:
+        case .camera:
           response = await Permission.camera.status;
           break;
-        case PermissionType.mediaLibrary:
+        case .mediaLibrary:
           response = await Permission.mediaLibrary.status;
           break;
-        case PermissionType.photos:
+        case .photos:
           response = await Permission.photos.status;
           break;
-        case PermissionType.microphone:
+        case .microphone:
           response = await Permission.microphone.status;
           break;
-        case PermissionType.audio:
+        case .audio:
           response = await Permission.audio.status;
           break;
-        case PermissionType.notification:
+        case .notification:
           response = await Permission.notification.status;
           break;
-        case PermissionType.storage:
+        case .storage:
           response = await Permission.storage.status;
           break;
-        case PermissionType.manageExternalStorage:
+        case .manageExternalStorage:
           response = await Permission.manageExternalStorage.status;
           break;
-        case PermissionType.appTrackingTransparency:
+        case .appTrackingTransparency:
           response = await Permission.appTrackingTransparency.status;
           break;
-        case PermissionType.contacts:
+        case .contacts:
           response = await Permission.contacts.status;
           break;
         default:
@@ -71,40 +71,40 @@ class PermissionService extends IPermissionService {
     try {
       PermissionStatus? response;
       switch (permission) {
-        case PermissionType.notification:
+        case .notification:
           response = await Permission.notification.request();
           break;
-        case PermissionType.accessNotificationPolicy:
+        case .accessNotificationPolicy:
           response = await Permission.accessMediaLocation.request();
           break;
-        case PermissionType.location:
+        case .location:
           response = await Permission.location.request();
           break;
-        case PermissionType.calendar:
+        case .calendar:
           response = await Permission.calendarFullAccess.request();
           break;
-        case PermissionType.mediaLibrary:
+        case .mediaLibrary:
           response = await Permission.mediaLibrary.request();
           break;
-        case PermissionType.accessMediaLocation:
+        case .accessMediaLocation:
           response = await Permission.accessMediaLocation.request();
           break;
-        case PermissionType.camera:
+        case .camera:
           response = await Permission.camera.request();
           break;
-        case PermissionType.locationAlways:
+        case .locationAlways:
           response = await Permission.locationAlways.request();
           break;
-        case PermissionType.locationWhenInUse:
+        case .locationWhenInUse:
           response = await Permission.locationWhenInUse.request();
           break;
-        case PermissionType.storage:
+        case .storage:
           response = await Permission.storage.request();
           break;
-        case PermissionType.manageExternalStorage:
+        case .manageExternalStorage:
           response = await Permission.manageExternalStorage.request();
           break;
-        case PermissionType.appTrackingTransparency:
+        case .appTrackingTransparency:
           response = await Permission.appTrackingTransparency.request();
           break;
         default:

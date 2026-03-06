@@ -1,8 +1,6 @@
 import 'package:geolocator/geolocator.dart';
 
 import '../../domain/entities/position_entity.dart';
-import '../../domain/enums/permission_status_type_enum.dart';
-import '../../domain/enums/permission_type_enum.dart';
 import '../../domain/failures/i_location_failure.dart';
 import '../../domain/interfaces/either.dart';
 import '../../domain/services/i_permission_service.dart';
@@ -17,30 +15,36 @@ class LocationDriver extends ILocationDriver {
   Future<Either<ILocationFailure, PositionEntity>> getCurrentPosition() async {
     try {
       final statusResponse = await permissionService.getPermissionStatus(
-        permission: PermissionType.location,
+        permission: .location,
       );
       return statusResponse.fold(
         (l) => Left(CurrentLocationFailure(l.toString())),
         (r) async {
-          switch (r) {
-            case PermissionStatusType.denied:
-              return Left(PermissionDeniedError('Permission denied'));
-            case PermissionStatusType.granted:
-              final response = await Geolocator.getCurrentPosition();
-              return Right(
-                PositionEntity(
-                  latitude: response.latitude,
-                  longitude: response.longitude,
-                ),
-              );
-            case PermissionStatusType.restricted:
-              return Left(PermissionRestrictedError('Permission restricted'));
-            case PermissionStatusType.limited:
-              return Left(PermissionLimitedError('Permission limited'));
-            case PermissionStatusType.permanentlyDenied:
-              return Left(
-                PermissionPermanentDeniedError('Permission permanently denied'),
-              );
+          try {
+            switch (r) {
+              case .denied:
+                return Left(PermissionDeniedError('Permission denied'));
+              case .granted:
+                final response = await Geolocator.getCurrentPosition();
+                return Right(
+                  PositionEntity(
+                    latitude: response.latitude,
+                    longitude: response.longitude,
+                  ),
+                );
+              case .restricted:
+                return Left(PermissionRestrictedError('Permission restricted'));
+              case .limited:
+                return Left(PermissionLimitedError('Permission limited'));
+              case .permanentlyDenied:
+                return Left(
+                  PermissionPermanentDeniedError(
+                    'Permission permanently denied',
+                  ),
+                );
+            }
+          } catch (e) {
+            return Left(CurrentLocationFailure(e.toString()));
           }
         },
       );

@@ -6,8 +6,7 @@ import 'package:flutter/material.dart';
 import '../../../core/utils/crash_log.dart';
 import '../../../domain/entities/received_notifications_entity.dart';
 import '../../../domain/interfaces/either.dart';
-import '../../../infra/drivers/firebase/i_firebase_notifications_driver.dart'
-    show IFirebaseNotificationsDriver;
+import '../../../infra/drivers/firebase/i_firebase_notifications_driver.dart';
 import '../../../infra/drivers/firebase/i_firebase_storage_driver.dart';
 import '../../../infra/models/received_notifications_model.dart';
 
