@@ -97,8 +97,8 @@ class FirebaseCrashlyticsService extends IFirebaseCrashlyticsService {
       return userIdResult.fold((error) => Left(error), (_) async {
         // Define atributos customizados do usuário
         final attributes = <String, dynamic>{
-          if (email != null) 'user_email': email,
-          if (name != null) 'user_name': name,
+          'user_email': ?email,
+          'user_name': ?name,
           if (customAttributes != null) ...customAttributes,
         };
 
@@ -185,8 +185,8 @@ class FirebaseCrashlyticsService extends IFirebaseCrashlyticsService {
       data: {
         'method': method,
         'endpoint': endpoint,
-        if (statusCode != null) 'status_code': statusCode,
-        if (error != null) 'error': error,
+        'status_code': ?statusCode,
+        'error': ?error,
       },
     );
   }
