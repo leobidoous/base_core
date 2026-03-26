@@ -3,20 +3,20 @@ enum SortingOrderType { asc, desc }
 extension SortingOrderTypeExt on SortingOrderType {
   String get toJson {
     switch (this) {
-      case SortingOrderType.asc:
-        return 'ASC';
-      case SortingOrderType.desc:
-        return 'DESC';
+      case .asc:
+        return 'asc';
+      case .desc:
+        return 'desc';
     }
   }
 }
 
 SortingOrderType? sortingOrderTypeFromJson(String? type) {
   switch (type) {
-    case 'ASC':
-      return SortingOrderType.asc;
-    case 'DESC':
-      return SortingOrderType.desc;
+    case 'asc':
+      return .asc;
+    case 'desc':
+      return .desc;
     default:
       return null;
   }
