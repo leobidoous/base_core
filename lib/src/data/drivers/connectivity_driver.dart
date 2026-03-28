@@ -1,18 +1,17 @@
 import 'dart:async';
 
-import 'package:connectivity_plus/connectivity_plus.dart'
-    show Connectivity, ConnectivityResult;
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 import '../../domain/enums/connectivity_status.dart';
-import '../../infra/drivers/i_connectivity_driver.dart'
-    show IConnectivityDriver;
+import '../../infra/drivers/i_connectivity_driver.dart';
 
 class ConnectivityDriver implements IConnectivityDriver {
   ConnectivityDriver({required this.connectivity});
+
   final Connectivity connectivity;
 
   @override
-  Future<bool> get isOnline async {
+  Future<bool> get haveNetworkConnection async {
     final result = await connectivity.checkConnectivity();
     return result.contains(ConnectivityResult.wifi) ||
         result.contains(ConnectivityResult.ethernet) ||
@@ -25,19 +24,19 @@ class ConnectivityDriver implements IConnectivityDriver {
         .map((event) {
           return event.map((status) {
             switch (status) {
-              case ConnectivityResult.bluetooth:
+              case .bluetooth:
                 return ConnectivityStatus.bluetooth;
-              case ConnectivityResult.wifi:
+              case .wifi:
                 return ConnectivityStatus.wifi;
-              case ConnectivityResult.ethernet:
+              case .ethernet:
                 return ConnectivityStatus.ethernet;
-              case ConnectivityResult.mobile:
+              case .mobile:
                 return ConnectivityStatus.mobile;
-              case ConnectivityResult.none:
+              case .none:
                 return ConnectivityStatus.none;
-              case ConnectivityResult.vpn:
+              case .vpn:
                 return ConnectivityStatus.vpn;
-              case ConnectivityResult.other:
+              case .other:
                 return ConnectivityStatus.other;
             }
           }).toList();

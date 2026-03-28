@@ -2,18 +2,17 @@ import 'dart:async';
 
 import '../../domain/enums/connectivity_status.dart';
 import '../../domain/interfaces/either.dart';
-import '../../domain/services/i_connectivity_service.dart'
-    show IConnectivityService;
-import '../drivers/i_connectivity_driver.dart' show IConnectivityDriver;
+import '../../domain/services/i_connectivity_service.dart';
+import '../drivers/i_connectivity_driver.dart';
 
 class ConnectivityService implements IConnectivityService {
   ConnectivityService({required this.driver});
   final IConnectivityDriver driver;
 
   @override
-  Future<Either<Exception, Unit>> isOnline() async {
+  Future<Either<Exception, Unit>> haveNetworkConnection() async {
     try {
-      if (await driver.isOnline) return Right(unit);
+      if (await driver.haveNetworkConnection) return Right(unit);
 
       throw Exception('Você está offline.');
     } catch (e) {
