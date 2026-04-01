@@ -38,6 +38,8 @@ class ConnectivityDriver implements IConnectivityDriver {
                 return ConnectivityStatus.vpn;
               case .other:
                 return ConnectivityStatus.other;
+              case .satellite:
+                return ConnectivityStatus.satellite;
             }
           }).toList();
         })
