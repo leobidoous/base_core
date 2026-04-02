@@ -22,6 +22,8 @@ class FirebaseCrashlyticsDriver extends IFirebaseCrashlyticsDriver {
     bool fatal = false,
   }) async {
     try {
+      if (!instance.isCrashlyticsCollectionEnabled) return Right(unit);
+      
       await instance.recordError(
         exception,
         stackTrace,

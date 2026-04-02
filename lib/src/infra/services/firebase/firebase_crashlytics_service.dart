@@ -22,9 +22,9 @@ class FirebaseCrashlyticsService extends IFirebaseCrashlyticsService {
   Future<Either<Exception, Unit>> init({Map<String, dynamic>? params}) async {
     try {
       // Habilitar coleta de crashlytics, exceto no WEB
-      if (!kIsWeb) {
-        await instance.setCrashlyticsCollectionEnabled(true);
-      }
+      // if (!kIsWeb) {
+      await instance.setCrashlyticsCollectionEnabled(!kIsWeb);
+      // }
 
       // Capturar erros do Flutter framework
       FlutterError.onError = (FlutterErrorDetails details) {
