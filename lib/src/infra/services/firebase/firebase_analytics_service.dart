@@ -161,8 +161,8 @@ class FirebaseAnalyticsService extends IFirebaseAnalyticsService {
   }
 
   @override
-  Future<Either<Exception, Unit>> logout({required String name}) {
-    return firebaseAnalyticsDriver.logout(name: name);
+  Future<Either<Exception, Unit>> logout() {
+    return firebaseAnalyticsDriver.logout();
   }
 
   @override

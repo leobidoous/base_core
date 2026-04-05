@@ -12,7 +12,7 @@ abstract class IFirebaseAnalyticsService extends IAppTrackingService {
     Map<String, Object>? params,
   });
 
-  Future<Either<Exception, Unit>> logout({required String name});
+  Future<Either<Exception, Unit>> logout();
 
   Future<Either<Exception, Unit>> setUserProperty({
     required String name,

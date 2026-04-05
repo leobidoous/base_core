@@ -19,7 +19,7 @@ abstract class IFirebaseAnalyticsDriver extends IAppTrackingDriver {
     Map<String, Object>? params,
   });
 
-  Future<Either<Exception, Unit>> logout({required String name});
+  Future<Either<Exception, Unit>> logout();
 
   Future<Either<Exception, Unit>> addToCart({
     required FirebaseAddToCartEntity data,

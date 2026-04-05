@@ -27,7 +27,7 @@ enum ConnectivityStatus {
   /// On iOS and macOS, reported when [NWPath.isUltraConstrained] is true.
   /// Appears alongside [mobile] (e.g. `[mobile, satellite]`).
   ///
-  /// On Android 15 (API 35) and newer, reported when [TRANSPORT_SATELLITE] 
+  /// On Android 15 (API 35) and newer, reported when [TRANSPORT_SATELLITE]
   /// capability is present.
   ///
   /// Not reported on other platforms.

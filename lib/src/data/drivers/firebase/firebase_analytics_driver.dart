@@ -90,11 +90,10 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
       if (nameNormalized.length > 24) {
         nameNormalized = nameNormalized.substring(0, 24);
       }
-      await Future.wait([
-        instance.setUserId(id: value),
-        setUserProperty(name: nameNormalized, value: value),
-        instance.logLogin(loginMethod: loginMethod, parameters: params),
-      ]);
+      await instance.setUserId(id: value);
+      await setUserProperty(name: nameNormalized, value: value);
+      await instance.logLogin(loginMethod: loginMethod, parameters: params);
+
       for (MapEntry<String, Object> item in params?.entries ?? []) {
         setUserProperty(name: item.key, value: item.value.toString());
       }
@@ -403,12 +402,10 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
   }
 
   @override
-  Future<Either<Exception, Unit>> logout({required String name}) async {
+  Future<Either<Exception, Unit>> logout() async {
     try {
-      await Future.wait([
-        instance.setUserId(id: null),
-        setUserProperty(name: name, value: ''),
-      ]);
+      await instance.setUserId(id: '');
+      await instance.setUserId(id: null);
       debugPrint('FirebaseAnalyticsDriver logout efetuado com sucesso.');
       return Right(unit);
     } catch (exception, stackTrace) {
