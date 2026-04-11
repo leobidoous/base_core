@@ -92,7 +92,10 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
       }
       await instance.setUserId(id: value);
       await setUserProperty(name: nameNormalized, value: value);
-      await instance.logLogin(loginMethod: loginMethod, parameters: params);
+      await instance.logLogin(
+        loginMethod: loginMethod,
+        parameters: _convertToMapStringObject(params),
+      );
 
       for (MapEntry<String, Object> item in params?.entries ?? []) {
         setUserProperty(name: item.key, value: item.value.toString());
