@@ -15,6 +15,22 @@ class FirebaseCrashlyticsDriver extends IFirebaseCrashlyticsDriver {
     }
   }
 
+  Map<String, Object>? _convertToMapStringObject(Map? params) {
+    if (params == null) return null;
+    return params.map((key, value) {
+      if (value is String || value is num) {
+        return MapEntry(key, value);
+      } else {
+        return MapEntry(
+          key,
+          value.toString().length > 100
+              ? value.toString().substring(0, 100)
+              : value.toString(),
+        );
+      }
+    });
+  }
+
   @override
   Future<Either<Exception, Unit>> setError({
     required exception,
@@ -72,7 +88,7 @@ class FirebaseCrashlyticsDriver extends IFirebaseCrashlyticsDriver {
     required Map<String, dynamic> keys,
   }) async {
     try {
-      for (final entry in keys.entries) {
+      for (final entry in (_convertToMapStringObject(keys) ?? {}).entries) {
         await instance.setCustomKey(entry.key, entry.value);
       }
       return Right(unit);
