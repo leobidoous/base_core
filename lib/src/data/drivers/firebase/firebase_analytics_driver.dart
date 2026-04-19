@@ -275,10 +275,10 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
       itemListId: i['itemListId']?.toString(),
       locationId: i['locationId']?.toString(),
       affiliation: i['affiliation']?.toString(),
+      index: .tryParse(i['index'].toString()),
+      price: .tryParse(i['price'].toString()),
       promotionId: i['promotionId']?.toString(),
       itemVariant: i['itemVariant']?.toString(),
-      index: int.tryParse(i['index'].toString()),
-      price: num.tryParse(i['price'].toString()),
       creativeName: i['creativeName']?.toString(),
       creativeSlot: i['creativeSlot']?.toString(),
       itemCategory: i['itemCategory']?.toString(),
@@ -288,8 +288,8 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
       itemCategory4: i['itemCategory4']?.toString(),
       itemCategory5: i['itemCategory5']?.toString(),
       promotionName: i['promotionName']?.toString(),
-      discount: num.tryParse(i['discount'].toString()),
-      quantity: int.tryParse(i['quantity'].toString()),
+      discount: .tryParse(i['discount'].toString()),
+      quantity: .tryParse(i['quantity'].toString()),
       parameters: _convertToMapStringObject(i['parameters']),
     );
   }

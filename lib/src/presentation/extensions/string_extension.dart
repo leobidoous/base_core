@@ -15,7 +15,7 @@ extension StringExt on String {
     return double.tryParse(value);
   }
 
-  int? get tryParseToInt => int.tryParse(this);
+  int? get tryParseToInt => .tryParse(this);
 
   String capitalize({bool onlyFirstWord = false}) {
     String cap(List<String> sentence) {

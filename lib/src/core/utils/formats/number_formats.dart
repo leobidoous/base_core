@@ -16,11 +16,11 @@ class NumberFormat {
     ).format;
     try {
       if (value.toString().contains('e')) {
-        return format(value);
+        return format(value).trim();
       }
       return format(value.toString().tryParseCurrencyToDouble).trim();
     } catch (e) {
-      return format(0.0);
+      return format(0).trim();
     }
   }
 }

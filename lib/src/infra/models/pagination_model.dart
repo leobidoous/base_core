@@ -13,9 +13,9 @@ class PaginationModel extends PaginationEntity {
   factory PaginationModel.fromMap(Map<String, dynamic> map) {
     return PaginationModel(
       sortingBy: map['sortingBy'] ?? '',
-      limit: int.tryParse(map['limit'].toString()),
-      offset: int.tryParse(map['offset'].toString()),
-      pageNumber: int.tryParse(map['page'].toString()),
+      limit: .tryParse(map['limit'].toString()),
+      offset: .tryParse(map['offset'].toString()),
+      pageNumber: .tryParse(map['page'].toString()),
       sortingOrder: sortingOrderTypeFromJson(map['sortingOrder']),
     );
   }
