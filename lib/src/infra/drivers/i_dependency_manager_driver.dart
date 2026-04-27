@@ -10,4 +10,7 @@ abstract class IDependencyManagerDriver {
 
   /// Disposes an object of type T from the DM
   bool dispose<T extends Object>({String? key});
+
+  /// Set page arguments
+  void setArguments(dynamic args);
 }
