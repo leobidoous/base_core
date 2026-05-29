@@ -86,12 +86,8 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     Map<String, Object>? params,
   }) async {
     try {
-      String nameNormalized = name.replaceAll(RegExp('[^a-zA-Z0-9_]'), '_');
-      if (nameNormalized.length > 24) {
-        nameNormalized = nameNormalized.substring(0, 24);
-      }
       await instance.setUserId(id: value);
-      await setUserProperty(name: nameNormalized, value: value);
+      await setUserProperty(name: name, value: value);
       await instance.logLogin(
         loginMethod: loginMethod,
         parameters: _convertToMapStringObject(params),
@@ -109,14 +105,25 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     }
   }
 
+  String _normalizePropertyName(String name) {
+    String normalized = name.replaceAll(RegExp('[^a-zA-Z0-9_]'), '_');
+    if (normalized.length > 24) {
+      normalized = normalized.substring(0, 24);
+    }
+    return normalized;
+  }
+
   @override
   Future<Either<Exception, Unit>> setUserProperty({
     required String name,
     required String value,
   }) async {
     try {
-      await instance.setUserProperty(name: name, value: value);
-      debugPrint('FirebaseAnalyticsDriver.setUserProperty: [$name]: $value.');
+      final normalizedName = _normalizePropertyName(name);
+      await instance.setUserProperty(name: normalizedName, value: value);
+      debugPrint(
+        'FirebaseAnalyticsDriver.setUserProperty: [$normalizedName]: $value.',
+      );
       return Right(unit);
     } catch (exception, stackTrace) {
       debugPrint('FirebaseAnalyticsDriver.setUserProperty: $exception');
