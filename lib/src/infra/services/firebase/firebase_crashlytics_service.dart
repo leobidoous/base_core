@@ -99,7 +99,7 @@ class FirebaseCrashlyticsService extends IFirebaseCrashlyticsService {
         final attributes = <String, dynamic>{
           'user_email': ?email,
           'user_name': ?name,
-          if (customAttributes != null) ...customAttributes,
+          ...?customAttributes,
         };
 
         if (attributes.isNotEmpty) {
