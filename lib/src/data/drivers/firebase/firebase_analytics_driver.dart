@@ -252,10 +252,10 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
       await instance.logPurchase(
         items: items,
         coupon: data.coupon,
-        currency: data.currency ?? 'BRL',
-        affiliation: data.affiliation,
         tax: data.tax?.toDouble(),
+        affiliation: data.affiliation,
         value: data.value?.toDouble(),
+        currency: data.currency ?? 'BRL',
         transactionId: data.transactionId,
         shipping: data.shipping?.toDouble(),
         parameters: _convertToMapStringObject(parameters),

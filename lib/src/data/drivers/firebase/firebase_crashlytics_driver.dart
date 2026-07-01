@@ -38,7 +38,9 @@ class FirebaseCrashlyticsDriver extends IFirebaseCrashlyticsDriver {
     bool fatal = false,
   }) async {
     try {
-      if (!instance.isCrashlyticsCollectionEnabled) return Right(unit);
+      if (!kIsWeb && !instance.isCrashlyticsCollectionEnabled) {
+        return Right(unit);
+      }
 
       await instance.recordError(
         exception,
@@ -59,7 +61,7 @@ class FirebaseCrashlyticsDriver extends IFirebaseCrashlyticsDriver {
     required String userId,
   }) async {
     try {
-      await instance.setUserIdentifier(userId);
+      if (!kIsWeb) await instance.setUserIdentifier(userId);
       return Right(unit);
     } catch (exception) {
       debugPrint('FirebaseCrashlyticsDriver.setUserIdentifier: $exception');
@@ -74,7 +76,8 @@ class FirebaseCrashlyticsDriver extends IFirebaseCrashlyticsDriver {
     required dynamic value,
   }) async {
     try {
-      await instance.setCustomKey(key, value);
+      if (!kIsWeb) await instance.setCustomKey(key, value);
+
       return Right(unit);
     } catch (exception) {
       debugPrint('FirebaseCrashlyticsDriver.setCustomKey: $exception');
@@ -88,8 +91,10 @@ class FirebaseCrashlyticsDriver extends IFirebaseCrashlyticsDriver {
     required Map<String, dynamic> keys,
   }) async {
     try {
-      for (final entry in (_convertToMapStringObject(keys) ?? {}).entries) {
-        await instance.setCustomKey(entry.key, entry.value);
+      if (!kIsWeb) {
+        for (final entry in (_convertToMapStringObject(keys) ?? {}).entries) {
+          await instance.setCustomKey(entry.key, entry.value);
+        }
       }
       return Right(unit);
     } catch (exception) {
@@ -102,7 +107,8 @@ class FirebaseCrashlyticsDriver extends IFirebaseCrashlyticsDriver {
   @override
   Future<Either<Exception, Unit>> log({required String message}) async {
     try {
-      await instance.log(message);
+      if (!kIsWeb) await instance.log(message);
+
       return Right(unit);
     } catch (exception) {
       debugPrint('FirebaseCrashlyticsDriver.log: $exception');
@@ -114,6 +120,8 @@ class FirebaseCrashlyticsDriver extends IFirebaseCrashlyticsDriver {
   @override
   Future<Either<Exception, bool>> isCrashlyticsCollectionEnabled() async {
     try {
+      if (kIsWeb) return Right(false);
+
       final isEnabled = instance.isCrashlyticsCollectionEnabled;
       return Right(isEnabled);
     } catch (exception) {
@@ -130,7 +138,9 @@ class FirebaseCrashlyticsDriver extends IFirebaseCrashlyticsDriver {
     required bool enabled,
   }) async {
     try {
-      await instance.setCrashlyticsCollectionEnabled(enabled);
+      if (!kIsWeb) {
+        await instance.setCrashlyticsCollectionEnabled(enabled);
+      }
       return Right(unit);
     } catch (exception) {
       debugPrint(
@@ -144,7 +154,9 @@ class FirebaseCrashlyticsDriver extends IFirebaseCrashlyticsDriver {
   @override
   Future<Either<Exception, Unit>> sendUnsentReports() async {
     try {
-      await instance.sendUnsentReports();
+      if (!kIsWeb) {
+        await instance.sendUnsentReports();
+      }
       return Right(unit);
     } catch (exception) {
       debugPrint('FirebaseCrashlyticsDriver.sendUnsentReports: $exception');
@@ -156,7 +168,9 @@ class FirebaseCrashlyticsDriver extends IFirebaseCrashlyticsDriver {
   @override
   Future<Either<Exception, Unit>> deleteUnsentReports() async {
     try {
-      await instance.deleteUnsentReports();
+      if (!kIsWeb) {
+        await instance.deleteUnsentReports();
+      }
       return Right(unit);
     } catch (exception) {
       debugPrint('FirebaseCrashlyticsDriver.deleteUnsentReports: $exception');
