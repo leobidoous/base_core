@@ -4,7 +4,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/query_params_entity.dart';
 
-class QueryParamsModel extends QueryParamsEntity with EquatableMixin {
+class QueryParamsModel extends QueryParamsEntity with Equatable {
   QueryParamsModel({super.pageNumber, super.pageSize});
 
   factory QueryParamsModel.fromMap(Map<String, dynamic> map) {

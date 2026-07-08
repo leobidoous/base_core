@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/log_event_entity.dart';
 
-class LogEventModel extends LogEventEntity with EquatableMixin {
+class LogEventModel extends LogEventEntity with Equatable {
   LogEventModel({required super.name, super.parameters});
 
   factory LogEventModel.fromMap(Map<String, dynamic> map) {

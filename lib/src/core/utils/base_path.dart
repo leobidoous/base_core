@@ -1,4 +1,4 @@
-import 'package:equatable/equatable.dart' show EquatableMixin;
+import 'package:equatable/equatable.dart' show Equatable;
 
 ///
 /// Utility class to define a route path.
@@ -24,7 +24,7 @@ import 'package:equatable/equatable.dart' show EquatableMixin;
 /// Nav.pushNamed(steps);
 /// Nav.pushNamed(email);
 /// ```
-class BasePath<T> with EquatableMixin {
+class BasePath<T> with Equatable {
   /// Creates a [BasePath]
   const BasePath(this.path, [this.rootPath]);
 

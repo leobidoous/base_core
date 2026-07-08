@@ -5,7 +5,7 @@ import 'package:equatable/equatable.dart';
 import '../../domain/entities/received_notifications_entity.dart';
 
 class ReceivedNotificationModel extends ReceivedNotificationEntity
-    with EquatableMixin {
+    with Equatable {
   ReceivedNotificationModel({
     required super.id,
     required super.title,

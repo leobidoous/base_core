@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 
 import '../../domain/entities/position_entity.dart';
 
-class PositionModel extends PositionEntity with EquatableMixin {
+class PositionModel extends PositionEntity with Equatable {
   PositionModel({required super.latitude, required super.longitude});
 
   factory PositionModel.fromMap(Map<String, dynamic> map) {
