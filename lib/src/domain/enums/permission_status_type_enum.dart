@@ -27,16 +27,16 @@ extension PermissionStatusTypeExt on PermissionStatusType {}
 PermissionStatusType permissionStatusFromType(String? status) {
   switch (status) {
     case 'denied':
-      return PermissionStatusType.denied;
+      return .denied;
     case 'granted':
-      return PermissionStatusType.granted;
+      return .granted;
     case 'restricted':
-      return PermissionStatusType.restricted;
+      return .restricted;
     case 'limited':
-      return PermissionStatusType.limited;
+      return .limited;
     case 'permanentlyDenied':
-      return PermissionStatusType.permanentlyDenied;
+      return .permanentlyDenied;
     default:
-      return PermissionStatusType.denied;
+      return .denied;
   }
 }

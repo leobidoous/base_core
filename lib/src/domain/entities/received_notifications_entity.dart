@@ -1,34 +1,34 @@
 class ReceivedNotificationEntity {
   ReceivedNotificationEntity({
     required this.id,
-    required this.title,
     required this.body,
+    required this.title,
     required this.payload,
-    this.senderId,
-    this.category,
-    this.collapseKey,
-    this.contentAvailable,
+    this.ttl,
     this.from,
-    this.messageId,
-    this.messageType,
-    this.mutableContent,
     this.sentTime,
     this.threadId,
-    this.ttl,
+    this.senderId,
+    this.category,
+    this.messageId,
+    this.collapseKey,
+    this.messageType,
+    this.mutableContent,
+    this.contentAvailable,
   });
   final int id;
-  final String? title;
+  final int? ttl;
+  final String? from;
   final String? body;
+  final String? title;
   final String? payload;
   final String? senderId;
   final String? category;
-  final String? collapseKey;
-  final bool? contentAvailable;
-  final String? from;
-  final String? messageId;
-  final String? messageType;
-  final bool? mutableContent;
-  final DateTime? sentTime;
   final String? threadId;
-  final int? ttl;
+  final String? messageId;
+  final DateTime? sentTime;
+  final String? messageType;
+  final String? collapseKey;
+  final bool? mutableContent;
+  final bool? contentAvailable;
 }

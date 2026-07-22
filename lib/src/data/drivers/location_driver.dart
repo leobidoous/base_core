@@ -25,7 +25,13 @@ class LocationDriver extends ILocationDriver {
               case .denied:
                 return Left(PermissionDeniedError('Permission denied'));
               case .granted:
-                final response = await Geolocator.getCurrentPosition();
+                final response = await Geolocator.getCurrentPosition(
+                  locationSettings: LocationSettings(
+                    accuracy: .best,
+                    distanceFilter: 0,
+                    timeLimit: Duration(seconds: 5),
+                  ),
+                );
                 return Right(
                   PositionEntity(
                     latitude: response.latitude,

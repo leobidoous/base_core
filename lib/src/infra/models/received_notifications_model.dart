@@ -8,20 +8,20 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
     with Equatable {
   ReceivedNotificationModel({
     required super.id,
-    required super.title,
     required super.body,
+    required super.title,
     required super.payload,
+    super.ttl,
+    super.from,
     super.senderId,
     super.category,
-    super.collapseKey,
-    super.contentAvailable,
-    super.from,
-    super.messageId,
-    super.messageType,
-    super.mutableContent,
     super.sentTime,
     super.threadId,
-    super.ttl,
+    super.messageId,
+    super.messageType,
+    super.collapseKey,
+    super.mutableContent,
+    super.contentAvailable,
   });
 
   factory ReceivedNotificationModel.fromMap(Map<String, dynamic> map) {
@@ -52,21 +52,41 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
 
   String get toJson => jsonEncode({
     'id': id,
-    'title': title,
+    'ttl': ttl,
     'body': body,
+    'from': from,
+    'title': title,
     'payload': payload,
     'senderId': senderId,
     'category': category,
-    'collapseKey': collapseKey,
-    'contentAvailable': contentAvailable,
-    'from': from,
-    'messageId': messageId,
-    'messageType': messageType,
-    'mutableContent': mutableContent,
     'sentTime': sentTime,
     'threadId': threadId,
-    'ttl': ttl,
+    'messageId': messageId,
+    'messageType': messageType,
+    'collapseKey': collapseKey,
+    'mutableContent': mutableContent,
+    'contentAvailable': contentAvailable,
   });
+
+  Map<String, dynamic> get toMap {
+    return {
+      'id': id,
+      'ttl': ttl,
+      'body': body,
+      'from': from,
+      'title': title,
+      'payload': payload,
+      'senderId': senderId,
+      'category': category,
+      'sentTime': sentTime,
+      'threadId': threadId,
+      'messageId': messageId,
+      'messageType': messageType,
+      'collapseKey': collapseKey,
+      'mutableContent': mutableContent,
+      'contentAvailable': contentAvailable,
+    };
+  }
 
   ReceivedNotificationEntity get toEntity => this;
 
