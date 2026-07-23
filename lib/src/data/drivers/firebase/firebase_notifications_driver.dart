@@ -1,5 +1,3 @@
-import 'dart:convert' show jsonEncode;
-
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
@@ -57,12 +55,13 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
 
       FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
         final notification = ReceivedNotificationModel(
+          android: _mapAndroidNotification(message.notification?.android),
+          apple: _mapAppleNotification(message.notification?.apple),
           id: message.messageId?.hashCode ?? message.hashCode,
           contentAvailable: message.contentAvailable,
           title: message.notification?.title ?? '',
-          body: message.notification?.title ?? '',
+          body: message.notification?.body ?? '',
           mutableContent: message.mutableContent,
-          payload: jsonEncode(message.data),
           collapseKey: message.collapseKey,
           messageType: message.messageType,
           messageId: message.messageId,
@@ -70,6 +69,7 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
           senderId: message.senderId,
           sentTime: message.sentTime,
           threadId: message.threadId,
+          payload: message.data,
           from: message.from,
           ttl: message.ttl,
         );
@@ -79,10 +79,12 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
 
       FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) {
         final notification = ReceivedNotificationModel(
+          android: _mapAndroidNotification(message.notification?.android),
+          apple: _mapAppleNotification(message.notification?.apple),
           id: message.messageId?.hashCode ?? message.hashCode,
           title: message.notification?.title ?? '',
           body: message.notification?.body ?? '',
-          payload: jsonEncode(message.data),
+          payload: message.data,
         );
 
         if (onMessageOpenedApp != null) onMessageOpenedApp(notification);
@@ -172,5 +174,37 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
         },
       );
     });
+  }
+
+  AndroidNotificationData? _mapAndroidNotification(
+    AndroidNotification? android,
+  ) {
+    if (android == null) return null;
+    return AndroidNotificationData(
+      tag: android.tag,
+      link: android.link,
+      color: android.color,
+      count: android.count,
+      sound: android.sound,
+      ticker: android.ticker,
+      imageUrl: android.imageUrl,
+      channelId: android.channelId,
+      smallIcon: android.smallIcon,
+      clickAction: android.clickAction,
+    );
+  }
+
+  AppleNotificationData? _mapAppleNotification(AppleNotification? apple) {
+    if (apple == null) return null;
+    return AppleNotificationData(
+      badge: apple.badge,
+      imageUrl: apple.imageUrl,
+      subtitle: apple.subtitle,
+      soundName: apple.sound?.name,
+      subtitleLocKey: apple.subtitleLocKey,
+      soundVolume: apple.sound?.volume ?? 0,
+      subtitleLocArgs: apple.subtitleLocArgs,
+      soundCritical: apple.sound?.critical ?? false,
+    );
   }
 }

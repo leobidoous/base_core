@@ -22,6 +22,8 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
     super.collapseKey,
     super.mutableContent,
     super.contentAvailable,
+    super.android,
+    super.apple,
   });
 
   factory ReceivedNotificationModel.fromMap(Map<String, dynamic> map) {
@@ -35,7 +37,7 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
       id: id,
       body: map['body']?.toString() ?? '',
       title: map['title']?.toString() ?? '',
-      payload: map['payload']?.toString() ?? '',
+      payload: map['payload'] is Map ? map['payload'] : {},
     );
   }
 
@@ -47,6 +49,19 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
       body: entity.body,
       title: entity.title,
       payload: entity.payload,
+      ttl: entity.ttl,
+      from: entity.from,
+      senderId: entity.senderId,
+      category: entity.category,
+      sentTime: entity.sentTime,
+      threadId: entity.threadId,
+      messageId: entity.messageId,
+      messageType: entity.messageType,
+      collapseKey: entity.collapseKey,
+      mutableContent: entity.mutableContent,
+      contentAvailable: entity.contentAvailable,
+      android: entity.android,
+      apple: entity.apple,
     );
   }
 
@@ -59,16 +74,41 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
     'payload': payload,
     'senderId': senderId,
     'category': category,
-    'sentTime': sentTime,
     'threadId': threadId,
     'messageId': messageId,
     'messageType': messageType,
     'collapseKey': collapseKey,
     'mutableContent': mutableContent,
     'contentAvailable': contentAvailable,
+    'sentTime': sentTime?.toIso8601String(),
+
+    'android.channelId': ?android?.channelId,
+    'android.clickAction': ?android?.clickAction,
+    'android.color': ?android?.color,
+    'android.count': ?android?.count,
+    'android.imageUrl': ?android?.imageUrl,
+    'android.link': ?android?.link,
+    'android.smallIcon': ?android?.smallIcon,
+    'android.sound': ?android?.sound,
+    'android.ticker': ?android?.ticker,
+    'android.tag': ?android?.tag,
+    'apple.badge': ?apple?.badge,
+    'apple.imageUrl': ?apple?.imageUrl,
+    'apple.subtitle': ?apple?.subtitle,
+    'apple.subtitleLocArgs': ?apple?.subtitleLocArgs,
+    'apple.subtitleLocKey': ?apple?.subtitleLocKey,
+    'apple.soundName': ?apple?.soundName,
+    'apple.soundCritical': ?apple?.soundCritical,
+    'apple.soundVolume': ?apple?.soundVolume,
   });
 
   Map<String, dynamic> get toMap {
+    late final String payload;
+    try {
+      payload = jsonEncode(this.payload);
+    } catch (e) {
+      payload = '';
+    }
     return {
       'id': id,
       'ttl': ttl,
@@ -78,13 +118,32 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
       'payload': payload,
       'senderId': senderId,
       'category': category,
-      'sentTime': sentTime,
       'threadId': threadId,
       'messageId': messageId,
       'messageType': messageType,
       'collapseKey': collapseKey,
       'mutableContent': mutableContent,
       'contentAvailable': contentAvailable,
+      'sentTime': sentTime?.toIso8601String(),
+
+      'android.channelId': ?android?.channelId,
+      'android.clickAction': ?android?.clickAction,
+      'android.color': ?android?.color,
+      'android.count': ?android?.count,
+      'android.imageUrl': ?android?.imageUrl,
+      'android.link': ?android?.link,
+      'android.smallIcon': ?android?.smallIcon,
+      'android.sound': ?android?.sound,
+      'android.ticker': ?android?.ticker,
+      'android.tag': ?android?.tag,
+      'apple.badge': ?apple?.badge,
+      'apple.imageUrl': ?apple?.imageUrl,
+      'apple.subtitle': ?apple?.subtitle,
+      'apple.subtitleLocArgs': ?apple?.subtitleLocArgs,
+      'apple.subtitleLocKey': ?apple?.subtitleLocKey,
+      'apple.soundName': ?apple?.soundName,
+      'apple.soundCritical': ?apple?.soundCritical,
+      'apple.soundVolume': ?apple?.soundVolume,
     };
   }
 
@@ -107,6 +166,8 @@ class ReceivedNotificationModel extends ReceivedNotificationEntity
     sentTime,
     threadId,
     ttl,
+    android,
+    apple,
   ];
 
   @override
