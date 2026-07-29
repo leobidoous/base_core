@@ -21,8 +21,8 @@ class ReceivedNotificationEntity {
   final int id;
   final int? ttl;
   final String? from;
-  final String? body;
-  final String? title;
+  final String body;
+  final String title;
   final String? senderId;
   final String? category;
   final String? threadId;

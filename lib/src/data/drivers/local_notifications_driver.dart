@@ -5,12 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart'
     show
         FlutterLocalNotificationsPlugin,
+        AndroidFlutterLocalNotificationsPlugin,
+        IOSFlutterLocalNotificationsPlugin,
         AndroidInitializationSettings,
+        AndroidNotificationChannel,
         DarwinInitializationSettings,
         InitializationSettings,
         AndroidNotificationDetails,
         NotificationDetails,
-        DarwinNotificationDetails;
+        DarwinNotificationDetails,
+        Importance;
 
 import '../../domain/entities/received_notifications_entity.dart';
 import '../../domain/interfaces/either.dart';
@@ -33,6 +37,10 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver {
         requestAlertPermission: false,
         requestBadgePermission: false,
         requestSoundPermission: false,
+        notificationCategories: [],
+        defaultPresentAlert: true,
+        defaultPresentBadge: true,
+        defaultPresentSound: true,
       );
 
       final settings = InitializationSettings(
@@ -49,6 +57,22 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver {
           );
         },
       );
+
+      // Cria o canal de alta importância no Android (obrigatório API 26+).
+      final androidPlugin = _localNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin
+          >();
+      await androidPlugin?.createNotificationChannel(
+        const AndroidNotificationChannel(
+          'high_importance_channel',
+          'High Importance Notifications',
+          description: 'This channel is used for important notifications.',
+          importance: Importance.max,
+        ),
+      );
+
+      await requestPermissions();
       debugPrint('LocalNotificationsDriver iniciado com sucesso.');
       return Right(unit);
     } catch (e) {
@@ -59,7 +83,24 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver {
 
   @override
   Future<Either<Exception, Unit>> requestPermissions() async {
-    return Right(unit);
+    try {
+      final android = _localNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            AndroidFlutterLocalNotificationsPlugin
+          >();
+      final iOS = _localNotificationsPlugin
+          .resolvePlatformSpecificImplementation<
+            IOSFlutterLocalNotificationsPlugin
+          >();
+
+      await android?.requestNotificationsPermission();
+      await iOS?.requestPermissions(alert: true, badge: true, sound: true);
+
+      return Right(unit);
+    } catch (e) {
+      debugPrint('Erro ao solicitar permissões de notificação: $e');
+      return Left(Exception(e));
+    }
   }
 
   @override
@@ -80,7 +121,13 @@ class LocalNotificationsDriver extends ILocalNotificationsDriver {
         priority: .high,
         ticker: 'ticker',
       );
-      const iOSDetails = DarwinNotificationDetails();
+      const iOSDetails = DarwinNotificationDetails(
+        presentAlert: true,
+        presentBadge: true,
+        presentSound: true,
+        presentBanner: true,
+        presentList: true,
+      );
       const platformChannelSpecifics = NotificationDetails(
         android: androidDetails,
         iOS: iOSDetails,

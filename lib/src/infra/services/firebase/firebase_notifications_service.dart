@@ -22,6 +22,12 @@ class FirebaseNotificationsService extends IFirebaseNotificationsService {
   }
 
   @override
+  Future<Either<Exception, ReceivedNotificationEntity?>>
+  getInitialNotification() {
+    return firebaseNotificationsDriver.getInitialNotification();
+  }
+
+  @override
   Future<Either<Exception, String>> getToken() {
     return firebaseNotificationsDriver.getToken();
   }

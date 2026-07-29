@@ -7,6 +7,8 @@ abstract class IFirebaseNotificationsDriver {
     Function(ReceivedNotificationEntity)? onMessage,
     Function(ReceivedNotificationEntity)? onMessageOpenedApp,
   });
+  Future<Either<Exception, ReceivedNotificationEntity?>>
+  getInitialNotification();
   Future<Either<Exception, Unit>> subscribeToTopic({required String topic});
   Future<Either<Exception, Unit>> unsubscribeFromTopic({required String topic});
   Future<Either<Exception, String>> getToken();

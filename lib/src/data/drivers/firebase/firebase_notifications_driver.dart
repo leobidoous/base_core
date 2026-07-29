@@ -100,6 +100,28 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
   }
 
   @override
+  Future<Either<Exception, ReceivedNotificationEntity?>>
+  getInitialNotification() async {
+    try {
+      final initialMessage = await instance.getInitialMessage();
+      if (initialMessage == null) return Right(null);
+
+      final notification = ReceivedNotificationModel(
+        android: _mapAndroidNotification(initialMessage.notification?.android),
+        id: initialMessage.messageId?.hashCode ?? initialMessage.hashCode,
+        apple: _mapAppleNotification(initialMessage.notification?.apple),
+        title: initialMessage.notification?.title ?? '',
+        body: initialMessage.notification?.body ?? '',
+        payload: initialMessage.data,
+      );
+      return Right(notification);
+    } catch (exception, strackTrace) {
+      await crashLog.capture(exception: exception, stackTrace: strackTrace);
+      return Left(Exception(exception));
+    }
+  }
+
+  @override
   Future<Either<Exception, Unit>> subscribeToTopic({
     required String topic,
   }) async {

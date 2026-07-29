@@ -22,6 +22,11 @@ abstract class INavigationDriver {
   BuildContext? get context;
 
   ///
+  /// Current context
+  ///
+  bool get hasContext;
+
+  ///
   /// Current path
   ///
   BasePath get basePath;
