@@ -119,6 +119,7 @@ class FirebaseAnalyticsDriver extends IFirebaseAnalyticsDriver {
     required String value,
   }) async {
     try {
+      if (name.isEmpty) return Right(unit);
       final normalizedName = _normalizePropertyName(name);
       await instance.setUserProperty(name: normalizedName, value: value);
       debugPrint(
