@@ -3,7 +3,7 @@ description: Um package auxiliar para manter as dependências globais de um apli
 homepage: https://www.github.com/leobidoous
 repository: https://www.github.com/leobidoous/base_core
 issue_tracker: https://www.github.com/leobidoous/base_core/issues
-version: 1.4.5
+version: 1.4.6
 
 environment:
   sdk: ^3.10.7
@@ -26,7 +26,7 @@ dependencies:
   #==============================================
 
   #===== New dependecies for new app flutter =====
-  dio: ^5.11.0
+  dio: ^5.11.1
   intl: ^0.20.2
   rxdart: ^0.28.0
   equatable: ^2.1.0
@@ -39,8 +39,8 @@ dependencies:
   package_info_plus: ^10.2.1
   shared_preferences: ^2.5.5
   local_auth_android: ^2.0.9
-  permission_handler: ^13.0.1
-  flutter_secure_storage: ^11.0.0
+  permission_handler: ^13.0.2
+  flutter_secure_storage: ^11.1.0
   mask_text_input_formatter: ^2.9.0
   flutter_local_notifications: ^22.3.0
   #==============================================
