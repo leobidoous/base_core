@@ -684,10 +684,10 @@ packages:
     dependency: "direct main"
     description:
       name: local_auth_android
-      sha256: fc6d4edecbb8baa59f1f1ab2005c5043bbe311c3936a467fb5e05c2b155bf111
+      sha256: "76c389998fe95cff4352644776ab5775f24ddd58f179dbf3df1b9c268cbbadc4"
       url: "https://pub.dev"
     source: hosted
-    version: "2.1.0"
+    version: "2.2.0"
   local_auth_darwin:
     dependency: "direct main"
     description:

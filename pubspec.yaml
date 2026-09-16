@@ -38,7 +38,7 @@ dependencies:
   connectivity_plus: ^7.3.1
   package_info_plus: ^10.2.1
   shared_preferences: ^2.5.5
-  local_auth_android: ^2.1.0
+  local_auth_android: ^2.2.0
   permission_handler: ^13.0.2
   flutter_secure_storage: ^11.2.0
   mask_text_input_formatter: ^2.9.0
