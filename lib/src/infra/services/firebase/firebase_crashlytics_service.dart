@@ -94,7 +94,7 @@ class FirebaseCrashlyticsService extends IFirebaseCrashlyticsService {
       );
 
       // Se falhou ao definir userId, retorna o erro
-      return userIdResult.fold((error) => Left(error), (_) async {
+      return await userIdResult.fold((error) => Left(error), (_) async {
         // Define atributos customizados do usuário
         final attributes = <String, dynamic>{
           'user_email': ?email,
@@ -140,7 +140,7 @@ class FirebaseCrashlyticsService extends IFirebaseCrashlyticsService {
           ? '''$message | Data: ${data.entries.map((e) => '${e.key}=${e.value}').join(', ')}'''
           : message;
 
-      return firebaseCrashlyticsDriver.log(message: logMessage);
+      return await firebaseCrashlyticsDriver.log(message: logMessage);
     } catch (exception) {
       debugPrint('FirebaseCrashlyticsService.logBreadcrumb: $exception');
       return Left(Exception(exception));
@@ -153,7 +153,7 @@ class FirebaseCrashlyticsService extends IFirebaseCrashlyticsService {
     required Map<String, dynamic> context,
   }) async {
     try {
-      return firebaseCrashlyticsDriver.setCustomKeys(keys: context);
+      return await firebaseCrashlyticsDriver.setCustomKeys(keys: context);
     } catch (exception) {
       debugPrint('FirebaseCrashlyticsService.setSessionContext: $exception');
       return Left(Exception(exception));
@@ -204,7 +204,7 @@ class FirebaseCrashlyticsService extends IFirebaseCrashlyticsService {
   @override
   Future<Either<Exception, Unit>> sendUnsentReports() async {
     try {
-      return firebaseCrashlyticsDriver.sendUnsentReports();
+      return await firebaseCrashlyticsDriver.sendUnsentReports();
     } catch (exception) {
       debugPrint('FirebaseCrashlyticsService.sendUnsentReports: $exception');
       return Left(Exception(exception));
@@ -215,7 +215,7 @@ class FirebaseCrashlyticsService extends IFirebaseCrashlyticsService {
   @override
   Future<Either<Exception, bool>> checkForUnsentReports() async {
     try {
-      return firebaseCrashlyticsDriver.checkForUnsentReports();
+      return await firebaseCrashlyticsDriver.checkForUnsentReports();
     } catch (exception) {
       debugPrint(
         'FirebaseCrashlyticsService.checkForUnsentReports: $exception',

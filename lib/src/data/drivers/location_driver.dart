@@ -17,7 +17,7 @@ class LocationDriver extends ILocationDriver {
       final statusResponse = await permissionService.getPermissionStatus(
         permission: .location,
       );
-      return statusResponse.fold(
+      return await statusResponse.fold(
         (l) => Left(CurrentLocationFailure(l.toString())),
         (r) async {
           try {
