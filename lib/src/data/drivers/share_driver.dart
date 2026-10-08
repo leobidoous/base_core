@@ -23,12 +23,9 @@ class ShareDriver extends IShareDriver {
       final box = context.findRenderObject() as RenderBox;
       await instance.share(
         ShareParams(
-          files: files.map((f) => XFile(f.path)).toList(),
+          files: files,
           text: text,
           subject: subject,
-          title: files.first.name,
-          previewThumbnail: files.first,
-          fileNameOverrides: files.map((f) => f.name).toList(),
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
         ),
       );
@@ -48,7 +45,7 @@ class ShareDriver extends IShareDriver {
   }) async {
     try {
       final box = context.findRenderObject() as RenderBox;
-      final files = List.empty(growable: true);
+      final files = <XFile>[];
       for (var key in keys) {
         try {
           final boundary =
@@ -60,20 +57,23 @@ class ShareDriver extends IShareDriver {
           final pngBytes = byteData!.buffer.asUint8List();
 
           // Get directory to save the file
-          final directory = await getApplicationDocumentsDirectory();
-          final filePath = '${directory.path}/temp_image_${key.hashCode}.png';
-          final file = File(filePath);
+          final directory = await getTemporaryDirectory();
+          final fileName = 'comprovante_${key.hashCode}.png';
+          final file = File('${directory.path}/$fileName');
 
           // Save the file
-          await file.writeAsBytes(pngBytes);
-          files.add(file);
+          await file.writeAsBytes(pngBytes, flush: true);
+          files.add(XFile(file.path, name: fileName, mimeType: 'image/png'));
         } catch (e) {
           debugPrint('ShareDriver.shareWidgets error: $e');
         }
       }
+      if (files.isEmpty) {
+        return Left(Exception('Nenhuma imagem foi gerada para compartilhar.'));
+      }
       await instance.share(
         ShareParams(
-          files: files.map((f) => XFile(f.path)).toList(),
+          files: files,
           subject: subject,
           text: text,
           sharePositionOrigin: box.localToGlobal(Offset.zero) & box.size,
