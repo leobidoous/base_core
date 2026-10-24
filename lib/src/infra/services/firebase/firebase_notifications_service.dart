@@ -33,6 +33,13 @@ class FirebaseNotificationsService extends IFirebaseNotificationsService {
   }
 
   @override
+  Future<Either<Exception, String>> getInstallationId({
+    Duration timeout = const Duration(seconds: 10),
+  }) {
+    return firebaseNotificationsDriver.getInstallationId(timeout: timeout);
+  }
+
+  @override
   Future<Either<Exception, Unit>> subscribeToTopic({required String topic}) {
     return firebaseNotificationsDriver.subscribeToTopic(topic: topic);
   }

@@ -47,26 +47,30 @@ class DioClientDriver extends IHttpDriver with Disposable {
           break;
       }
 
-      crashLog.capture(
-        exception: HttpFailure(
-          exception: e,
-          stackTrace: StackTrace.current,
-          path: e.requestOptions.baseUrl + e.requestOptions.path,
-          params: e.requestOptions.data is Map<String, dynamic>
-              ? {
-                  ...e.requestOptions.data,
-                  ...e.requestOptions.queryParameters,
-                  if (e.response?.data is Map<String, dynamic>)
-                    ...e.response?.data,
-                }
-              : {
-                  ...{'requestBodyData': e.requestOptions.data.toString()},
-                  ...{'responseBodyData': e.response?.data.toString()},
-                  ...e.requestOptions.queryParameters,
-                },
-        ),
-        stackTrace: s,
-      );
+      // Cancelamento (CancelToken do CustomController ao sair da tela) não é
+      // erro: só geraria ruído e consumiria cota das ferramentas de crash.
+      if (e.type != dio.DioExceptionType.cancel) {
+        crashLog.capture(
+          exception: HttpFailure(
+            exception: e,
+            stackTrace: StackTrace.current,
+            path: e.requestOptions.baseUrl + e.requestOptions.path,
+            params: e.requestOptions.data is Map<String, dynamic>
+                ? {
+                    ...e.requestOptions.data,
+                    ...e.requestOptions.queryParameters,
+                    if (e.response?.data is Map<String, dynamic>)
+                      ...e.response?.data,
+                  }
+                : {
+                    ...{'requestBodyData': e.requestOptions.data.toString()},
+                    ...{'responseBodyData': e.response?.data.toString()},
+                    ...e.requestOptions.queryParameters,
+                  },
+          ),
+          stackTrace: s,
+        );
+      }
 
       return HttpDriverResponse(
         data: e.response?.data,

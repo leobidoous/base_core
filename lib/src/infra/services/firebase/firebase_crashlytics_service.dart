@@ -26,16 +26,21 @@ class FirebaseCrashlyticsService extends IFirebaseCrashlyticsService {
       await instance.setCrashlyticsCollectionEnabled(!kIsWeb);
       // }
 
-      // Capturar erros do Flutter framework
-      FlutterError.onError = (FlutterErrorDetails details) {
-        instance.recordFlutterError(details);
-      };
+      // Apps com várias ferramentas de crash devem passar
+      // `captureGlobalErrors: false` e direcionar os handlers globais para o
+      // `CrashLog`; caso contrário só o Crashlytics recebe esses erros.
+      if (params?['captureGlobalErrors'] ?? true) {
+        // Capturar erros do Flutter framework
+        FlutterError.onError = (FlutterErrorDetails details) {
+          instance.recordFlutterError(details);
+        };
 
-      // Capturar erros assíncronos não tratados (PlatformDispatcher)
-      PlatformDispatcher.instance.onError = (error, stack) {
-        instance.recordError(error, stack, fatal: true);
-        return true;
-      };
+        // Capturar erros assíncronos não tratados (PlatformDispatcher)
+        PlatformDispatcher.instance.onError = (error, stack) {
+          instance.recordError(error, stack, fatal: true);
+          return true;
+        };
+      }
 
       // Configurar informações iniciais do app (se fornecidas)
       if (params != null) {

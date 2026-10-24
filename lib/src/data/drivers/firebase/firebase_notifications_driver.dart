@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 
@@ -17,6 +19,13 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
   final CrashLog crashLog;
   final IFirebaseStorageDriver storageDriver;
 
+  /// Estáticos: o driver é instanciado várias vezes, mas o registro no FCM é
+  /// único por app. `onRegistered` é broadcast, então quem não estiver
+  /// escutando quando o evento sair o perde.
+  static String? _installationId;
+  static Completer<String>? _registration;
+  static bool _listeningRegistration = false;
+
   FirebaseMessaging get instance {
     try {
       return FirebaseMessaging.instance;
@@ -29,6 +38,10 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
   @override
   Future<Either<Exception, String>> getToken() async {
     try {
+      // `getToken` foi depreciado em favor de `register`/`onRegistered`, que
+      // retornam o FID (outro identificador). Mantido enquanto o backend
+      // envia push por token e para SDKs que exigem o token FCM.
+      // ignore: deprecated_member_use
       final token = await instance.getToken();
       if (token == null) return Left(Exception('Token está vazio'));
       return Right(token);
@@ -36,6 +49,55 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
       await crashLog.capture(exception: exception, stackTrace: strackTrace);
       return Left(Exception(exception));
     }
+  }
+
+  @override
+  Future<Either<Exception, String>> getInstallationId({
+    Duration timeout = const Duration(seconds: 10),
+  }) async {
+    try {
+      final cached = _installationId;
+      if (cached != null) return Right(cached);
+
+      _listenRegistration();
+      final registration = _registration ??= _register();
+      return Right(await registration.future.timeout(timeout));
+    } on TimeoutException catch (exception) {
+      // Libera uma nova tentativa na próxima chamada
+      _registration = null;
+      return Left(exception);
+    } catch (exception, strackTrace) {
+      _registration = null;
+      await crashLog.capture(exception: exception, stackTrace: strackTrace);
+      return Left(Exception(exception));
+    }
+  }
+
+  Completer<String> _register() {
+    final completer = Completer<String>();
+    instance.register().catchError((Object exception, StackTrace stackTrace) {
+      if (!completer.isCompleted) {
+        completer.completeError(exception, stackTrace);
+      }
+    });
+    return completer;
+  }
+
+  void _listenRegistration() {
+    if (_listeningRegistration) return;
+    _listeningRegistration = true;
+
+    instance.onRegistered.listen((fid) {
+      _installationId = fid;
+      final registration = _registration;
+      if (registration != null && !registration.isCompleted) {
+        registration.complete(fid);
+      }
+    });
+    instance.onUnregistered.listen((fid) {
+      if (_installationId == fid) _installationId = null;
+      _registration = null;
+    });
   }
 
   @override
@@ -52,6 +114,9 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
         badge: true,
         sound: true,
       );
+
+      // Registra cedo para o FID já estar em cache nas primeiras requisições
+      unawaited(getInstallationId());
 
       FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
         final notification = ReceivedNotificationModel(
@@ -161,6 +226,8 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
       doc: userId,
     );
     final token = await getToken();
+    // Transição token -> FID: grava os dois; FID é opcional por enquanto
+    final fid = (await getInstallationId()).fold((l) => null, (r) => r);
     return token.fold((l) => Left(l), (token) async {
       return response.fold(
         (l) async {
@@ -169,6 +236,7 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
             id: userId,
             data: {
               'deviceTokens': [token],
+              'deviceFids': [?fid],
             },
           );
           return response;
@@ -179,11 +247,20 @@ class FirebaseNotificationsDriver extends IFirebaseNotificationsDriver {
               ((r.data()?['deviceTokens'] as List?) ?? []),
               growable: true,
             );
-            if (!deviceTokens.contains(token)) {
+            final deviceFids = List.from(
+              ((r.data()?['deviceFids'] as List?) ?? []),
+              growable: true,
+            );
+            final hasNewToken = !deviceTokens.contains(token);
+            final hasNewFid = fid != null && !deviceFids.contains(fid);
+            if (hasNewToken || hasNewFid) {
               final response = await storageDriver.docSet(
                 collection: collection,
                 id: userId,
-                data: {'deviceTokens': deviceTokens..add(token)},
+                data: {
+                  'deviceTokens': [...deviceTokens, if (hasNewToken) token],
+                  'deviceFids': [...deviceFids, if (hasNewFid) fid],
+                },
               );
               return response;
             }
