@@ -1,3 +1,8 @@
+## 1.7.1
+
+* Stop versioning locally generated test, coverage and Sonar reports
+* Add graphify knowledge graph and Claude Code project settings
+
 ## 1.4.5
 
 * Upgrade dependencies to latest versions
