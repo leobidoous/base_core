@@ -1,3 +1,7 @@
+## 1.8.1
+
+* Revert flutter_local_notifications to ^22.3.2: version 23 requires Android Gradle plugin 9.1.1, compileSdk 37 and Flutter 3.44, which break Android builds of apps still on AGP 8
+
 ## 1.8.0
 
 * Upgrade dependencies: Firebase (firebase_core 5.2.0, firebase_auth 7.1.0, cloud_firestore 7.2.0, firebase_storage 14.1.0, firebase_database 13.1.0, firebase_messaging 17.1.0, firebase_analytics 13.1.0, firebase_crashlytics 6.1.0, firebase_remote_config 7.1.0, firebase_in_app_messaging 0.10.2) and flutter_local_notifications 23.0.4

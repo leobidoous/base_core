@@ -31,7 +31,7 @@ packages:
       path: ".."
       relative: true
     source: path
-    version: "1.7.1"
+    version: "1.8.1"
   boolean_selector:
     dependency: transitive
     description:
@@ -60,10 +60,10 @@ packages:
     dependency: transitive
     description:
       name: cloud_firestore
-      sha256: "3be0ac6592115923bfea8635a4b8e58dfe79fcaecaba737af641ace829d517c1"
+      sha256: "350aa5e71bfc31701381c90fd48c1f7c1bdd884b407dc229d6dbc97c62f01748"
       url: "https://pub.dev"
     source: hosted
-    version: "7.1.0"
+    version: "7.2.0"
   cloud_firestore_platform_interface:
     dependency: transitive
     description:
@@ -204,10 +204,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_analytics
-      sha256: "4184afc17c5749a1dc008289e582cdc07ea213d03f681f00454aed834db34357"
+      sha256: "164920117bfad80b20f9578bd392585453ba760d7b2e67d3f09325bc566b1417"
       url: "https://pub.dev"
     source: hosted
-    version: "13.0.1"
+    version: "13.1.0"
   firebase_analytics_platform_interface:
     dependency: transitive
     description:
@@ -228,10 +228,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_auth
-      sha256: eda4742142eb926b6081d2063b86979aaaa2f9b9ca525fc3dc3e0fc004d8e1ab
+      sha256: "8463bcb93f95fa3bc5a479705ea8b41cfd35f637336d8f01c71e4128521c185b"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.1"
+    version: "7.1.0"
   firebase_auth_platform_interface:
     dependency: transitive
     description:
@@ -252,10 +252,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_core
-      sha256: "21551c1205441d9d155660ea0a409530b65a8d66ce88002bab3f38d94a8638fc"
+      sha256: "1a3a65a71c5a21311a37f3e94fd4aef4c77801a66008a1859b30eb1a8fc1744b"
       url: "https://pub.dev"
     source: hosted
-    version: "5.1.0"
+    version: "5.2.0"
   firebase_core_platform_interface:
     dependency: transitive
     description:
@@ -276,10 +276,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_crashlytics
-      sha256: "2e79d2c51731f50e811df80421759ae8c769687f91aee7ad5a8ac1cf4391b4f0"
+      sha256: "6618fabbf2200f5715439ee4b39f7ea9ebf8b2e931622fad50bd6693cec86d37"
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.1"
+    version: "6.1.0"
   firebase_crashlytics_platform_interface:
     dependency: transitive
     description:
@@ -292,10 +292,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_database
-      sha256: "42f991c761e7a72d85e4971d7748feebb0d6a970b848ee9daac21a4c0b851c47"
+      sha256: "959769e21a96daabf3c358b14a33c5f9e1d9126b115317b0438e2f984d3fbeab"
       url: "https://pub.dev"
     source: hosted
-    version: "13.0.1"
+    version: "13.1.0"
   firebase_database_platform_interface:
     dependency: transitive
     description:
@@ -316,10 +316,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_in_app_messaging
-      sha256: de1022ee065e5bf379e1f5e0a329be4fa135c5f3015e25e5550718b8a9df6fd4
+      sha256: "1287bc65d76b00068aebbfae83de5f6bd6d582b75243fd45cf2267079a2dd41c"
       url: "https://pub.dev"
     source: hosted
-    version: "0.10.1"
+    version: "0.10.2"
   firebase_in_app_messaging_platform_interface:
     dependency: transitive
     description:
@@ -332,10 +332,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_messaging
-      sha256: e19c73b369ae83f4580a0676597f9ac3a0cd91e1b18be69ea16299c153dd9310
+      sha256: b971abf6ca94426d4cfc7685d6f97a34d3e1c2fda8e21d0e923d61736a984774
       url: "https://pub.dev"
     source: hosted
-    version: "17.0.1"
+    version: "17.1.0"
   firebase_messaging_platform_interface:
     dependency: transitive
     description:
@@ -356,10 +356,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_remote_config
-      sha256: "1bb31be51b9271c9574fa6c3bc754c164d94ccb8657ea693cf57ead83de928c7"
+      sha256: "730f6df2b2eefe505504e616ad4669584402c515ed5ed73bcc963801ec2fb23f"
       url: "https://pub.dev"
     source: hosted
-    version: "7.0.1"
+    version: "7.1.0"
   firebase_remote_config_platform_interface:
     dependency: transitive
     description:
@@ -380,10 +380,10 @@ packages:
     dependency: transitive
     description:
       name: firebase_storage
-      sha256: ad5a4cc21707cb97f26d77e953d8655f9cc8fa0610ce4a5872b3e5680b135afc
+      sha256: "1794f6b8198415d2705ec5015d6a5490d81ca49635b8bd23fae01d983c4a5ed6"
       url: "https://pub.dev"
     source: hosted
-    version: "14.0.1"
+    version: "14.1.0"
   firebase_storage_platform_interface:
     dependency: transitive
     description:
